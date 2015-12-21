@@ -21,7 +21,7 @@ abstract class Embed
     {
         if (!empty($content)) {
             $embera = new Embera\Embera();
-            $embera->addProvider('facebook.com', 'Alledia\OSEmbed\Pro\Provider\Facebook');
+            $embera->addProvider('facebook.com', 'Alledia\OSEmbed\Free\Provider\Facebook');
             $content = $embera->autoEmbed($content);
         }
 

@@ -6,7 +6,7 @@
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
-namespace Alledia\OSEmbed\Pro\Provider;
+namespace Alledia\OSEmbed\Free\Provider;
 
 defined('_JEXEC') or die();
 
