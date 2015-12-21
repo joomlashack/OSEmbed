@@ -1,0 +1,28 @@
+{
+    "name"             : "alledia/osembed",
+    "description"      : "OSEmbed",
+    "minimum-stability": "stable",
+    "license"          : "GPL-2+",
+    "type"             : "joomla.plugin",
+    "extra"            : {
+        "element"        : "plg_content_osembed",
+        "element-short"  : "osembed",
+        "name"           : "OSEmbed",
+        "folder"         : "content",
+        "client"         : "site",
+        "package-license": "free"
+    },
+    "authors"          : [
+        {
+            "name" : "Alledia",
+            "email": "support@alledia.com"
+        }
+    ],
+    "require"          : {
+        "php"       : ">= 5.3",
+        "mpratt/embera": "^1.8"
+    },
+    "config"           : {
+        "vendor-dir": "src/library"
+    }
+}

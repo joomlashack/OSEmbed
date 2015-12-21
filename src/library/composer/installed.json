@@ -1,0 +1,50 @@
+[
+    {
+        "name": "mpratt/embera",
+        "version": "1.8.12",
+        "version_normalized": "1.8.12.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/mpratt/Embera.git",
+            "reference": "69337f379455b2e226eb3650ea9e8c4646ef368a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/mpratt/Embera/zipball/69337f379455b2e226eb3650ea9e8c4646ef368a",
+            "reference": "69337f379455b2e226eb3650ea9e8c4646ef368a",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3"
+        },
+        "time": "2015-11-03 15:28:39",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Embera": "Lib/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Michael Pratt",
+                "email": "pratt@hablarmierda.net",
+                "homepage": "http://www.michael-pratt.com",
+                "role": "Author/Developer"
+            }
+        ],
+        "description": "A Oembed consumer library, that gives you information about urls. It helps you replace urls to youtube or vimeo for example, with their html embed code.",
+        "homepage": "https://github.com/mpratt/Embera",
+        "keywords": [
+            "Auto embed",
+            "embed",
+            "oembed",
+            "vimeo",
+            "youtube"
+        ]
+    }
+]

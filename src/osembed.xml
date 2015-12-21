@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.1" type="plugin" group="content" method="upgrade">
+    <name>PLG_CONTENT_OSEMBED</name>
+    <author>Alledia</author>
+    <creationDate>December 21 2015</creationDate>
+    <copyright>Copyright (C) 2015 Open Source Training, LLC. All rights reserved.</copyright>
+    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+    <authorEmail>support@alledia.com</authorEmail>
+    <authorUrl>http://www.alledia.com</authorUrl>
+    <version>1.1.0b1</version>
+    <description>PLG_CONTENT_OSEMBED_DESCRIPTION</description>
+
+    <alledia>
+        <element publish="true">osembed</element>
+        <namespace>OSEmbed</namespace>
+        <license>free</license>
+
+        <relatedExtensions>
+            <extension
+                type="library"
+                element="allediaframework">AllediaFramework</extension>
+
+            <extension
+                type="plugin"
+                group="system"
+                element="ossystem"
+                publish="true"
+                ordering="first">OSSystem</extension>
+
+
+        </relatedExtensions>
+
+        <include>AllediaFreeDefaultFiles</include>
+
+        <obsolete>
+            <extension
+                type="plugin"
+                group="content"
+                element="osembedcontent"
+                publish="true"
+                ordering="last">OSEmbedContent</extension>
+
+            <extension
+                type="plugin"
+                group="system"
+                element="osembed"
+                publish="true"
+                ordering="last">OSEmbed</extension>
+        </obsolete>
+    </alledia>
+
+    <scriptfile>script.installer.php</scriptfile>
+
+    <files>
+        <folder>language</folder>
+        <folder>library</folder>
+        <folder>views</folder>
+        <folder>form</folder>
+        <filename plugin="osembed">osembed.php</filename>
+        <filename>include.php</filename>
+    </files>
+
+    <media destination="plg_content_osembed" folder="media">
+        <folder>css</folder>
+        <folder>images</folder>
+        <folder>fonts</folder>
+    </media>
+
+    <updateservers>
+        <server type="extension" priority="1" name="OSEmbed - OSTraining Deployment Server"><![CDATA[https://deploy.ostraining.com/client/update/free/stable/plg_content_osembed]]></server>
+    </updateservers>
+</extension>
