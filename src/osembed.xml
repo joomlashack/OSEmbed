@@ -66,6 +66,19 @@
         <folder>fonts</folder>
     </media>
 
+    <config>
+        <fields name="params">
+            <fieldset name="basic" addfieldpath="/plugins/content/osembed/form/fields">
+                <field
+                    name="customfooter"
+                    type="customfooter"
+                    media="plg_content_osembed"
+                    showgoproad="1"
+                    jedurl="http://extensions.joomla.org/extensions/extension/social-web/social-media/osembed" />
+            </fieldset>
+        </fields>
+    </config>
+
     <updateservers>
         <server type="extension" priority="1" name="OSEmbed - OSTraining Deployment Server"><![CDATA[https://deploy.ostraining.com/client/update/free/stable/plg_content_osembed]]></server>
     </updateservers>
