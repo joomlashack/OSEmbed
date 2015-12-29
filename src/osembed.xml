@@ -2,12 +2,12 @@
 <extension version="3.1" type="plugin" group="content" method="upgrade">
     <name>PLG_CONTENT_OSEMBED</name>
     <author>Alledia</author>
-    <creationDate>December 21 2015</creationDate>
+    <creationDate>December 29 2015</creationDate>
     <copyright>Copyright (C) 2015 Open Source Training, LLC. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
     <authorEmail>support@alledia.com</authorEmail>
     <authorUrl>http://www.alledia.com</authorUrl>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <description>PLG_CONTENT_OSEMBED_DESCRIPTION</description>
 
     <alledia>
