@@ -20,6 +20,8 @@ require_once 'include.php';
  */
 class PlgContentOSEmbed extends AbstractPlugin
 {
+    protected $namespace = 'OSEmbed';
+
     protected $allowedToRun = true;
 
     /**
@@ -36,8 +38,7 @@ class PlgContentOSEmbed extends AbstractPlugin
     {
         parent::__construct($subject, $config);
 
-        $systemPlugin = Factory::getExtension('OSEmbed', 'plugin', 'content');
-        $systemPlugin->loadLibrary();
+        $this->init();
 
         // Check the minumum requirements
         if (!Helper::complyBasicRequirements()) {
