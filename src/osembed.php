@@ -22,6 +22,8 @@ class PlgContentOSEmbed extends AbstractPlugin
 {
     protected $namespace = 'OSEmbed';
 
+    public $type = 'content';
+
     protected $allowedToRun = true;
 
     /**

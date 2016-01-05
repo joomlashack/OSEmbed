@@ -27,7 +27,6 @@
                 publish="true"
                 ordering="first">OSSystem</extension>
 
-
         </relatedExtensions>
 
         <include>AllediaFreeDefaultFiles</include>
