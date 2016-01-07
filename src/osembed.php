@@ -10,8 +10,6 @@ defined('_JEXEC') or die;
 
 use Alledia\Framework\Joomla\Extension\AbstractPlugin;
 use Alledia\Framework\Factory;
-use Alledia\OSEmbed\Free\Helper;
-use Alledia\OSEmbed\Free\Embed;
 
 require_once 'include.php';
 
@@ -43,9 +41,28 @@ class PlgContentOSEmbed extends AbstractPlugin
         $this->init();
 
         // Check the minumum requirements
-        if (!Helper::complyBasicRequirements()) {
+        $helperClass = $this->getHelperClass();
+        if (!$helperClass::complyBasicRequirements()) {
             $this->allowedToRun = false;
         }
+    }
+
+    protected function getHelperClass()
+    {
+        if ($this->isPro()) {
+            return 'Alledia\\OSEmbed\\Pro\\Helper';
+        }
+
+        return 'Alledia\\OSEmbed\\Free\\Helper';
+    }
+
+    protected function getEmbedClass()
+    {
+        if ($this->isPro()) {
+            return 'Alledia\\OSEmbed\\Pro\\Embed';
+        }
+
+        return 'Alledia\\OSEmbed\\Free\\Embed';
     }
 
     /**
@@ -70,6 +87,7 @@ class PlgContentOSEmbed extends AbstractPlugin
         $doc = Factory::getDocument();
         $doc->addStyleSheet('media/plg_content_osembed/css/osembed.css');
 
-        $article->text = Embed::parseContent($article->text);
+        $embedClass = $this->getEmbedClass();
+        $article->text = $embedClass::parseContent($article->text);
     }
 }
