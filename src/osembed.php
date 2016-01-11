@@ -90,4 +90,11 @@ class PlgContentOSEmbed extends AbstractPlugin
         $embedClass = $this->getEmbedClass();
         $article->text = $embedClass::parseContent($article->text);
     }
+
+    public function onContentBeforeSave($context, $article, $isNew)
+    {
+        $embedClass = $this->getEmbedClass();
+
+        return $embedClass::onContentBeforeSave($article);
+    }
 }

@@ -36,4 +36,9 @@ abstract class Embed
 
         return $content;
     }
+
+    public static function onContentBeforeSave(&$article)
+    {
+        return true;
+    }
 }
