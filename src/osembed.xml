@@ -45,6 +45,13 @@
                 element="osembed"
                 publish="true"
                 ordering="last">OSEmbed</extension>
+
+            <extension
+                type="plugin"
+                group="system"
+                element="osembedpreview"
+                publish="true"
+                ordering="last">OSEmbedPreview</extension>
         </obsolete>
     </alledia>
 
