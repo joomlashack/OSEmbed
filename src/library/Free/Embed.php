@@ -27,11 +27,12 @@ abstract class Embed
 
         if (!empty($content)) {
             static::$embera->addProvider('facebook.com', '\\Alledia\\OSEmbed\\Free\\Provider\\Facebook');
-            $content = static::$embera->autoEmbed($content);
-        }
 
-        if ($stripNewLine) {
-            $content = preg_replace('/\n/', '', $content);
+            $content = static::$embera->autoEmbed($content);
+
+            if ($stripNewLine) {
+                $content = preg_replace('/\n/', '', $content);
+            }
         }
 
         return $content;
