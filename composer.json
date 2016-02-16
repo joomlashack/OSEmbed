@@ -18,9 +18,15 @@
             "email": "support@alledia.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url" : "https://github.com/OSTraining/Embera.git"
+        }
+    ],
     "require"          : {
-        "php"       : ">= 5.3",
-        "mpratt/embera": "^1.8"
+        "php"           : ">= 5.3",
+        "ostraining/embera": ">=1.8.16"
     },
     "config"           : {
         "vendor-dir": "src/library"

@@ -1,23 +1,23 @@
 [
     {
-        "name": "mpratt/embera",
-        "version": "1.8.12",
-        "version_normalized": "1.8.12.0",
+        "name": "ostraining/embera",
+        "version": "1.8.16",
+        "version_normalized": "1.8.16.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/mpratt/Embera.git",
-            "reference": "69337f379455b2e226eb3650ea9e8c4646ef368a"
+            "url": "https://github.com/OSTraining/Embera.git",
+            "reference": "a1f4d72d6e17ca6d16ce71f8833f92ee5a0e22a3"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/mpratt/Embera/zipball/69337f379455b2e226eb3650ea9e8c4646ef368a",
-            "reference": "69337f379455b2e226eb3650ea9e8c4646ef368a",
+            "url": "https://api.github.com/repos/OSTraining/Embera/zipball/a1f4d72d6e17ca6d16ce71f8833f92ee5a0e22a3",
+            "reference": "a1f4d72d6e17ca6d16ce71f8833f92ee5a0e22a3",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3"
         },
-        "time": "2015-11-03 15:28:39",
+        "time": "2016-02-16 22:40:20",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -25,7 +25,6 @@
                 "Embera": "Lib/"
             }
         },
-        "notification-url": "https://packagist.org/downloads/",
         "license": [
             "MIT"
         ],
@@ -37,14 +36,22 @@
                 "role": "Author/Developer"
             }
         ],
-        "description": "A Oembed consumer library, that gives you information about urls. It helps you replace urls to youtube or vimeo for example, with their html embed code.",
-        "homepage": "https://github.com/mpratt/Embera",
+        "description": "Oembed consumer library, that gives information about urls. It helps you replace urls to 60+ sites like youtube or vimeo, with their html embed code.",
+        "homepage": "https://github.com/OSTraining/Embera",
         "keywords": [
             "Auto embed",
-            "embed",
-            "oembed",
-            "vimeo",
-            "youtube"
-        ]
+            "Embed",
+            "Embed Text",
+            "Instagram",
+            "Oembed",
+            "Twitter",
+            "Url Embed",
+            "Vimeo",
+            "Vine",
+            "Youtube"
+        ],
+        "support": {
+            "source": "https://github.com/OSTraining/Embera/tree/master"
+        }
     }
 ]

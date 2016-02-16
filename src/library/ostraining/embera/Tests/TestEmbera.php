@@ -131,7 +131,8 @@ class TestEmbera extends PHPUnit_Framework_TestCase
         $config = array(
             'custom_params' => array(
                 'Youtube' => array('custom' => 'none'),
-                'vimeO' => array('apikey' => '8987928734234')
+                'vimeO' => array('apikey' => '8987928734234'),
+                'CustomService' => array('align' => 'left')
             )
         );
 
@@ -142,6 +143,7 @@ class TestEmbera extends PHPUnit_Framework_TestCase
         $method->setAccessible(true);
 
         $providers = $method->invoke($embera, array(
+            'http://customservice.com/12345',
             'http://stuff.com/unknown',
             'http://youtu.be/fSUK4WgQ3vk',
             'http://www.youtube.com/watch?v=MpVHQnIvTXo',
@@ -213,6 +215,26 @@ class TestEmbera extends PHPUnit_Framework_TestCase
         $embera = new \Embera\Embera(array('oembed' => false, 'use_embed_prefix' => true));
         $result = $embera->getUrlInfo($validUrls);
         $this->assertCount(3, $result);
+    }
+
+    public function testReplaceOrderOnAutoEmbed()
+    {
+        $expected = array(
+            '<iframe width="420" height="315" src="//www.youtube.com/embed/fSUK4WgQ3vk" frameborder="0" allowfullscreen></iframe>',
+            '<iframe width="420" height="315" src="//www.youtube.com/embed/fSUK4WgQ3vkIII" frameborder="0" allowfullscreen></iframe>',
+            '<iframe width="420" height="315" src="//www.youtube.com/embed/fSUK4WgQ3vkII" frameborder="0" allowfullscreen></iframe>'
+        );
+
+        $urls = array(
+            'http://youtu.be/fSUK4WgQ3vk',
+            'http://youtu.be/fSUK4WgQ3vkIII',
+            'http://youtu.be/fSUK4WgQ3vkII'
+        );
+
+        $embera = new \Embera\Embera(array('oembed' => false));
+        $result = $embera->autoEmbed(implode(', ', $urls));
+
+        $this->assertEquals($result, implode(', ', $expected));
     }
 }
 

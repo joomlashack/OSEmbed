@@ -34,6 +34,7 @@ class Providers
     protected $services = array(
         '23hq.com' => '\Embera\Providers\Hq23',
         'live.amcharts.com' => '\Embera\Providers\AmCharts',
+        'animatron.com' => '\Embera\Providers\Animatron',
         'animoto.com' => '\Embera\Providers\Animoto',
         'on.aol.com' => '\Embera\Providers\AolOn',
         '5min.com' => '\Embera\Providers\AolOn',
@@ -46,6 +47,7 @@ class Providers
         'public.chartblocks.com' => '\Embera\Providers\Chartblocks',
         'chirb.it' => '\Embera\Providers\Chirbit',
         'clyp.it' => '\Embera\Providers\Clyp',
+        'codepoints.net' => '\Embera\Providers\Codepoints',
         'circuitlab.com' => '\Embera\Providers\CircuitLab',
         'collegehumor.com' => '\Embera\Providers\CollegeHumor',
         'coub.com' => '\Embera\Providers\Coub',
@@ -61,6 +63,7 @@ class Providers
         'dotsub.com' => '\Embera\Providers\DotSub',
         'edocr.com' => '\Embera\Providers\Edocr',
         'egliseinfo.catholique.fr' => '\Embera\Providers\EgliseInfo',
+        'facebook.com' => '\Embera\Providers\Facebook',
         'flickr.com' => '\Embera\Providers\Flickr',
         'flic.kr' => '\Embera\Providers\Flickr',
         'funnyordie.com' => '\Embera\Providers\FunnyOrDie',
@@ -76,6 +79,7 @@ class Providers
         'channel-islands.geographs.org.je' => '\Embera\Providers\GeographCI',
         'gettyimages.com' => '\Embera\Providers\GettyImages',
         'gty.im' => '\Embera\Providers\GettyImages',
+        'gfycat.com' => '\Embera\Providers\Gfycat',
         'gist.github.com' => '\Embera\Providers\GithubGist',
         'gmep.org' => '\Embera\Providers\Gmep',
         'huffduffer.com' => '\Embera\Providers\Huffduffer',
@@ -94,7 +98,10 @@ class Providers
         'mobypicture.com' => '\Embera\Providers\MobyPicture',
         'moby.to' => '\Embera\Providers\MobyPicture',
         'nfb.ca' => '\Embera\Providers\NFB',
+        'mix.office.com' => '\Embera\Providers\Officemix',
         'official.fm' => '\Embera\Providers\OfficialFM',
+        'oumy.com' => '\Embera\Providers\Oumy',
+        'pastery.net' => '\Embera\Providers\Pastery',
         '*.polldaddy.com' => '\Embera\Providers\PollDaddy',
         'polleverywhere.com' => '\Embera\Providers\PollEveryWhere',
         'portfolium.com' => '\Embera\Providers\Portfolium',
@@ -114,17 +121,21 @@ class Providers
         'shortnote.jp' => '\Embera\Providers\ShortNote',
         '*.shoudio.com' => '\Embera\Providers\Shoudio',
         '*.shoud.io' => '\Embera\Providers\Shoudio',
+        'showtheway.io' => '\Embera\Providers\Showtheway',
+        '*.silk.co' => '\Embera\Providers\Silk',
         'sketchfab.com' => '\Embera\Providers\Sketchfab',
         '*.slideshare.net' => '\Embera\Providers\SlideShare',
         '*.soundcloud.com' => '\Embera\Providers\SoundCloud',
         'speakerdeck.com' => '\Embera\Providers\Speakerdeck',
         '*.spotify.com' => '\Embera\Providers\Spotify',
         'spoti.fi' => '\Embera\Providers\Spotify',
+        'sway.com' => '\Embera\Providers\Sway',
         'ted.com' => '\Embera\Providers\Ted',
         'theysaidso.com' => '\Embera\Providers\TheySaidSo',
         'twitter.com' => '\Embera\Providers\Twitter',
         'ustream.tv' => '\Embera\Providers\Ustream',
         'ustream.com' => '\Embera\Providers\Ustream',
+        'verse.media' => '\Embera\Providers\Verse',
         'viddler.com' => '\Embera\Providers\Viddler',
         'videofork.com' => '\Embera\Providers\VideoFork',
         'videojug.com' => '\Embera\Providers\VideoJug',
@@ -156,7 +167,6 @@ class Providers
             'fake' => array()
         ), $config);
 
-        $this->extractCustomParams($this->config['custom_params']);
         $this->oembed = $oembed;
     }
 
@@ -169,23 +179,21 @@ class Providers
     protected function findServices(array $urls = array())
     {
         $return = array();
-        if (!empty($urls)) {
+        $this->extractCustomParams($this->config['custom_params']);
+        foreach (array_unique($urls) as $u) {
 
-            foreach (array_unique($urls) as $u) {
+            try {
+                $host = $this->getHost($u);
+                if (isset($this->services[$host])) {
+                    $provider = new \ReflectionClass($this->services[$host]);
+                    $return[$u] = $provider->newInstance($u, $this->config, $this->oembed);
 
-                try {
-                    $host = $this->getHost($u);
-                    if (isset($this->services[$host])) {
-                        $provider = new \ReflectionClass($this->services[$host]);
-                        $return[$u] = $provider->newInstance($u, $this->config, $this->oembed);
-
-                        if (isset($this->customParams[$host])) {
-                            $return[$u]->appendParams($this->customParams[$host]);
-                        }
+                    if (isset($this->customParams[$host])) {
+                        $return[$u]->appendParams($this->customParams[$host]);
                     }
-                } catch (\Exception $e) {
-                    //echo $e->getMessage() . PHP_EOL;
                 }
+            } catch (\Exception $e) {
+                //echo $e->getMessage() . PHP_EOL;
             }
         }
 
@@ -250,7 +258,7 @@ class Providers
     {
         foreach ($params as $name => $values) {
             foreach ($this->services as $host => $service) {
-                if (preg_match('~' . $name . '~i', $service)) {
+                if (preg_match('~' . preg_quote($name, '~') . '~i', $service)) {
                     $this->customParams[$host] = (array) $values;
                 }
             }

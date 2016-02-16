@@ -18,7 +18,7 @@ namespace Embera;
 class Embera
 {
     /** @var int Class constant with the current Version of this library */
-    const VERSION = '1.8.12';
+    const VERSION = '1.8.15';
 
     /** @var object Instance of \Embera\Oembed */
     protected $oembed;
@@ -108,7 +108,7 @@ class Embera
                 }
             }
 
-            return str_replace(array_keys($table), array_values($table), $body);
+            return strtr($body, $table);
         }
 
         return $body;
