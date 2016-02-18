@@ -18,7 +18,7 @@ namespace Embera;
 class Embera
 {
     /** @var int Class constant with the current Version of this library */
-    const VERSION = '1.8.15';
+    const VERSION = '1.8.18';
 
     /** @var object Instance of \Embera\Oembed */
     protected $oembed;
@@ -135,9 +135,14 @@ class Embera
                 }
 
                 // Add the provider_alias if not exists
-                if (!isset($data['provider_alias'])) {
+                if (!isset($info['provider_alias'])) {
                     $info['provider_alias'] = preg_replace('/[^a-z0-9\-]/i', '-', $info['provider_name']);
                     $info['provider_alias'] = strtolower(str_replace('--', '-', $info['provider_alias']));
+                }
+
+                // Add the wrapper_class if not exists
+                if (!isset($info['wrapper_class'])) {
+                    $info['wrapper_class'] = '';
                 }
 
                 $results[$url] = $info;

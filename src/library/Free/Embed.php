@@ -30,7 +30,7 @@ abstract class Embed
             static::$embera->addProvider('facebook.com', '\\Alledia\\OSEmbed\\Free\\Provider\\Facebook');
 
             // Add wrapper to make the embed responsive
-            static::$embera->setTemplate('<div class="osembed-wrapper ose-{provider_alias}">{html}</div>');
+            static::$embera->setTemplate('<div class="osembed-wrapper ose-{provider_alias} {wrapper_class}">{html}</div>');
 
             $content = static::$embera->transform($content);
 
