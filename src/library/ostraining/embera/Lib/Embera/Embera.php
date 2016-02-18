@@ -125,7 +125,22 @@ class Embera
         $results = array();
         if ($providers = $this->getProviders($body)) {
             foreach ($providers as $url => $service) {
-                $results[$url] = $service->getInfo();
+                $info = $service->getInfo();
+
+                // Check if we don't have a provider_name set, and set it based on the class name
+                if (!isset($info['provider_name'])) {
+                    $reflect = new \ReflectionClass($service);
+                    $info['provider_name'] = $reflect->getShortName();
+                    unset($reflect);
+                }
+
+                // Add the provider_alias if not exists
+                if (!isset($data['provider_alias'])) {
+                    $info['provider_alias'] = preg_replace('/[^a-z0-9\-]/i', '-', $info['provider_name']);
+                    $info['provider_alias'] = strtolower(str_replace('--', '-', $info['provider_alias']));
+                }
+
+                $results[$url] = $info;
                 $this->errors = array_merge($this->errors, $service->getErrors());
             }
         }

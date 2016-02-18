@@ -80,9 +80,16 @@ class Formatter
                     continue;
                 }
 
-                $providers[$url] = str_replace(array_map(function ($name) {
-                    return '{' . $name . '}';
-                }, array_keys($data)), array_values($data), $this->template);
+                $providers[$url] = str_replace(
+                    array_map(
+                        function ($name) {
+                            return '{' . $name . '}';
+                        },
+                        array_keys($data)
+                    ),
+                    array_values($data),
+                    $this->template
+                );
             }
         }
 

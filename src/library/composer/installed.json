@@ -1,23 +1,23 @@
 [
     {
         "name": "ostraining/embera",
-        "version": "1.8.16",
-        "version_normalized": "1.8.16.0",
+        "version": "1.8.17",
+        "version_normalized": "1.8.17.0",
         "source": {
             "type": "git",
             "url": "https://github.com/OSTraining/Embera.git",
-            "reference": "a1f4d72d6e17ca6d16ce71f8833f92ee5a0e22a3"
+            "reference": "94b29def6a83c5df4a0ca15c153434260681e005"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/OSTraining/Embera/zipball/a1f4d72d6e17ca6d16ce71f8833f92ee5a0e22a3",
-            "reference": "a1f4d72d6e17ca6d16ce71f8833f92ee5a0e22a3",
+            "url": "https://api.github.com/repos/OSTraining/Embera/zipball/94b29def6a83c5df4a0ca15c153434260681e005",
+            "reference": "94b29def6a83c5df4a0ca15c153434260681e005",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3"
         },
-        "time": "2016-02-16 22:40:20",
+        "time": "2016-02-18 17:25:46",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -51,7 +51,7 @@
             "Youtube"
         ],
         "support": {
-            "source": "https://github.com/OSTraining/Embera/tree/master"
+            "source": "https://github.com/OSTraining/Embera/tree/1.8.17"
         }
     }
 ]

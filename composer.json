@@ -26,7 +26,7 @@
     ],
     "require"          : {
         "php"           : ">= 5.3",
-        "ostraining/embera": ">=1.8.16"
+        "ostraining/embera": ">=1.8.17"
     },
     "config"           : {
         "vendor-dir": "src/library"
