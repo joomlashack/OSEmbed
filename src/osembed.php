@@ -84,8 +84,10 @@ class PlgContentOSEmbed extends AbstractPlugin
             return true;
         }
 
+        $versionUID = md5($this->extension->getVersion());
+
         $doc = Factory::getDocument();
-        $doc->addStyleSheet('media/plg_content_osembed/css/osembed.css');
+        $doc->addStyleSheet('media/plg_content_osembed/css/osembed.css?' . $versionUID);
 
         $embedClass = $this->getEmbedClass();
         $article->text = $embedClass::parseContent($article->text);
