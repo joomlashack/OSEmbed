@@ -28,6 +28,8 @@ Sites marked with an `*` allow offline html embedding.
 - * [Funny Or Die](http://www.funnyordie.com)
 - [GettyImages](http://www.gettyimages.com)
 - * [Github Gist](https://gist.github.com)
+- * [Google Docs](http://docs.google.com)
+- * [Google Maps](http://google.com/maps)
 - [HuffDuffer](http://huffduffer.com)
 - [Hulu](http://www.hulu.com)
 - * [IFTTT](http://ifttt.com)
