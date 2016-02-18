@@ -11,6 +11,7 @@ namespace Alledia\OSEmbed\Free;
 defined('_JEXEC') or die();
 
 use Embera\Embera;
+use Embera\Formatter;
 
 jimport('joomla.log.log');
 
@@ -22,13 +23,16 @@ abstract class Embed
     public static function parseContent($content, $stripNewLine = false)
     {
         if (!isset(static::$embera)) {
-            static::$embera = new Embera;
+            static::$embera = new Formatter(new Embera, true);
         }
 
         if (!empty($content)) {
             static::$embera->addProvider('facebook.com', '\\Alledia\\OSEmbed\\Free\\Provider\\Facebook');
 
-            $content = static::$embera->autoEmbed($content);
+            // Add wrapper to make the embed responsive
+            static::$embera->setTemplate('<div class="osembed-wrapper ose-{provider_alias}">{html}</div>');
+
+            $content = static::$embera->transform($content);
 
             if ($stripNewLine) {
                 $content = preg_replace('/\n/', '', $content);
