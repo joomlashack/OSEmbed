@@ -59,10 +59,6 @@
     padding-bottom: 56.25%;
 }
 
-.ose-google-docs {
-    padding-bottom: 62.6%;
-}
-
 /* 1:1 aspect ratio */
 .ose-vine {
     padding-bottom: 100%;
@@ -73,6 +69,16 @@
     padding-bottom: 63.3%;
 }
 
-.ose-google-docs .ose-google-docs-drawings {
+.ose-google-docs {
+    padding-bottom: 62.6%;
+}
+
+.ose-google-docs.ose-google-docs-drawings {
     padding-bottom: 74.5%;
+}
+
+.ose-google-docs.ose-google-docs-document,
+.ose-google-docs.ose-google-docs-forms,
+.ose-google-docs.ose-google-docs-spreadsheets {
+    padding-bottom: 142%;
 }
