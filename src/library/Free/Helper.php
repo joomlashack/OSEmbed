@@ -32,7 +32,7 @@ abstract class Helper
                 'text_file' => 'osembed.log.php'
             ),
             JLog::ALL,
-            array('osembed.library', 'osembed.content')
+            array('osembed.library', 'osembed.content', 'osembed.system')
        );
     }
 
