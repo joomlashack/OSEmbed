@@ -8,95 +8,97 @@
 
 defined('_JEXEC') or die;
 
-use Alledia\Framework\Joomla\Extension\AbstractPlugin;
-use Alledia\Framework\Factory;
+use Alledia\Framework\Joomla\Extension;
+use Alledia\Framework;
 
-require_once 'include.php';
+include_once 'include.php';
 
-/**
- * OSEmbed Content Plugin
- */
-class PlgContentOSEmbed extends AbstractPlugin
-{
-    protected $namespace = 'OSEmbed';
-
-    public $type = 'content';
-
-    protected $allowedToRun = true;
-
+if (defined('OSEMBED_LOADED')) {
     /**
-     * Constructor
-     *
-     * @param   object  &$subject  The object to observe
-     * @param   array   $config    An optional associative array of configuration settings.
-     *                             Recognized key values include 'name', 'group', 'params', 'language'
-     *                             (this list is not meant to be comprehensive).
-     *
-     * @since   1.5
+     * OSEmbed Content Plugin
      */
-    public function __construct(&$subject, $config = array())
+    class PlgContentOSEmbed extends Extension\AbstractPlugin
     {
-        parent::__construct($subject, $config);
+        protected $namespace = 'OSEmbed';
 
-        $this->init();
+        public $type = 'content';
 
-        // Check the minumum requirements
-        $helperClass = $this->getHelperClass();
-        if (!$helperClass::complyBasicRequirements()) {
-            $this->allowedToRun = false;
-        }
-    }
+        protected $allowedToRun = true;
 
-    protected function getHelperClass()
-    {
-        if ($this->isPro()) {
-            return 'Alledia\\OSEmbed\\Pro\\Helper';
-        }
+        /**
+         * Constructor
+         *
+         * @param   object  &$subject  The object to observe
+         * @param   array   $config    An optional associative array of configuration settings.
+         *                             Recognized key values include 'name', 'group', 'params', 'language'
+         *                             (this list is not meant to be comprehensive).
+         *
+         * @since   1.5
+         */
+        public function __construct(&$subject, $config = array())
+        {
+            parent::__construct($subject, $config);
 
-        return 'Alledia\\OSEmbed\\Free\\Helper';
-    }
+            $this->init();
 
-    protected function getEmbedClass()
-    {
-        if ($this->isPro()) {
-            return 'Alledia\\OSEmbed\\Pro\\Embed';
-        }
-
-        return 'Alledia\\OSEmbed\\Free\\Embed';
-    }
-
-    /**
-     * Plugin that loads module positions within content
-     *
-     * @param   string   $context   The context of the content being passed to the plugin.
-     * @param   object   &$article  The article object.  Note $article->text is also available
-     * @param   mixed    &$params   The article params
-     * @param   integer  $page      The 'page' number
-     *
-     * @return  mixed   true if there is an error. Void otherwise.
-     *
-     * @since   1.6
-     */
-    public function onContentPrepare($context, &$article, &$params, $page = 0)
-    {
-        // Don't run this plugin when the content is being indexed
-        if ($context == 'com_finder.indexer' || !$this->allowedToRun) {
-            return true;
+            // Check the minumum requirements
+            $helperClass = $this->getHelperClass();
+            if (!$helperClass::complyBasicRequirements()) {
+                $this->allowedToRun = false;
+            }
         }
 
-        $versionUID = md5($this->extension->getVersion());
+        protected function getHelperClass()
+        {
+            if ($this->isPro()) {
+                return 'Alledia\\OSEmbed\\Pro\\Helper';
+            }
 
-        $doc = Factory::getDocument();
-        $doc->addStyleSheet('media/plg_content_osembed/css/osembed.css?' . $versionUID);
+            return 'Alledia\\OSEmbed\\Free\\Helper';
+        }
 
-        $embedClass = $this->getEmbedClass();
-        $article->text = $embedClass::parseContent($article->text);
-    }
+        protected function getEmbedClass()
+        {
+            if ($this->isPro()) {
+                return 'Alledia\\OSEmbed\\Pro\\Embed';
+            }
 
-    public function onContentBeforeSave($context, $article, $isNew)
-    {
-        $embedClass = $this->getEmbedClass();
+            return 'Alledia\\OSEmbed\\Free\\Embed';
+        }
 
-        return $embedClass::onContentBeforeSave($article);
+        /**
+         * Plugin that loads module positions within content
+         *
+         * @param   string   $context   The context of the content being passed to the plugin.
+         * @param   object   &$article  The article object.  Note $article->text is also available
+         * @param   mixed    &$params   The article params
+         * @param   integer  $page      The 'page' number
+         *
+         * @return  mixed   true if there is an error. Void otherwise.
+         *
+         * @since   1.6
+         */
+        public function onContentPrepare($context, &$article, &$params, $page = 0)
+        {
+            // Don't run this plugin when the content is being indexed
+            if ($context == 'com_finder.indexer' || !$this->allowedToRun) {
+                return true;
+            }
+
+            $versionUID = md5($this->extension->getVersion());
+
+            $doc = Framework\Factory::getDocument();
+            $doc->addStyleSheet('media/plg_content_osembed/css/osembed.css?' . $versionUID);
+
+            $embedClass = $this->getEmbedClass();
+            $article->text = $embedClass::parseContent($article->text);
+        }
+
+        public function onContentBeforeSave($context, $article, $isNew)
+        {
+            $embedClass = $this->getEmbedClass();
+
+            return $embedClass::onContentBeforeSave($article);
+        }
     }
 }
