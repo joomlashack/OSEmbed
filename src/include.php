@@ -30,9 +30,7 @@ if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
 if (defined('ALLEDIA_FRAMEWORK_LOADED') && !defined('OSEMBED_LOADED')) {
     include_once 'library/autoload.php';
 
-    Framework\AutoLoader::register('Alledia\OSEmbed', OSEMBED_PLUGIN_PATH . '/library');
+    Framework\Joomla\Extension\Helper::loadLibrary('plg_content_osembed');
 
-    if (class_exists('Alledia\OSEmbed\Free\Embed')) {
-        define('OSEMBED_LOADED', 1);
-    }
+    define('OSEMBED_LOADED', 1);
 }
