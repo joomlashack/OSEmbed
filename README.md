@@ -33,4 +33,4 @@ OSEmbed supports **60+** sites. Sites marked with an `*` allow offline html embe
 - [Deviantart](http://deviantart.com)
 - * [Scribd](http://www.scribd.com)
 
-Full list: [PROVIDERS.md](https://github.com/ostraining/OSEmbed-Pro/blob/master/PROVIDERS.md)
+Full list: [PROVIDERS.md](https://github.com/ostraining/OSEmbed/blob/master/PROVIDERS.md)
