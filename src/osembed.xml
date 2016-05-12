@@ -10,6 +10,8 @@
     <version>1.1.4</version>
     <description>PLG_CONTENT_OSEMBED_DESCRIPTION</description>
 
+    <variant>FREE</variant>
+
     <alledia>
         <element publish="true">osembed</element>
         <namespace>OSEmbed</namespace>
