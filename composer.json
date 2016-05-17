@@ -10,7 +10,8 @@
         "name"           : "OSEmbed",
         "folder"         : "content",
         "client"         : "site",
-        "package-license": "free"
+        "package-license": "free",
+        "target-platform": "3.*"
     },
     "authors"          : [
         {

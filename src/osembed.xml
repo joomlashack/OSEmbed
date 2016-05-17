@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="3.1" type="plugin" group="content" method="upgrade">
+<extension version="3.5" type="plugin" group="content" method="upgrade">
     <name>PLG_CONTENT_OSEMBED</name>
     <author>Alledia</author>
     <creationDate>May 12 2016</creationDate>
@@ -16,7 +16,7 @@
         <element publish="true">osembed</element>
         <namespace>OSEmbed</namespace>
         <license>free</license>
-
+        <targetplatform>3.*</targetplatform>
         <relatedExtensions>
             <extension
                 type="library"
