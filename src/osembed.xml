@@ -8,9 +8,42 @@
     <authorEmail>support@alledia.com</authorEmail>
     <authorUrl>http://www.alledia.com</authorUrl>
     <version>1.1.6</version>
+    <variant>FREE</variant>
     <description>PLG_CONTENT_OSEMBED_DESCRIPTION</description>
 
-    <variant>FREE</variant>
+    <scriptfile>script.installer.php</scriptfile>
+
+    <files>
+        <folder>language</folder>
+        <folder>library</folder>
+        <folder>views</folder>
+        <folder>form</folder>
+        <filename plugin="osembed">osembed.php</filename>
+        <filename>include.php</filename>
+    </files>
+
+    <media destination="plg_content_osembed" folder="media">
+        <folder>css</folder>
+        <folder>images</folder>
+        <folder>fonts</folder>
+    </media>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic" addfieldpath="/plugins/content/osembed/form/fields">
+                <field
+                    name="customfooter"
+                    type="customfooter"
+                    media="plg_content_osembed"
+                    showgoproad="1"
+                    jedurl="http://extensions.joomla.org/extensions/extension/social-web/social-media/osembed" />
+            </fieldset>
+        </fields>
+    </config>
+
+    <updateservers>
+        <server type="extension" priority="1" name="OSEmbed - OSTraining Deployment Server"><![CDATA[https://deploy.ostraining.com/client/update/free/stable/plg_content_osembed]]></server>
+    </updateservers>
 
     <alledia>
         <element publish="true">osembed</element>
@@ -56,38 +89,4 @@
                 ordering="last">OSEmbedPreview</extension>
         </obsolete>
     </alledia>
-
-    <scriptfile>script.installer.php</scriptfile>
-
-    <files>
-        <folder>language</folder>
-        <folder>library</folder>
-        <folder>views</folder>
-        <folder>form</folder>
-        <filename plugin="osembed">osembed.php</filename>
-        <filename>include.php</filename>
-    </files>
-
-    <media destination="plg_content_osembed" folder="media">
-        <folder>css</folder>
-        <folder>images</folder>
-        <folder>fonts</folder>
-    </media>
-
-    <config>
-        <fields name="params">
-            <fieldset name="basic" addfieldpath="/plugins/content/osembed/form/fields">
-                <field
-                    name="customfooter"
-                    type="customfooter"
-                    media="plg_content_osembed"
-                    showgoproad="1"
-                    jedurl="http://extensions.joomla.org/extensions/extension/social-web/social-media/osembed" />
-            </fieldset>
-        </fields>
-    </config>
-
-    <updateservers>
-        <server type="extension" priority="1" name="OSEmbed - OSTraining Deployment Server"><![CDATA[https://deploy.ostraining.com/client/update/free/stable/plg_content_osembed]]></server>
-    </updateservers>
 </extension>
