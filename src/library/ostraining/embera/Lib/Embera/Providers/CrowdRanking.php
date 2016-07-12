@@ -48,5 +48,3 @@ class CrowdRanking extends \Embera\Adapters\Service
         );
     }
 }
-
-?>

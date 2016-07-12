@@ -26,5 +26,3 @@ class RepubHub extends \Embera\Adapters\Service
         return (preg_match('~repubhub\.icopyright\.net/freePost.act\?([^ ]+)~i', $this->url));
     }
 }
-
-?>

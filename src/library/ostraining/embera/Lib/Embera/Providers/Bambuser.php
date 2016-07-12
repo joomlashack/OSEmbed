@@ -76,5 +76,3 @@ class Bambuser extends \Embera\Adapters\Service
     }
 
 }
-
-?>

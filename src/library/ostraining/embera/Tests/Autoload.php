@@ -21,7 +21,6 @@ class MockHttpRequest extends \Embera\HttpRequest
         return $this->response;
     }
 }
-
 /**
  * A custom Service
  */
@@ -33,7 +32,6 @@ class CustomService extends \Embera\Adapters\Service
         return preg_match('~customservice\.com/([0-9]+)~i', $this->url);
     }
 }
-
 /**
  * Oembed Mockup
  * @codeCoverageIgnore
@@ -46,4 +44,3 @@ class MockOembed extends \Embera\Oembed
         return array();
     }
 }
-?>

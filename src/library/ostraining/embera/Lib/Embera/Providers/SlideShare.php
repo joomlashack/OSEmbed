@@ -31,5 +31,3 @@ class SlideShare extends \Embera\Adapters\Service
         return (preg_match('~slideshare\.net/(?:[\w\d_-]+)/(?:[\w\d_-]+)/?$~i', $this->url));
     }
 }
-
-?>

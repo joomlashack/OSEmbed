@@ -30,5 +30,3 @@ class Showtheway extends \Embera\Adapters\Service
         return (preg_match('~showtheway\.io/to/(?:[^/]+)$~i', $this->url));
     }
 }
-
-?>

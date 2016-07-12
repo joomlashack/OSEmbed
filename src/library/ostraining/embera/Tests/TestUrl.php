@@ -150,5 +150,3 @@ class TestUrl extends PHPUnit_Framework_TestCase
         $this->assertEquals('https://www.hablarmierda.net/path/', (string) $url);
     }
 }
-
-?>

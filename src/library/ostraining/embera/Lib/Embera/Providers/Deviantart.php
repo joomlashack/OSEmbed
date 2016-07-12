@@ -46,5 +46,3 @@ class Deviantart extends \Embera\Adapters\Service
         return $response;
     }
 }
-
-?>

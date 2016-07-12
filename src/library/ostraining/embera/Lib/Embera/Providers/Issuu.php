@@ -45,5 +45,3 @@ class Issuu extends \Embera\Adapters\Service
         }
     }
 }
-
-?>

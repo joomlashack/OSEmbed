@@ -46,5 +46,3 @@ class Sway extends \Embera\Adapters\Service
         );
     }
 }
-
-?>

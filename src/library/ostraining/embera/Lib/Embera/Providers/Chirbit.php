@@ -49,5 +49,3 @@ class Chirbit extends \Embera\Adapters\Service
     }
 
 }
-
-?>

@@ -30,5 +30,3 @@ class Rdio extends \Embera\Adapters\Service
                 preg_match('~rdio\.com/people/(?:[\d\w-_\+\%\./]+)/playlists/(?:.+)~i', $this->url));
     }
 }
-
-?>

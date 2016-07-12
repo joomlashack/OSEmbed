@@ -53,7 +53,6 @@ abstract class Service
      * @param string $url
      * @param array  $config
      * @param object $oembed
-     * @return void
      *
      * @throws InvalidArgumentException when the given url doesnt match the current service
      */
@@ -111,7 +110,6 @@ abstract class Service
      * Appends custom parameters for the oembed request
      *
      * @param array $params
-     * @return void
      */
     public function appendParams(array $params = array())
     {
@@ -170,7 +168,6 @@ abstract class Service
      *
      * Use the $this->url property to do the job
      *
-     * @return void
      */
     protected function normalizeUrl() {}
 
@@ -188,5 +185,3 @@ abstract class Service
         return $response;
     }
 }
-
-?>

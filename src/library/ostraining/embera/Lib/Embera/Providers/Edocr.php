@@ -32,5 +32,3 @@ class Edocr extends \Embera\Adapters\Service
         return (preg_match('~edocr\.com/doc/(?:[0-9]+)/(?:[^/]+)$~i', $this->url));
     }
 }
-
-?>

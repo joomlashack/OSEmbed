@@ -31,7 +31,6 @@ class ShortNote extends \Embera\Adapters\Service
         return (preg_match('~shortnote\.jp/view/notes/(?:[^ /]+)$~is', $this->url));
     }
 
-
     /** inline {@inheritdoc} */
     public function fakeResponse()
     {
@@ -45,5 +44,3 @@ class ShortNote extends \Embera\Adapters\Service
         );
     }
 }
-
-?>

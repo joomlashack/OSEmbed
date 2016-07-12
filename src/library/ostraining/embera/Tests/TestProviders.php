@@ -234,4 +234,3 @@ class TestProviders extends PHPUnit_Framework_TestCase
         }
     }
 }
-?>

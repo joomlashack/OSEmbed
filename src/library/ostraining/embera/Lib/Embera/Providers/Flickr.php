@@ -49,5 +49,3 @@ class Flickr extends \Embera\Adapters\Service
         return $response;
     }
 }
-
-?>

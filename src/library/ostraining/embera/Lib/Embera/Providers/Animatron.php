@@ -32,5 +32,3 @@ class Animatron extends \Embera\Adapters\Service
         return (preg_match('~animatron\.com/project/(?:[^/]+)$~i', $this->url));
     }
 }
-
-?>

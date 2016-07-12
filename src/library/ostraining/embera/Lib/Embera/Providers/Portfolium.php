@@ -31,5 +31,3 @@ class Portfolium extends \Embera\Adapters\Service
         return (preg_match('~portfolium\.com\/entry\/(?:[^ /]+)$~i', $this->url));
     }
 }
-
-?>

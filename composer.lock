@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "999811c7de409ff870c57805564168e0",
-    "content-hash": "924178eae95e1527226e5f5142339d39",
+    "hash": "7ee345a3e6e4b0dc537481fa5eaab358",
+    "content-hash": "3d7d77d5de27948a370fe75c5304f8d2",
     "packages": [
         {
             "name": "ostraining/embera",
-            "version": "1.9.2",
+            "version": "1.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OSTraining/Embera.git",
-                "reference": "178d887568035136a7a19aad45b733823b3ec209"
+                "reference": "93c191fdd07c72d39351cd31a1073383c4dfbe16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OSTraining/Embera/zipball/178d887568035136a7a19aad45b733823b3ec209",
-                "reference": "178d887568035136a7a19aad45b733823b3ec209",
+                "url": "https://api.github.com/repos/OSTraining/Embera/zipball/51d4c22303680b4434c3c0d3a34694c0ebbca1a1",
+                "reference": "93c191fdd07c72d39351cd31a1073383c4dfbe16",
                 "shasum": ""
             },
             "require": {
@@ -42,7 +42,7 @@
                 }
             ],
             "description": "Oembed consumer library, that gives information about urls. It helps you replace urls to 60+ sites like youtube or vimeo, with their html embed code.",
-            "homepage": "https://github.com/mpratt/Embera",
+            "homepage": "https://github.com/OSTraining/Embera",
             "keywords": [
                 "Auto embed",
                 "Embed",
@@ -56,9 +56,9 @@
                 "Youtube"
             ],
             "support": {
-                "source": "https://github.com/OSTraining/Embera/tree/1.9.2"
+                "source": "https://github.com/OSTraining/Embera/tree/master"
             },
-            "time": "2016-05-09 22:51:25"
+            "time": "2016-07-12 20:32:39"
         }
     ],
     "packages-dev": [],

@@ -65,5 +65,3 @@ class GithubGist extends \Embera\Adapters\Service
         return array();
     }
 }
-
-?>

@@ -61,5 +61,3 @@ class NFB extends \Embera\Adapters\Service
         );
     }
 }
-
-?>

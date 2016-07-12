@@ -38,4 +38,3 @@ class TestServiceScribd extends TestProviders
 
     public function testProvider() { $this->validateProvider('Scribd'); }
 }
-?>

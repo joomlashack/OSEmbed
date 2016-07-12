@@ -32,5 +32,3 @@ class Animoto extends \Embera\Adapters\Service
         return (preg_match('~/play/(?:[\w\d]+)/?$~i', $this->url));
     }
 }
-
-?>

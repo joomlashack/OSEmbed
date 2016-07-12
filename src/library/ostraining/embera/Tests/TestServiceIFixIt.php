@@ -28,13 +28,8 @@ class TestServiceIFixIt extends TestProviders
             'http://www.ifixit.com/',
             'http://www.ifixit.com/Guide/login/register',
             'http://www.ifixit.com/Guide/login',
-        ),
-        'fake' => array(
-            'type' => 'rich',
-            'html' => '<iframe'
         )
     );
 
     public function testProvider() { $this->validateProvider('IFixIt'); }
 }
-?>

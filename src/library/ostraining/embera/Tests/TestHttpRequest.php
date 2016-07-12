@@ -165,5 +165,3 @@ class TestHttpRequest extends PHPUnit_Framework_TestCase
         $this->assertEquals('PHP/Morcilla 2', $response['user-agent']);
     }
 }
-
-?>

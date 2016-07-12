@@ -31,5 +31,3 @@ class Meetup extends \Embera\Adapters\Service
                 preg_match('~meetu\.ps/(?:[\w\d]+)/?$~i', $this->url)  );
     }
 }
-
-?>

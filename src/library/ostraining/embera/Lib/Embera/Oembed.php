@@ -27,7 +27,6 @@ class Oembed
      * Construct
      *
      * @param object $http Instance of \Embera\HttpRequest
-     * @return void
      */
     public function __construct(\Embera\HttpRequest $http)
     {
@@ -91,5 +90,3 @@ class Oembed
         return $apiUrl . ((strpos($apiUrl, '?') === false) ? '?' : '&') . http_build_query(array_filter($params));
     }
 }
-
-?>

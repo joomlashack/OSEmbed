@@ -57,4 +57,3 @@ class TestServiceSketchfab extends TestProviders
 
     public function testProvider() { $this->validateProvider('Sketchfab'); }
 }
-?>

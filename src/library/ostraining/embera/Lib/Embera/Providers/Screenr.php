@@ -44,5 +44,3 @@ class Screenr extends \Embera\Adapters\Service
         );
     }
 }
-
-?>

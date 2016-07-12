@@ -29,5 +29,3 @@ class GeographCI extends \Embera\Adapters\Service
         return (preg_match('~/photo/(?:[0-9]+)/?$~i', $this->url));
     }
 }
-
-?>

@@ -49,5 +49,3 @@ class Viddler extends \Embera\Adapters\Service
         );
     }
 }
-
-?>

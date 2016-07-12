@@ -54,5 +54,3 @@ class Scribd extends \Embera\Adapters\Service
         );
     }
 }
-
-?>

@@ -42,5 +42,3 @@ class Hq23 extends \Embera\Adapters\Service
         return $response;
     }
 }
-
-?>

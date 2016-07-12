@@ -30,5 +30,3 @@ class SoundCloud extends \Embera\Adapters\Service
         return (preg_match('~soundcloud\.com/(?:[\w\d\-_]+)~i', $this->url));
     }
 }
-
-?>

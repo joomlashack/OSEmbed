@@ -44,5 +44,3 @@ class Oumy extends \Embera\Adapters\Service
         );
     }
 }
-
-?>

@@ -26,5 +26,3 @@ class WordpressTV extends \Embera\Adapters\Service
         return (preg_match('~wordpress\.tv/(?:[0-9]+)/(?:[0-9]+)/(?:[0-9]+)/(?:[^/]+)/?$~i', $this->url));
     }
 }
-
-?>

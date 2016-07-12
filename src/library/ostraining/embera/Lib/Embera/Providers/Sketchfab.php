@@ -73,5 +73,3 @@ class Sketchfab extends \Embera\Adapters\Service
         );
     }
 }
-
-?>

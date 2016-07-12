@@ -27,5 +27,3 @@ class BlipTV extends \Embera\Adapters\Service
         return (preg_match('~blip\.tv/(?:[^/]+)/(?:[^/]+)-([0-9]+)/?$~i', $this->url));
     }
 }
-
-?>

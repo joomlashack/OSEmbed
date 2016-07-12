@@ -97,5 +97,3 @@ class TestFakeResponse extends PHPUnit_Framework_TestCase
         $this->assertEquals($response['thumb'], 'http://image.com');
     }
 }
-
-?>

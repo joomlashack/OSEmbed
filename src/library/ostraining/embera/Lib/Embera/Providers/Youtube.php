@@ -48,5 +48,3 @@ class Youtube extends \Embera\Adapters\Service
         );
     }
 }
-
-?>

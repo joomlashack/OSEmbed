@@ -55,5 +55,3 @@ class Reverbnation extends \Embera\Adapters\Service
         );
     }
 }
-
-?>

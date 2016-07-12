@@ -47,5 +47,3 @@ class Silk extends \Embera\Adapters\Service
         );
     }
 }
-
-?>

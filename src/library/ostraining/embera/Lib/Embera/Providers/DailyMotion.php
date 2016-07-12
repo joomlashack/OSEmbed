@@ -58,5 +58,3 @@ class DailyMotion extends \Embera\Adapters\Service
         );
     }
 }
-
-?>

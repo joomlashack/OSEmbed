@@ -27,5 +27,3 @@ class Pastery extends \Embera\Adapters\Service
         return (preg_match('~pastery\.net/(?:[^/]+)/?$~i', $this->url));
     }
 }
-
-?>

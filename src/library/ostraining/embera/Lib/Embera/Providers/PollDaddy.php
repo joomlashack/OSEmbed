@@ -62,5 +62,3 @@ class PollDaddy extends \Embera\Adapters\Service
         return array();
     } */
 }
-
-?>

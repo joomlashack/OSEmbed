@@ -38,4 +38,3 @@ class TestServiceSilk extends TestProviders
 
     public function testProvider() { $this->validateProvider('Silk'); }
 }
-?>

@@ -33,5 +33,3 @@ class Rapidengage extends \Embera\Adapters\Service
         return (preg_match('~rapidengage\.com/s/(?:[^ /]+)$~i', $this->url));
     }
 }
-
-?>

@@ -162,7 +162,6 @@ class Providers
      *
      * @param array $config  Associative array with configuration options
      * @param object $oembed Instance of \Embera\Oembed
-     * @return void
      */
     public function __construct(array $config = array(), \Embera\Oembed $oembed)
     {
@@ -211,7 +210,6 @@ class Providers
      * @param string $host The host for the map
      * @param string|object $class The class or object that should manage the provider
      * @param array $params Custom parameters that should be sent in the url for this Provider
-     * @return void
      */
     public function addProvider($host, $class, array $params = array())
     {
@@ -285,5 +283,3 @@ class Providers
         return $this->findServices((array) $urls);
     }
 }
-
-?>

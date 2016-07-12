@@ -28,7 +28,6 @@ class HttpRequest
      * Constructor
      *
      * @param array $config
-     * @return void
      */
     public function __construct(array $config = array())
     {
@@ -161,5 +160,3 @@ class HttpRequest
         throw new \Exception('Invalid Server Response from ' . $url);
     }
 }
-
-?>

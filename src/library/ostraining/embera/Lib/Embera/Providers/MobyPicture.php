@@ -46,5 +46,3 @@ class MobyPicture extends \Embera\Adapters\Service
         return $response;
     }
 }
-
-?>

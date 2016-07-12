@@ -31,5 +31,3 @@ class MixCloud extends \Embera\Adapters\Service
         return (preg_match('~mixcloud\.com/(?:[^/]+)/(?:[^/]+)/?$~i', $this->url));
     }
 }
-
-?>

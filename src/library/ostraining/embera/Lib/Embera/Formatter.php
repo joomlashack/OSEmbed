@@ -35,7 +35,6 @@ class Formatter
      *
      * @param object $embera Instance of \Embera\Embera
      * @param bool $allowOffline Wether or not to allow offline embera
-     * @return void
      */
     public function __construct(\Embera\Embera $embera, $allowOffline = false)
     {
@@ -167,4 +166,3 @@ class Formatter
         throw new \InvalidArgumentException('No method ' . $method . ' was found');
     }
 }
-?>

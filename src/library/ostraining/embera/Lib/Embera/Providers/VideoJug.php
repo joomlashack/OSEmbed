@@ -28,5 +28,3 @@ class VideoJug extends \Embera\Adapters\Service
         return (preg_match('~videojug\.com/(?:interview|film)/(?:[^/]+)$~i', $this->url));
     }
 }
-
-?>

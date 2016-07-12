@@ -37,7 +37,6 @@ class FakeResponse
      *
      * @param array $config
      * @param array $response
-     * @return void
      */
     public function __construct(array $config = array(), array $response = array())
     {
@@ -79,5 +78,3 @@ class FakeResponse
         return $return;
     }
 }
-
-?>

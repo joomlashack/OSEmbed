@@ -57,5 +57,3 @@ class AmCharts extends \Embera\Adapters\Service
         );
     }
 }
-
-?>

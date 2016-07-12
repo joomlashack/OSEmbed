@@ -39,5 +39,3 @@ class Ted extends \Embera\Adapters\Service
         );
     }
 }
-
-?>

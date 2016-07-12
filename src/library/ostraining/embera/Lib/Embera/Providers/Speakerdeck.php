@@ -27,5 +27,3 @@ class Speakerdeck extends \Embera\Adapters\Service
         return (preg_match('~speakerdeck\.com/([^/]{2,})/([^/]+)/?$~i', $this->url));
     }
 }
-
-?>

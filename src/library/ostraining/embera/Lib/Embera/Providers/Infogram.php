@@ -34,5 +34,3 @@ class Infogram extends \Embera\Adapters\Service
         return (preg_match('~infogr\.am/([^/ ]+)$~i', $this->url));
     }
 }
-
-?>

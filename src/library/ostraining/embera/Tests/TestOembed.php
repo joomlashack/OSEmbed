@@ -71,5 +71,3 @@ class TestOembed extends PHPUnit_Framework_TestCase
                             'http://www.apiurl.com/?');
     }
 }
-
-?>

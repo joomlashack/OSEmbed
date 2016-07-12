@@ -36,5 +36,3 @@ class Twitter extends \Embera\Adapters\Service
             $this->url = new \Embera\Url('https://twitter.com/' . $matches['1'] . '/' . $matches['2'] . '/' . $matches['3']);
     }
 }
-
-?>

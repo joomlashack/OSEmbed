@@ -30,5 +30,3 @@ class Revision3 extends \Embera\Adapters\Service
         return (preg_match('~revision3\.com/([^/]+)/([^/]+)/?~i', $this->url));
     }
 }
-
-?>

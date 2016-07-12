@@ -30,5 +30,3 @@ class Roomshare extends \Embera\Adapters\Service
                 preg_match('~roomshare\.jp/(?:[^/]+)/post/(?:[0-9]+)/?$~i', $this->url)  );
     }
 }
-
-?>

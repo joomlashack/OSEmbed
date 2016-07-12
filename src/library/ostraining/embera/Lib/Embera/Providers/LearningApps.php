@@ -28,5 +28,3 @@ class LearningApps extends \Embera\Adapters\Service
         return (preg_match('~learningapps\.org/(?:[0-9]+)$~i', $this->url));
     }
 }
-
-?>

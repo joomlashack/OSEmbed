@@ -54,5 +54,3 @@ class Clyp extends \Embera\Adapters\Service
     }
     */
 }
-
-?>

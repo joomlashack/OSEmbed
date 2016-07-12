@@ -28,5 +28,3 @@ class DailyMile extends \Embera\Adapters\Service
         return (preg_match('~/people/(?:[^/]+)/entries/(?:[0-9]+)/?$~i', $this->url));
     }
 }
-
-?>

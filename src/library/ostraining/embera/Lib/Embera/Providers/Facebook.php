@@ -168,5 +168,3 @@ class Facebook extends \Embera\Adapters\Service
         return $response;
     }
 }
-
-?>

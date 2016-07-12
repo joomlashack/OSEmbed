@@ -32,5 +32,3 @@ class AppNet extends \Embera\Adapters\Service
                 preg_match('~photos\.app\.net/(?:[0-9]+)/([?:0-9]+)~i', $this->url));
     }
 }
-
-?>

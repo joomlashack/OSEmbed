@@ -37,5 +37,3 @@ class Hulu extends \Embera\Adapters\Service
             $this->url = new \Embera\Url('http://www.hulu.com/watch/' . $matches['1']);
     }
 }
-
-?>

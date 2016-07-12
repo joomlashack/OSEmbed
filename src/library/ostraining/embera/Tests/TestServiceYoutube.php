@@ -52,4 +52,3 @@ class TestServiceYoutube extends TestProviders
 
     public function testProvider() { $this->validateProvider('Youtube'); }
 }
-?>

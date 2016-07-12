@@ -54,5 +54,3 @@ class Cacoo extends \Embera\Adapters\Service
         );
     }
 }
-
-?>

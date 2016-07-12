@@ -47,5 +47,3 @@ class Gmep extends \Embera\Adapters\Service
         return $response;
     }
 }
-
-?>

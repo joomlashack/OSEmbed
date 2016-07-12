@@ -31,5 +31,3 @@ class Shoudio extends \Embera\Adapters\Service
                 preg_match('~shoud\.io/(?:[0-9]+)$~i', $this->url));
     }
 }
-
-?>

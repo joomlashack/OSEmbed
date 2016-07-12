@@ -45,5 +45,3 @@ class Coub extends \Embera\Adapters\Service
         );
     }
 }
-
-?>

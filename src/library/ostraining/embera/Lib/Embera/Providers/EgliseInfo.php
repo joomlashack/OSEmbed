@@ -27,5 +27,3 @@ class EgliseInfo extends \Embera\Adapters\Service
         return (preg_match('~egliseinfo\.catholique\.fr/([^ ]+)~i', $this->url));
     }
 }
-
-?>
