@@ -18,7 +18,7 @@ namespace Embera;
 class Embera
 {
     /** @var int Class constant with the current Version of this library */
-    const VERSION = '1.8.18';
+    const VERSION = '1.9.2';
 
     /** @var object Instance of \Embera\Oembed */
     protected $oembed;
@@ -33,10 +33,10 @@ class Embera
     protected $errors = array();
 
     /** @var string The pattern used to extract urls from a text */
-    protected $urlRegex = '~\bhttps?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))~i';
+    protected $urlRegex = '~\bhttps?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/|_))~i';
 
     /** @var string The pattern used to extract urls from a text when the embed:// prefix option is enabled */
-    protected $urlEmbedRegex = '~\bembed://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))~i';
+    protected $urlEmbedRegex = '~\bembed://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/|_))~i';
 
     /**
      * Constructs the object and also instantiates the \Embera\Oembed Object
@@ -70,6 +70,7 @@ class Embera
             'custom_params' => array(),
             'http' => array(),
             'fake' => array(),
+            'ignore_tags' => array('pre', 'code', 'a', 'img'),
         ), $config);
 
 
@@ -108,6 +109,12 @@ class Embera
                 }
             }
 
+            // Determine wether the body looks like HTML or just plain text.
+            if (strpos($body, '>') !== false) {
+                $processor = new \Embera\HtmlProcessor($this->config['ignore_tags'], $table);
+                return $processor->process($body);
+            }
+
             return strtr($body, $table);
         }
 
@@ -125,27 +132,7 @@ class Embera
         $results = array();
         if ($providers = $this->getProviders($body)) {
             foreach ($providers as $url => $service) {
-                $info = $service->getInfo();
-
-                // Check if we don't have a provider_name set, and set it based on the class name
-                if (!isset($info['provider_name'])) {
-                    $reflect = new \ReflectionClass($service);
-                    $info['provider_name'] = $reflect->getShortName();
-                    unset($reflect);
-                }
-
-                // Add the provider_alias if not exists
-                if (!isset($info['provider_alias'])) {
-                    $info['provider_alias'] = preg_replace('/[^a-z0-9\-]/i', '-', $info['provider_name']);
-                    $info['provider_alias'] = strtolower(str_replace('--', '-', $info['provider_alias']));
-                }
-
-                // Add the wrapper_class if not exists
-                if (!isset($info['wrapper_class'])) {
-                    $info['wrapper_class'] = '';
-                }
-
-                $results[$url] = $info;
+                $results[$url] = $service->getInfo();
                 $this->errors = array_merge($this->errors, $service->getErrors());
             }
         }
