@@ -20,19 +20,45 @@ abstract class Embed
 {
     protected static $embera;
 
+    protected static $ignoreTags = array('pre', 'code', 'a', 'img', 'iframe');
+
     public static function parseContent($content, $stripNewLine = false)
     {
-        if (!isset(static::$embera)) {
-            static::$embera = new Formatter(new Embera, true);
-        }
-
         if (!empty($content)) {
+            // Initialise the Embera library
+            if (!isset(static::$embera)) {
+                static::$embera = new Embera;
+            }
+
+            // Add additional providers
             static::$embera->addProvider('facebook.com', '\\Alledia\\OSEmbed\\Free\\Provider\\Facebook');
 
-            // Add wrapper to make the embed responsive
-            static::$embera->setTemplate('<div class="osembed-wrapper ose-{provider_alias} {wrapper_class}">{html}</div>');
+            // Get all the supported URLs and respective info
+            $data = static::$embera->getUrlInfo($content);
 
-            $content = static::$embera->transform($content);
+            // Get a list of URLs and the final HTML code
+            $table = array();
+            foreach ($data as $url => $service) {
+                $html = $service['html'];
+
+                if (!empty($html)) {
+
+                    $providerClass = \JArrayHelper::getValue($service, 'provider_alias', 'default');
+                    $wrapperClass = \JArrayHelper::getValue($service, 'wrapper_class', 'default');
+
+                    // Wrapper the HTML code to make the embed responsive
+                    $table[$url] = "<div class=\"osembed_wrapper ose-{$providerClass} {$wrapperClass}\">{$html}</div>";
+                }
+            }
+
+            // Determine wether the body looks like HTML or just plain text.
+            if (strpos($content, '>') !== false) {
+                $processor = new \Embera\HtmlProcessor(static::$ignoreTags, $table);
+                $content = $processor->process($content);
+            } else {
+                // Replace the URLs
+                $content = strtr($content, $table);
+            }
 
             if ($stripNewLine) {
                 $content = preg_replace('/\n/', '', $content);
