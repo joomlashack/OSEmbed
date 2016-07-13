@@ -91,7 +91,7 @@ if (defined('OSEMBED_LOADED')) {
             $doc->addStyleSheetVersion('media/plg_content_osembed/css/osembed.css', $versionUID);
 
             $embedClass = $this->getEmbedClass();
-            $article->text = $embedClass::parseContent($article->text);
+            $article->text = $embedClass::parseContent($article->text, false);
         }
 
         public function onContentBeforeSave($context, $article, $isNew)

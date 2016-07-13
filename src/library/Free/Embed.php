@@ -20,7 +20,7 @@ abstract class Embed
 {
     protected static $embera;
 
-    protected static $ignoreTags = array('pre', 'code', 'a', 'img', 'iframe');
+    protected static $ignoreTags;
 
     public static function parseContent($content, $stripNewLine = false)
     {
@@ -44,7 +44,7 @@ abstract class Embed
                 if (!empty($html)) {
 
                     $providerClass = \JArrayHelper::getValue($service, 'provider_alias', 'default');
-                    $wrapperClass = \JArrayHelper::getValue($service, 'wrapper_class', 'default');
+                    $wrapperClass  = \JArrayHelper::getValue($service, 'wrapper_class', 'default');
 
                     // Wrapper the HTML code to make the embed responsive
                     $table[$url] = "<div class=\"osembed_wrapper ose-{$providerClass} {$wrapperClass}\">{$html}</div>";
@@ -53,8 +53,8 @@ abstract class Embed
 
             // Determine wether the body looks like HTML or just plain text.
             if (strpos($content, '>') !== false) {
-                $processor = new \Embera\HtmlProcessor(static::$ignoreTags, $table);
-                $content = $processor->process($content);
+                $processor = new \Embera\HtmlProcessor(static::getIgnoreTags(), $table);
+                $content   = $processor->process($content);
             } else {
                 // Replace the URLs
                 $content = strtr($content, $table);
@@ -71,5 +71,19 @@ abstract class Embed
     public static function onContentBeforeSave($article)
     {
         return true;
+    }
+
+    /**
+     * Get the list of tags to ignore
+     *
+     * @return array
+     */
+    protected static function getIgnoreTags()
+    {
+        if (!isset(static::$ignoreTags)) {
+            static::$ignoreTags = array('pre', 'code', 'a', 'img', 'iframe');
+        }
+
+        return static::$ignoreTags;
     }
 }
