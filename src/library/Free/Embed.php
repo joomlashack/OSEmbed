@@ -78,7 +78,7 @@ abstract class Embed
      *
      * @return array
      */
-    protected static function getIgnoreTags()
+    public static function getIgnoreTags()
     {
         if (!isset(static::$ignoreTags)) {
             static::$ignoreTags = array('pre', 'code', 'a', 'img', 'iframe');
