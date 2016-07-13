@@ -39,15 +39,17 @@ abstract class Embed
             // Get a list of URLs and the final HTML code
             $table = array();
             foreach ($data as $url => $service) {
-                $html = $service['html'];
+                if (isset($service['html'])) {
+                    $html = $service['html'];
 
-                if (!empty($html)) {
+                    if (!empty($html)) {
 
-                    $providerClass = \JArrayHelper::getValue($service, 'provider_alias', 'default');
-                    $wrapperClass  = \JArrayHelper::getValue($service, 'wrapper_class', 'default');
+                        $providerClass = \JArrayHelper::getValue($service, 'provider_alias', 'default');
+                        $wrapperClass  = \JArrayHelper::getValue($service, 'wrapper_class', 'default');
 
-                    // Wrapper the HTML code to make the embed responsive
-                    $table[$url] = "<div class=\"osembed_wrapper ose-{$providerClass} {$wrapperClass}\">{$html}</div>";
+                        // Wrapper the HTML code to make the embed responsive
+                        $table[$url] = "<div class=\"osembed_wrapper ose-{$providerClass} {$wrapperClass}\">{$html}</div>";
+                    }
                 }
             }
 
