@@ -28,6 +28,9 @@ abstract class Embed
             // Initialise the Embera library
             if (!isset(static::$embera)) {
                 static::$embera = new Embera;
+
+                // Disable some unsupported services to avoid warnings
+                static::$embera->addProvider('youtu.be', '\\Alledia\\OSEmbed\\Free\\Provider\\Example');
             }
 
             // Add additional providers
