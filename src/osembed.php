@@ -88,7 +88,7 @@ if (defined('OSEMBED_LOADED')) {
             $versionUID = md5($this->extension->getVersion());
 
             $doc = Framework\Factory::getDocument();
-            $doc->addStyleSheetVersion('media/plg_content_osembed/css/osembed.css', $versionUID);
+            $doc->addStyleSheetVersion('/media/plg_content_osembed/css/osembed.css', $versionUID);
 
             $embedClass = $this->getEmbedClass();
             $article->text = $embedClass::parseContent($article->text, false);
