@@ -89,7 +89,7 @@ if (defined('OSEMBED_LOADED')) {
 
             $doc = Framework\Factory::getDocument();
             $doc->addStyleSheetVersion('media/plg_content_osembed/css/osembed.css', $versionUID);
-            $doc->addScriptVersion('media/plg_content_osembed/js/osembed.js?' . $versionUID);
+            $doc->addScriptVersion('media/plg_content_osembed/js/osembed.js', $versionUID);
 
             $embedClass = $this->getEmbedClass();
             $article->text = $embedClass::parseContent($article->text, false);
