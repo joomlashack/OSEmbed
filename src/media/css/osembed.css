@@ -83,8 +83,3 @@ body .ose-google-docs.ose-google-docs-forms,
 body .ose-google-docs.ose-google-docs-spreadsheets {
     padding-bottom: 142%;
 }
-
-body .ose-flickr .flickr-embed-frame {
-    max-width: 100% !important;
-    width: 100% !important;
-}
