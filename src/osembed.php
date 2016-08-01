@@ -87,6 +87,8 @@ if (defined('OSEMBED_LOADED')) {
 
             $versionUID = md5($this->extension->getVersion());
 
+            JHtml::_('jquery.framework');
+
             $doc = Framework\Factory::getDocument();
             $doc->addStyleSheetVersion('media/plg_content_osembed/css/osembed.css', $versionUID);
             $doc->addScriptVersion('media/plg_content_osembed/js/osembed.js', $versionUID);
