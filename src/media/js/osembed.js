@@ -5,26 +5,22 @@
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 
-// Original code by arigesher from https://gist.github.com/arigesher/8932051
-
 (function($)
 {
-    $(document).ready(function() {
-        $('.ose-flickr iframe').each(function(index) {
-            var ratio = $(this).height() / $(this).width();
-            var origHeight = $(this).height();
-            var origWidth  = $(this).width();
-            var self = this;
-            $(window).resize(function() {
-                if($(self).parent().width() > origWidth) {
-                    $(self).width(origWidth);
-                    $(self).height(origHeight);
-                } else {
-                    $(self).width($(self).parent().width());
-                    $(self).height($(self).parent().width() * ratio);
-                }
+    $(window).resize(function() {
+        $('.ose-flickr').each(function() {
+
+            // Calculate old and new width/height values
+            var $oldHeight  =  $(this).find('iframe').attr('height'); // Get iframe's height
+            var $oldWidth   =  $(this).find('iframe').attr('width'); // Get iframe's width
+            var $newWidth   =  $(this).width(); // Get wrapper's width
+            var $newHeight  = ($oldHeight/$oldWidth) * $newWidth;
+
+            // Apply new width/height values
+            $(this).find('iframe').css({
+                "height" : $newHeight + "px",
+                "width" : $newWidth + "px"
             });
         });
-        $(window).resize();
     });
-});
+})(jQuery);
