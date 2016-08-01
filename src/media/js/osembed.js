@@ -10,7 +10,7 @@
 (function($)
 {
     $(document).ready(function() {
-        $('.ose-flickr').each(function(index) {
+        $('.ose-flickr iframe').each(function(index) {
             var ratio = $(this).height() / $(this).width();
             var origHeight = $(this).height();
             var origWidth  = $(this).width();
