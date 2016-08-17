@@ -39,12 +39,22 @@ if (defined('OSEMBED_LOADED')) {
         {
             parent::__construct($subject, $config);
 
-            $this->init();
+            $option  = JFactory::getApplication()->input->get('option');
+            $docType = JFactory::getDocument()->getType();
 
-            // Check the minumum requirements
-            $helperClass = $this->getHelperClass();
-            if (!$helperClass::complyBasicRequirements()) {
+            // Do not run if called from OSMap's XML view
+            if ($option === 'com_osmap' && $docType !== 'html') {
                 $this->allowedToRun = false;
+            }
+
+            if ($this->allowedToRun) {
+                $this->init();
+
+                // Check the minumum requirements
+                $helperClass = $this->getHelperClass();
+                if (!$helperClass::complyBasicRequirements()) {
+                    $this->allowedToRun = false;
+                }
             }
         }
 
