@@ -26,7 +26,7 @@ class Instagram extends \Embera\Adapters\Service
     {
         $this->url->stripQueryString();
 
-        return (preg_match('~/p/([\w\d]+)/?$~i', $this->url));
+        return (preg_match('~/p/([\w\d\-]+)/?$~i', $this->url));
     }
 
     /** inline {@inheritdoc} */
