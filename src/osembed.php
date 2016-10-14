@@ -100,8 +100,8 @@ if (defined('OSEMBED_LOADED')) {
             JHtml::_('jquery.framework');
 
             $doc = Framework\Factory::getDocument();
-            $doc->addStyleSheetVersion('media/plg_content_osembed/css/osembed.css', $versionUID);
-            $doc->addScriptVersion('media/plg_content_osembed/js/osembed.js', $versionUID);
+            $doc->addStyleSheetVersion(JURI::root() . 'media/plg_content_osembed/css/osembed.css', $versionUID);
+            $doc->addScriptVersion(JURI::root() . 'media/plg_content_osembed/js/osembed.js', $versionUID);
 
             $embedClass = $this->getEmbedClass();
             $article->text = $embedClass::parseContent($article->text, false);
