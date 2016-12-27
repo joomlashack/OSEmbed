@@ -89,10 +89,3 @@ body .ose-flickr .flickr-embed-frame {
     max-width: 100% !important;
     width: 100% !important;
 }
-
-/* Facebook */
-/*body .ose-facebook .fb_iframe_widget,
-body .ose-facebook .fb_iframe_widget > span,
-body .ose-facebook .fb_iframe_widget > span > iframe {
-    width: 100%;
-}*/

@@ -8,7 +8,7 @@
 (function($)
 {
     $(window).resize(function() {
-        $('.ose-flickr, .ose-facebook').each(function() {
+        $('.ose-flickr').each(function() {
 
             // Calculate old and new width/height values
             var $oldHeight  =  $(this).find('iframe').attr('height'); // Get iframe's height
@@ -21,18 +21,6 @@
                 "height" : $newHeight + "px",
                 "width" : $newWidth + "px"
             });
-
-            // Only for Facebook
-            /*if( $(this).is('.ose-facebook') ) {
-             console.log('Facebook');
-
-             $(this).find('.fb_iframe_widget, .fb_iframe_widget > span').css({
-             "height" : $newHeight + "px",
-             "width" : $newWidth + "px"
-             });
-
-             console.log( $(this).find('iframe').attr('name') );
-             }*/
         });
     });
 })(jQuery);
