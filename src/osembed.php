@@ -28,8 +28,8 @@ if (defined('OSEMBED_LOADED')) {
         /**
          * Constructor
          *
-         * @param   object  &$subject  The object to observe
-         * @param   array   $config    An optional associative array of configuration settings.
+         * @param   object &$subject   The object to observe
+         * @param   array  $config     An optional associative array of configuration settings.
          *                             Recognized key values include 'name', 'group', 'params', 'language'
          *                             (this list is not meant to be comprehensive).
          *
@@ -79,10 +79,10 @@ if (defined('OSEMBED_LOADED')) {
         /**
          * Plugin that loads module positions within content
          *
-         * @param   string   $context   The context of the content being passed to the plugin.
-         * @param   object   &$article  The article object.  Note $article->text is also available
-         * @param   mixed    &$params   The article params
-         * @param   integer  $page      The 'page' number
+         * @param   string  $context  The context of the content being passed to the plugin.
+         * @param   object  &$article The article object.  Note $article->text is also available
+         * @param   mixed   &$params  The article params
+         * @param   integer $page     The 'page' number
          *
          * @return  mixed   true if there is an error. Void otherwise.
          *
@@ -103,7 +103,7 @@ if (defined('OSEMBED_LOADED')) {
             $doc->addStyleSheetVersion(JURI::root() . 'media/plg_content_osembed/css/osembed.css', $versionUID);
             $doc->addScriptVersion(JURI::root() . 'media/plg_content_osembed/js/osembed.js', $versionUID);
 
-            $embedClass = $this->getEmbedClass();
+            $embedClass    = $this->getEmbedClass();
             $article->text = $embedClass::parseContent($article->text, false);
         }
 
