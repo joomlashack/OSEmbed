@@ -84,7 +84,7 @@ if (defined('OSEMBED_LOADED')) {
          * @param   mixed   &$params  The article params
          * @param   integer $page     The 'page' number
          *
-         * @return  mixed   true if there is an error. Void otherwise.
+         * @return  void
          *
          * @since   1.6
          */
@@ -92,7 +92,7 @@ if (defined('OSEMBED_LOADED')) {
         {
             // Don't run this plugin when the content is being indexed
             if ($context == 'com_finder.indexer' || !$this->allowedToRun) {
-                return true;
+                return;
             }
 
             $versionUID = md5($this->extension->getVersion());

@@ -13,7 +13,6 @@ defined('_JEXEC') or die();
 use Embera;
 use Embera\Adapters\Service;
 
-
 class Facebook extends Service
 {
     protected $apiUrl = array(
