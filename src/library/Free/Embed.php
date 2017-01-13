@@ -12,6 +12,7 @@ defined('_JEXEC') or die();
 
 use Embera\Embera;
 use Embera\Formatter;
+use Joomla\Utilities\ArrayHelper;
 
 jimport('joomla.log.log');
 
@@ -51,9 +52,8 @@ abstract class Embed
                     $html = $service['html'];
 
                     if (!empty($html)) {
-
-                        $providerClass = \JArrayHelper::getValue($service, 'provider_alias', 'default');
-                        $wrapperClass  = \JArrayHelper::getValue($service, 'wrapper_class', 'default');
+                        $providerClass = ArrayHelper::getValue($service, 'provider_alias', 'default');
+                        $wrapperClass  = ArrayHelper::getValue($service, 'wrapper_class', 'default');
 
                         // Wrapper the HTML code to make the embed responsive
                         $table[$url] = "<div class=\"osembed_wrapper ose-{$providerClass} {$wrapperClass}\">{$html}</div>";
