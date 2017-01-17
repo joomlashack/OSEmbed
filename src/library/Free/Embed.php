@@ -19,10 +19,22 @@ jimport('joomla.log.log');
 
 abstract class Embed
 {
+    /**
+     * @var Embera
+     */
     protected static $embera;
 
+    /**
+     * @var string[]
+     */
     protected static $ignoreTags;
 
+    /**
+     * @param string $content
+     * @param bool   $stripNewLine
+     *
+     * @return string
+     */
     public static function parseContent($content, $stripNewLine = false)
     {
         if (!empty($content)) {
