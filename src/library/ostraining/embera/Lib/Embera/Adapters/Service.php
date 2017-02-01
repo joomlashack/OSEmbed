@@ -54,7 +54,7 @@ abstract class Service
      * @param array  $config
      * @param object $oembed
      *
-     * @throws InvalidArgumentException when the given url doesnt match the current service
+     * @throws \InvalidArgumentException when the given url doesnt match the current service
      */
     public function __construct($url, array $config = array(), \Embera\Oembed $oembed)
     {
