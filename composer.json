@@ -19,14 +19,14 @@
             "email": "help@joomlashack.com"
         }
     ],
-    "repositories": [
+    "repositories"     : [
         {
             "type": "vcs",
             "url" : "https://github.com/OSTraining/Embera.git"
         }
     ],
     "require"          : {
-        "php"           : ">= 5.3",
+        "php"              : ">= 5.3",
         "ostraining/embera": ">=1.9.2"
     },
     "config"           : {

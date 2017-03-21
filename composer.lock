@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7ee345a3e6e4b0dc537481fa5eaab358",
-    "content-hash": "3d7d77d5de27948a370fe75c5304f8d2",
+    "content-hash": "736ed165e83fa1d830be0559bb58df3a",
     "packages": [
         {
             "name": "ostraining/embera",
@@ -58,7 +57,7 @@
             "support": {
                 "source": "https://github.com/OSTraining/Embera/tree/v1.9.4"
             },
-            "time": "2016-08-12 18:25:46"
+            "time": "2016-08-12T18:25:46+00:00"
         }
     ],
     "packages-dev": [],
