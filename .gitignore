@@ -46,9 +46,7 @@ nb-configuration.xml
 ####################
 _notes/
 
-packages/*
-!packages/.gitkeep
-
+auth.json
 build.properties
 
 tests/_output/*
