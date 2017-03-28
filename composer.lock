@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "736ed165e83fa1d830be0559bb58df3a",
+    "content-hash": "536f20184460d078da55eb6cf167c86a",
     "packages": [
         {
             "name": "ostraining/embera",
-            "version": "v1.9.4",
+            "version": "1.9.4b1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OSTraining/Embera.git",
-                "reference": "937220f5c7249f834ba59757394aacf06670ac20"
+                "reference": "9e5b2dd5fc17c679541e6dd8007e0b8080e39b97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OSTraining/Embera/zipball/937220f5c7249f834ba59757394aacf06670ac20",
-                "reference": "937220f5c7249f834ba59757394aacf06670ac20",
+                "url": "https://api.github.com/repos/OSTraining/Embera/zipball/9e5b2dd5fc17c679541e6dd8007e0b8080e39b97",
+                "reference": "9e5b2dd5fc17c679541e6dd8007e0b8080e39b97",
                 "shasum": ""
             },
             "require": {
@@ -55,15 +55,17 @@
                 "Youtube"
             ],
             "support": {
-                "source": "https://github.com/OSTraining/Embera/tree/v1.9.4"
+                "source": "https://github.com/OSTraining/Embera/tree/1.9.4b1"
             },
-            "time": "2016-08-12T18:25:46+00:00"
+            "time": "2017-03-28T19:24:21+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "ostraining/embera": 10
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
