@@ -51,9 +51,6 @@ abstract class Embed
                 static::$embera->addProvider('youtu.be', '\\Alledia\\OSEmbed\\Free\\Provider\\Example');
             }
 
-            // Add additional providers
-            static::$embera->addProvider('facebook.com', '\\Alledia\\OSEmbed\\Free\\Provider\\Facebook');
-
             // Get all the supported URLs and respective info
             $data = static::$embera->getUrlInfo($content);
 
