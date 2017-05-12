@@ -87,4 +87,5 @@ body .ose-google-docs.ose-google-docs-spreadsheets {
 /* Dynamic aspect ratio */
 body .ose-flickr .flickr-embed-frame {
     max-width: 100% !important;
+    width: 100% !important;
 }
