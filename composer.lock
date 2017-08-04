@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "ostraining/embera",
-            "version": "v1.9.4b2",
+            "version": "v1.9.4b3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OSTraining/Embera.git",
-                "reference": "915cd9f579a65f28fb8f46a15516a3225d085985"
+                "reference": "3c499465c95f28a76552320fcf4f22ef426a9ab6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OSTraining/Embera/zipball/915cd9f579a65f28fb8f46a15516a3225d085985",
-                "reference": "915cd9f579a65f28fb8f46a15516a3225d085985",
+                "url": "https://api.github.com/repos/OSTraining/Embera/zipball/3c499465c95f28a76552320fcf4f22ef426a9ab6",
+                "reference": "3c499465c95f28a76552320fcf4f22ef426a9ab6",
                 "shasum": ""
             },
             "require": {
@@ -55,9 +55,9 @@
                 "Youtube"
             ],
             "support": {
-                "source": "https://github.com/OSTraining/Embera/tree/v1.9.4b2"
+                "source": "https://github.com/OSTraining/Embera/tree/v1.9.4b3"
             },
-            "time": "2017-03-31T19:16:13+00:00"
+            "time": "2017-08-04T17:50:16+00:00"
         }
     ],
     "packages-dev": [],
