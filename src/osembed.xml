@@ -50,7 +50,8 @@
         <element publish="true">osembed</element>
         <namespace>OSEmbed</namespace>
         <license>free</license>
-        <targetplatform>3.*</targetplatform>
+        <targetplatform>3.5</targetplatform>
+        <phpminimum>5.6</phpminimum>
         <relatedExtensions>
             <extension
                 type="library"
