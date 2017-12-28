@@ -89,3 +89,9 @@ body .ose-flickr .flickr-embed-frame {
     max-width: 1024px !important;
     width: 100% !important;
 }
+
+/* Fix scrolling on iOS devices */
+body .ose-google-docs {
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+}
