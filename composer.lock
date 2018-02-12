@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "536f20184460d078da55eb6cf167c86a",
+    "content-hash": "147a6d3641dbad32324aa841a38e1bb2",
     "packages": [
         {
             "name": "ostraining/embera",
@@ -69,7 +69,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">= 5.3"
+        "php": ">=5.6"
     },
     "platform-dev": []
 }
