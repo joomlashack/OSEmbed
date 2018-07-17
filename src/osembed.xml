@@ -36,8 +36,8 @@
                     name="customfooter"
                     type="customfooter"
                     media="plg_content_osembed"
-                    showgoproad="1"
-                    jedurl="http://extensions.joomla.org/extensions/extension/social-web/social-media/osembed" />
+                    showgoproad="https://www.joomlashack.com/joomla-extensions/osembed/"
+                    jedurl="https://extensions.joomla.org/extension/osembed/" />
             </fieldset>
         </fields>
     </config>
