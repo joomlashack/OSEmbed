@@ -8,7 +8,7 @@
 (function($)
 {
     $(window).resize(function() {
-        $('.ose-flickr').each(function() {
+        $('.ose-flickr, .ose-facebook').each(function() {
 
             // Calculate old and new width/height values
             var $oldHeight  =  $(this).find('iframe').attr('height'); // Get iframe's height
