@@ -7,7 +7,7 @@
 
 (function($)
 {
-    $(window).resize(function() {
+    $(window).on('load resize', function() {
         $('.ose-flickr, .ose-facebook').each(function() {
 
             // Calculate old and new width/height values
