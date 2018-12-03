@@ -14,9 +14,6 @@ use Alledia\Installer\AbstractScript;
 use Alledia\Framework\Factory;
 use Alledia\OSEmbed\Free\Helper;
 
-/**
- * Custom installer script
- */
 class PlgContentOSEmbedInstallerScript extends AbstractScript
 {
 
