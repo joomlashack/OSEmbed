@@ -32,12 +32,11 @@
     <config>
         <fields name="params">
             <fieldset name="basic" addfieldpath="/plugins/content/osembed/form/fields">
-                <field
-                    name="customfooter"
-                    type="customfooter"
-                    media="plg_content_osembed"
-                    showgoproad="https://www.joomlashack.com/joomla-extensions/osembed/"
-                    jedurl="https://extensions.joomla.org/extension/osembed/" />
+                <field name="customfooter"
+                       type="customfooter"
+                       media="plg_content_osembed"
+                       showgoproad="https://www.joomlashack.com/joomla-extensions/osembed/"
+                       jedurl="https://extensions.joomla.org/extension/osembed/"/>
             </fieldset>
         </fields>
     </config>
@@ -53,17 +52,14 @@
         <targetplatform>3.5</targetplatform>
         <phpminimum>5.6</phpminimum>
         <relatedExtensions>
-            <extension
-                type="library"
-                element="allediaframework">AllediaFramework</extension>
+            <extension type="library"
+                       element="allediaframework">AllediaFramework</extension>
 
-            <extension
-                type="plugin"
-                group="system"
-                element="ossystem"
-                publish="true"
-                ordering="first">OSSystem</extension>
-
+            <extension type="plugin"
+                       group="system"
+                       element="ossystem"
+                       publish="true"
+                       ordering="first">OSSystem</extension>
         </relatedExtensions>
 
         <include>AllediaFreeDefaultFiles</include>
@@ -71,26 +67,17 @@
         <obsolete>
             <file>/plugins/content/osembed/library/Free/Provider/Facebook.php</file>
 
-            <extension
-                type="plugin"
-                group="content"
-                element="osembedcontent"
-                publish="true"
-                ordering="last">OSEmbedContent</extension>
+            <extension type="plugin"
+                       group="content"
+                       element="osembedcontent"/>
 
-            <extension
-                type="plugin"
-                group="system"
-                element="osembed"
-                publish="true"
-                ordering="last">OSEmbed</extension>
+            <extension type="plugin"
+                       group="system"
+                       element="osembed"/>
 
-            <extension
-                type="plugin"
-                group="system"
-                element="osembedpreview"
-                publish="true"
-                ordering="last">OSEmbedPreview</extension>
+            <extension type="plugin"
+                       group="system"
+                       element="osembedpreview"/>
         </obsolete>
     </alledia>
 </extension>
