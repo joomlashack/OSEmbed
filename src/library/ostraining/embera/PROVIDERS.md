@@ -83,7 +83,6 @@ Sites marked with an `*` allow offline html embedding.
 - * [Rutube](https://rutube.ru)
 - [Shoudio](http://shoudio.com)
 - [ShowTheWay](http://showtheway.io)
-- * [Silk](https://silk.co)
 - [Sizzle](https://onsizzle.com)
 - * [Sketchfab](http://sketchfab.com)
 - [SlideShare](http://www.slideshare.net)

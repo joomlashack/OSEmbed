@@ -1,23 +1,23 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "147a6d3641dbad32324aa841a38e1bb2",
+    "content-hash": "233ce163b6ff09485529ae63294abe0d",
     "packages": [
         {
             "name": "ostraining/embera",
-            "version": "v1.9.4b3",
+            "version": "v1.9.4b4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OSTraining/Embera.git",
-                "reference": "3c499465c95f28a76552320fcf4f22ef426a9ab6"
+                "reference": "c6e5fc32328130c807265b71b9b68936af796a47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OSTraining/Embera/zipball/3c499465c95f28a76552320fcf4f22ef426a9ab6",
-                "reference": "3c499465c95f28a76552320fcf4f22ef426a9ab6",
+                "url": "https://api.github.com/repos/OSTraining/Embera/zipball/c6e5fc32328130c807265b71b9b68936af796a47",
+                "reference": "c6e5fc32328130c807265b71b9b68936af796a47",
                 "shasum": ""
             },
             "require": {
@@ -55,9 +55,9 @@
                 "Youtube"
             ],
             "support": {
-                "source": "https://github.com/OSTraining/Embera/tree/v1.9.4b3"
+                "source": "https://github.com/OSTraining/Embera/tree/v1.9.4b4"
             },
-            "time": "2017-08-04T17:50:16+00:00"
+            "time": "2018-03-09T17:35:19+00:00"
         }
     ],
     "packages-dev": [],
