@@ -26,8 +26,6 @@ defined('_JEXEC') or die();
 require_once 'library/Installer/include.php';
 
 use Alledia\Installer\AbstractScript;
-use Alledia\Framework\Factory;
-use Alledia\OSEmbed\Free\Helper;
 
 class PlgContentOSEmbedInstallerScript extends AbstractScript
 {

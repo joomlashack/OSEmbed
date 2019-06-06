@@ -25,15 +25,9 @@ namespace Alledia\OSEmbed\Free;
 
 defined('_JEXEC') or die();
 
-use Alledia\Framework\Factory;
-use JFactory;
 use JLog;
-use JRegistry;
-use JText;
-use WFEditor;
 
 jimport('joomla.log.log');
-
 
 abstract class Helper
 {
@@ -48,7 +42,7 @@ abstract class Helper
             ),
             JLog::ALL,
             array('osembed.library', 'osembed.content', 'osembed.system')
-       );
+        );
     }
 
     public static function complyBasicRequirements($logWarnings = false)

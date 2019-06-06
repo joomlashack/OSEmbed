@@ -26,11 +26,10 @@ namespace Alledia\OSEmbed\Free;
 defined('_JEXEC') or die();
 
 use Embera\Embera;
-use Embera\Formatter;
+use Embera\HtmlProcessor;
 use Joomla\Utilities\ArrayHelper;
 
 jimport('joomla.log.log');
-
 
 abstract class Embed
 {
@@ -87,7 +86,7 @@ abstract class Embed
 
             // Determine wether the body looks like HTML or just plain text.
             if (strpos($content, '>') !== false) {
-                $processor = new \Embera\HtmlProcessor(static::getIgnoreTags(), $table);
+                $processor = new HtmlProcessor(static::getIgnoreTags(), $table);
                 $content   = $processor->process($content);
             } else {
                 // Replace the URLs

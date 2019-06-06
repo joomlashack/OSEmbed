@@ -24,7 +24,10 @@
 defined('_JEXEC') or die;
 
 use Alledia\Framework\Joomla\Extension;
-use Alledia\Framework;
+use Alledia\OSEmbed\Free\Embed;
+use Alledia\OSEmbed\Free\Helper;
+use Joomla\Event\Dispatcher;
+use Joomla\Registry\Registry;
 
 include_once 'include.php';
 
@@ -41,14 +44,13 @@ if (defined('OSEMBED_LOADED')) {
         protected $allowedToRun = true;
 
         /**
-         * Constructor
+         * PlgContentOSEmbed constructor.
          *
-         * @param   object &$subject   The object to observe
-         * @param   array  $config     An optional associative array of configuration settings.
-         *                             Recognized key values include 'name', 'group', 'params', 'language'
-         *                             (this list is not meant to be comprehensive).
+         * @param Dispatcher $subject
+         * @param array      $config
          *
-         * @since   1.5
+         * @return void
+         * @throws Exception
          */
         public function __construct(&$subject, $config = array())
         {
@@ -73,6 +75,9 @@ if (defined('OSEMBED_LOADED')) {
             }
         }
 
+        /**
+         * @return Helper|string
+         */
         protected function getHelperClass()
         {
             if ($this->isPro()) {
@@ -82,6 +87,9 @@ if (defined('OSEMBED_LOADED')) {
             return 'Alledia\\OSEmbed\\Free\\Helper';
         }
 
+        /**
+         * @return Embed|string
+         */
         protected function getEmbedClass()
         {
             if ($this->isPro()) {
@@ -94,16 +102,16 @@ if (defined('OSEMBED_LOADED')) {
         /**
          * Plugin that loads module positions within content
          *
-         * @param   string  $context  The context of the content being passed to the plugin.
-         * @param   object  &$article The article object.  Note $article->text is also available
-         * @param   mixed   &$params  The article params
-         * @param   integer $page     The 'page' number
+         * @param string   $context
+         * @param object   $article
+         * @param Registry $params
+         * @param int      $page
          *
          * @return  void
          *
          * @since   1.6
          */
-        public function onContentPrepare($context, &$article, &$params, $page = 0)
+        public function onContentPrepare($context, $article, $params, $page = 0)
         {
             // Don't run this plugin when the content is being indexed
             if ($context == 'com_finder.indexer' || !$this->allowedToRun) {
@@ -114,9 +122,11 @@ if (defined('OSEMBED_LOADED')) {
 
             JHtml::_('jquery.framework');
 
-            $doc = Framework\Factory::getDocument();
-            $doc->addStyleSheetVersion(JURI::root() . 'media/plg_content_osembed/css/osembed.css', $versionUID);
-            $doc->addScriptVersion(JURI::root() . 'media/plg_content_osembed/js/osembed.js', $versionUID);
+            JHtml::_(
+                'stylesheet',
+                'plg_content_osembed/osembed.css',
+                array('relative' => true, 'version' => $versionUID)
+            );
 
             $embedClass    = $this->getEmbedClass();
             $article->text = $embedClass::parseContent($article->text, false);
