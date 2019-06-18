@@ -128,6 +128,12 @@ if (defined('OSEMBED_LOADED')) {
                 array('relative' => true, 'version' => $versionUID)
             );
 
+            JHtml::_(
+                'script',
+                'plg_content_osembed/osembed.js',
+                array('relative' => true, 'version' => $versionUID)
+            );
+
             $embedClass    = $this->getEmbedClass();
             $article->text = $embedClass::parseContent($article->text, false);
         }
