@@ -18,7 +18,7 @@ namespace Embera;
 class Embera
 {
     /** @var int Class constant with the current Version of this library */
-    const VERSION = '1.9.4b4';
+    const VERSION = '1.9.5b1';
 
     /** @var object Instance of \Embera\Oembed */
     protected $oembed;
@@ -32,22 +32,22 @@ class Embera
     /** @var array Fetched errors */
     protected $errors = array();
 
-    /** @var string The pattern used to extract urls from a text, ignoring text inside quotes */
-    protected $urlRegex = '~(?<!"|\')\bhttps?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/|_))(?!"|\')~i';
+    /** @var string The pattern used to extract urls from a text */
+    protected $urlRegex = '~\bhttps?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/|_))~i';
 
-    /** @var string The pattern used to extract urls from a text when the embed:// prefix option is enabled,
-                    ignoring text inside quotes */
-    protected $urlEmbedRegex = '~(?<!"|\')\bembed://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/|_))(?!"|\')~i';
+    /** @var string The pattern used to extract urls from a text when the embed:// prefix option is enabled */
+    protected $urlEmbedRegex = '~\bembed://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/|_))~i';
 
     /**
      * Constructs the object and also instantiates the \Embera\Oembed Object
      * and stores it into the $oembed properoty
      *
      * @param array $config
+     * @return void
      */
     public function __construct(array $config = array())
     {
-        $this->config = self::_recursiveMergeOverwrite(array(
+        $this->config = array_replace_recursive(array(
             /**
              * The oembed setting represents the behaviour of the library.
              * The default value (since version 1.8.0) is null, which means that the
@@ -88,32 +88,6 @@ class Embera
 
         $this->oembed = new \Embera\Oembed(new \Embera\HttpRequest($this->config['http']));
         $this->providers = new \Embera\Providers($this->config, $this->oembed);
-    }
-
-    /**
-     * Merges deep associative arrays.
-     *
-     * @access protected
-     * @author Oliver Lillie
-     * @param array $array1
-     * @param array $array2
-     * @return array
-     */
-    protected static function _recursiveMergeOverwrite($array1, $array2)
-    {
-        foreach($array2 as $key => $val)
-        {
-            if(array_key_exists($key, $array1) === true && is_array($val) === true)
-            {
-                $array1[$key] = self::_recursiveMergeOverwrite($array1[$key], $val);
-            }
-            else
-            {
-                $array1[$key] = $val;
-            }
-        }
-
-        return $array1;
     }
 
     /**
@@ -158,27 +132,7 @@ class Embera
         $results = array();
         if ($providers = $this->getProviders($body)) {
             foreach ($providers as $url => $service) {
-                $info = $service->getInfo();
-
-                // Check if we don't have a provider_name set, and set it based on the class name
-                if (!isset($info['provider_name'])) {
-                    $reflect = new \ReflectionClass($service);
-                    $info['provider_name'] = $reflect->getShortName();
-                    unset($reflect);
-                }
-
-                // Add the provider_alias if not exists
-                if (!isset($info['provider_alias'])) {
-                    $info['provider_alias'] = preg_replace('/[^a-z0-9\-]/i', '-', $info['provider_name']);
-                    $info['provider_alias'] = strtolower(str_replace('--', '-', $info['provider_alias']));
-                }
-
-                // Add the wrapper_class if not exists
-                if (!isset($info['wrapper_class'])) {
-                    $info['wrapper_class'] = '';
-                }
-
-                $results[$url] = $info;
+                $results[$url] = $service->getInfo();
                 $this->errors = array_merge($this->errors, $service->getErrors());
             }
         }
@@ -219,6 +173,7 @@ class Embera
      * @param string $host The host for the map
      * @param string|object $class The class or object that should manage the provider
      * @param array $params Custom parameters that should be sent in the url for this Provider
+     * @return void
      */
     public function addProvider($host, $class, array $params = array())
     {
@@ -286,3 +241,5 @@ class Embera
         return (!empty($this->errors));
     }
 }
+
+?>
