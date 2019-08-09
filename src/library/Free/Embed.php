@@ -48,6 +48,7 @@ abstract class Embed
      * @param bool   $stripNewLine
      *
      * @return string
+     * @throws \Exception
      */
     public static function parseContent($content, $stripNewLine = false)
     {
@@ -66,7 +67,7 @@ abstract class Embed
             }
 
             // Get all the supported URLs and respective info
-            $data = static::$embera->getUrlInfo($content);
+            $data = static::getUrlInfo($content);
 
             // Get a list of URLs and the final HTML code
             $table = array();
@@ -99,6 +100,39 @@ abstract class Embed
         }
 
         return $content;
+    }
+
+    /**
+     * @param string|array $content
+     *
+     * @return array[]
+     * @throws \ReflectionException
+     */
+    protected static function getUrlInfo($content)
+    {
+        $providers = static::$embera ? static::$embera->getUrlInfo($content) : array();
+
+        // Check if we don't have a provider_name set, and set it based on the class name
+        foreach ($providers as $url => &$service) {
+            if (!isset($service['provider_name'])) {
+                $reflect                  = new \ReflectionClass($service);
+                $service['provider_name'] = $reflect->getShortName();
+                unset($reflect);
+            }
+
+            // Add the provider_alias if not exists
+            if (!isset($service['provider_alias'])) {
+                $service['provider_alias'] = preg_replace('/[^a-z0-9\-]/i', '-', $service['provider_name']);
+                $service['provider_alias'] = strtolower(str_replace('--', '-', $service['provider_alias']));
+            }
+
+            // Add the wrapper_class if not exists
+            if (!isset($service['wrapper_class'])) {
+                $service['wrapper_class'] = '';
+            }
+        }
+
+        return $providers;
     }
 
     public static function onContentBeforeSave($article)
