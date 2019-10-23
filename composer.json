@@ -20,17 +20,16 @@
             "email": "help@joomlashack.com"
         }
     ],
-    "repositories"     : [
-        {
+    "repositories"     : {
+        "embera": {
             "type": "vcs",
-            "url" : "https://github.com/OSTraining/Embera.git"
+            "url" : "https://github.com/joomlashack/Embera.git"
         }
-    ],
-    "require"          : {
-        "php"              : ">=5.6",
-        "ostraining/embera": "*@beta"
     },
     "config"           : {
         "vendor-dir": "src/library"
+    },
+    "require"          : {
+        "joomlashack/embera": "*@beta"
     }
 }

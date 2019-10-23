@@ -1,23 +1,23 @@
 [
     {
-        "name": "ostraining/embera",
-        "version": "v1.9.5b1",
-        "version_normalized": "1.9.5.0-beta1",
+        "name": "joomlashack/embera",
+        "version": "v1.9.5",
+        "version_normalized": "1.9.5.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/OSTraining/Embera.git",
-            "reference": "14339da61f848a4a27548da40c8e827760581b1d"
+            "url": "https://github.com/joomlashack/Embera.git",
+            "reference": "e4c147678d20a563601f8147dac66d78a1fea8cb"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/OSTraining/Embera/zipball/14339da61f848a4a27548da40c8e827760581b1d",
-            "reference": "14339da61f848a4a27548da40c8e827760581b1d",
+            "url": "https://api.github.com/repos/joomlashack/Embera/zipball/e4c147678d20a563601f8147dac66d78a1fea8cb",
+            "reference": "e4c147678d20a563601f8147dac66d78a1fea8cb",
             "shasum": ""
         },
         "require": {
             "php": ">=5.6"
         },
-        "time": "2019-08-07T21:13:55+00:00",
+        "time": "2019-10-23T16:05:57+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -37,7 +37,7 @@
             }
         ],
         "description": "Oembed consumer library, that gives information about urls. It helps you replace urls to 60+ sites like youtube or vimeo, with their html embed code.",
-        "homepage": "https://github.com/OSTraining/Embera",
+        "homepage": "https://github.com/joomlashack/Embera",
         "keywords": [
             "Auto embed",
             "Embed",
@@ -51,7 +51,7 @@
             "Youtube"
         ],
         "support": {
-            "source": "https://github.com/OSTraining/Embera/tree/v1.9.5b1"
+            "source": "https://github.com/joomlashack/Embera/tree/v1.9.5"
         }
     }
 ]
