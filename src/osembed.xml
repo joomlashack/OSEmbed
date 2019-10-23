@@ -66,6 +66,8 @@
         <include>AllediaFreeDefaultFiles</include>
 
         <obsolete>
+            <folder>/plugins/content/osembed/library/ostraining</folder>
+
             <file>/plugins/content/osembed/library/Free/Provider/Facebook.php</file>
 
             <extension type="plugin"
