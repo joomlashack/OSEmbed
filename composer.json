@@ -30,6 +30,6 @@
         "vendor-dir": "src/library"
     },
     "require"          : {
-        "joomlashack/embera": "*@beta"
+        "joomlashack/embera": "^1@beta"
     }
 }
