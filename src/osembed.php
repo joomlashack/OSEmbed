@@ -108,8 +108,7 @@ if (defined('OSEMBED_LOADED')) {
          * @param int      $page
          *
          * @return  void
-         *
-         * @since   1.6
+         * @throws Exception
          */
         public function onContentPrepare($context, $article, $params, $page = 0)
         {
