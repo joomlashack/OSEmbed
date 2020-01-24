@@ -44,6 +44,14 @@ if (defined('OSEMBED_LOADED')) {
         protected $allowedToRun = true;
 
         /**
+         * @var string[]
+         */
+        protected $excludedContexts = array(
+            'com_finder.indexer',
+            'com_search.search'
+        );
+
+        /**
          * PlgContentOSEmbed constructor.
          *
          * @param Dispatcher $subject
@@ -112,8 +120,8 @@ if (defined('OSEMBED_LOADED')) {
          */
         public function onContentPrepare($context, $article, $params, $page = 0)
         {
-            // Don't run this plugin when the content is being indexed neither in search results
-            if ($context == 'com_finder.indexer' || $context == 'com_search.search' || !$this->allowedToRun) {
+            // Don't run this plugin in all contexts
+            if (!$this->allowedToRun || in_array($context, $this->excludedContexts)) {
                 return;
             }
 
