@@ -39,8 +39,14 @@ if (defined('OSEMBED_LOADED')) {
     {
         protected $namespace = 'OSEmbed';
 
+        /**
+         * @var string
+         */
         public $type = 'content';
 
+        /**
+         * @var bool
+         */
         protected $allowedToRun = true;
 
         /**
