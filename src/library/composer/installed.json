@@ -1,23 +1,23 @@
 [
     {
         "name": "joomlashack/embera",
-        "version": "v1.9.6b1",
-        "version_normalized": "1.9.6.0-beta1",
+        "version": "v1.9.7b1",
+        "version_normalized": "1.9.7.0-beta1",
         "source": {
             "type": "git",
             "url": "https://github.com/joomlashack/Embera.git",
-            "reference": "cbdb104c96cb2020e94db2836824f57665d6d888"
+            "reference": "2e8843ca5451e6a2ffe169e74813a3e9f5525357"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/joomlashack/Embera/zipball/cbdb104c96cb2020e94db2836824f57665d6d888",
-            "reference": "cbdb104c96cb2020e94db2836824f57665d6d888",
+            "url": "https://api.github.com/repos/joomlashack/Embera/zipball/2e8843ca5451e6a2ffe169e74813a3e9f5525357",
+            "reference": "2e8843ca5451e6a2ffe169e74813a3e9f5525357",
             "shasum": ""
         },
         "require": {
             "php": ">=5.6"
         },
-        "time": "2019-12-10T21:17:30+00:00",
+        "time": "2020-05-22T02:10:14+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -51,7 +51,7 @@
             "Youtube"
         ],
         "support": {
-            "source": "https://github.com/joomlashack/Embera/tree/v1.9.6b1-js1"
+            "source": "https://github.com/joomlashack/Embera/tree/v1.9.7b1"
         }
     }
 ]
