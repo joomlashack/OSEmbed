@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname(dirname($vendorDir));
 
 return array(
-    'Embera' => array($vendorDir . '/joomlashack/embera/Lib'),
+    'Embera' => array($vendorDir . '/mpratt/embera/Lib'),
 );

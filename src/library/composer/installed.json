@@ -1,23 +1,23 @@
 [
     {
-        "name": "joomlashack/embera",
-        "version": "v1.9.7b1",
-        "version_normalized": "1.9.7.0-beta1",
+        "name": "mpratt/embera",
+        "version": "1.9.6",
+        "version_normalized": "1.9.6.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/joomlashack/Embera.git",
-            "reference": "2e8843ca5451e6a2ffe169e74813a3e9f5525357"
+            "url": "https://github.com/mpratt/Embera.git",
+            "reference": "47bcef7f8d7ee60fdc51b55ab25444b1ead06f2f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/joomlashack/Embera/zipball/2e8843ca5451e6a2ffe169e74813a3e9f5525357",
-            "reference": "2e8843ca5451e6a2ffe169e74813a3e9f5525357",
+            "url": "https://api.github.com/repos/mpratt/Embera/zipball/47bcef7f8d7ee60fdc51b55ab25444b1ead06f2f",
+            "reference": "47bcef7f8d7ee60fdc51b55ab25444b1ead06f2f",
             "shasum": ""
         },
         "require": {
             "php": ">=5.6"
         },
-        "time": "2020-05-22T02:10:14+00:00",
+        "time": "2020-01-03T00:35:55+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -37,7 +37,7 @@
             }
         ],
         "description": "Oembed consumer library, that gives information about urls. It helps you replace urls to 60+ sites like youtube or vimeo, with their html embed code.",
-        "homepage": "https://github.com/joomlashack/Embera",
+        "homepage": "https://github.com/mpratt/Embera",
         "keywords": [
             "Auto embed",
             "Embed",
@@ -51,7 +51,8 @@
             "Youtube"
         ],
         "support": {
-            "source": "https://github.com/joomlashack/Embera/tree/v1.9.7b1"
+            "source": "https://github.com/mpratt/Embera/tree/1.9.6",
+            "issues": "https://github.com/mpratt/Embera/issues"
         }
     }
 ]

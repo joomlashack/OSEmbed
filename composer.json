@@ -23,13 +23,13 @@
     "repositories"     : {
         "embera": {
             "type": "vcs",
-            "url" : "https://github.com/joomlashack/Embera.git"
+            "url" : "git@github.com:mpratt/Embera.git"
         }
     },
     "config"           : {
         "vendor-dir": "src/library"
     },
     "require"          : {
-        "joomlashack/embera": "^1@beta"
+        "mpratt/embera": "^1"
     }
 }

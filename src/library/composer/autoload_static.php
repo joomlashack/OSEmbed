@@ -11,7 +11,7 @@ class ComposerStaticInit15b942fc6af6974ec5ec3a1e7a92e45dF
         array (
             'Embera' => 
             array (
-                0 => __DIR__ . '/..' . '/joomlashack/embera/Lib',
+                0 => __DIR__ . '/..' . '/mpratt/embera/Lib',
             ),
         ),
     );
