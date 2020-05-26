@@ -56,7 +56,6 @@ abstract class Embed
                 static::$embera->addProvider('c9ng.com', '\\Alledia\\OSEmbed\\Free\\Provider\\Example');
                 static::$embera->addProvider('geograph.org.uk', '\\Alledia\\OSEmbed\\Free\\Provider\\Example');
                 static::$embera->addProvider('geograph.co.uk', '\\Alledia\\OSEmbed\\Free\\Provider\\Example');
-                static::$embera->addProvider('geograph.ie', '\\Alledia\\OSEmbed\\Free\\Provider\\Example');
                 static::$embera->addProvider('youtu.be', '\\Alledia\\OSEmbed\\Free\\Provider\\Example');
             }
         }
