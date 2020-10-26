@@ -23,50 +23,8 @@
 
 namespace Alledia\OSEmbed\Free;
 
-use Embera\Adapters\Service;
-use ReflectionException;
-
 defined('_JEXEC') or die();
 
 class Embera extends \Embera\Embera
 {
-    /**
-     * @param string $body
-     *
-     * @return array
-     * @throws ReflectionException
-     */
-    public function getUrlInfo($body = null)
-    {
-        $results = array();
-        if ($providers = $this->getProviders($body)) {
-            /** @var Service $service */
-            foreach ($providers as $url => $service) {
-                $serviceInfo = $service->getInfo();
-
-                if (!isset($serviceInfo['provider_name'])) {
-                    $reflect = new \ReflectionClass($service);
-
-                    $serviceInfo['provider_name'] = $reflect->getShortName();
-                    unset($reflect);
-                }
-
-                if (!isset($serviceInfo['provider_alias'])) {
-                    $alias = preg_replace('/[^a-z0-9\-]/i', '-', $serviceInfo['provider_name']);
-                    $alias = strtolower(str_replace('--', '-', $alias));
-
-                    $serviceInfo['provider_alias'] = $alias;
-                }
-
-                if (!isset($serviceInfo['wrapper_class'])) {
-                    $serviceInfo['wrapper_class'] = '';
-                }
-
-                $results[$url] = $serviceInfo;
-                $this->errors  = array_merge($this->errors, $service->getErrors());
-            }
-        }
-
-        return array_filter($results);
-    }
 }

@@ -25,10 +25,7 @@ namespace Alledia\OSEmbed\Free;
 
 defined('_JEXEC') or die();
 
-use Embera\HtmlProcessor;
-use Joomla\Utilities\ArrayHelper;
-
-jimport('joomla.log.log');
+use Embera\ProviderCollection\SlimProviderCollection;
 
 abstract class Embed
 {
@@ -48,16 +45,16 @@ abstract class Embed
     protected static function getEmbera()
     {
         if (static::$embera === null) {
-            static::$embera = new Embera();
+            $config = [
+                'ignore_tags' => ['pre', 'code', 'a', 'img', 'iframe']
+            ];
 
-            if (static::class === self::class) {
-                // Disable some services we're not supporting in Free version
-                static::$embera->addProvider('alpha.app.net', '\\Alledia\\OSEmbed\\Free\\Provider\\Example');
-                static::$embera->addProvider('c9ng.com', '\\Alledia\\OSEmbed\\Free\\Provider\\Example');
-                static::$embera->addProvider('geograph.org.uk', '\\Alledia\\OSEmbed\\Free\\Provider\\Example');
-                static::$embera->addProvider('geograph.co.uk', '\\Alledia\\OSEmbed\\Free\\Provider\\Example');
-                static::$embera->addProvider('youtu.be', '\\Alledia\\OSEmbed\\Free\\Provider\\Example');
-            }
+            $providers = new SlimProviderCollection();
+
+            static::$embera = new Embera($config, $providers);
+
+            // @TODO: Disable certain options
+            //static::$embera->addProvider('youtu.be', '\\Alledia\\OSEmbed\\Free\\Provider\\Example');
         }
 
         return static::$embera;
@@ -72,42 +69,11 @@ abstract class Embed
      */
     public static function parseContent($content, $stripNewLine = false)
     {
-        if (!empty($content)) {
-            // Get all the supported URLs and respective info
-            $data = static::getEmbera()->getUrlInfo($content);
-
-            // Get a list of URLs and the final HTML code
-            $table = array();
-            foreach ($data as $url => $service) {
-                if (isset($service['html'])) {
-                    $html = $service['html'];
-
-                    if (!empty($html)) {
-                        $providerClass = ArrayHelper::getValue($service, 'provider_alias', 'default');
-                        $wrapperClass  = ArrayHelper::getValue($service, 'wrapper_class', 'default');
-
-                        // Wrapper the HTML code to make the embed responsive
-                        $table[$url] = sprintf(
-                            '<div class="%s">%s</div>',
-                            "osembed_wrapper ose-{$providerClass} {$wrapperClass}",
-                            $html
-                        );
-                    }
-                }
-            }
-
-            // Determine wether the body looks like HTML or just plain text.
-            if (strpos($content, '>') !== false) {
-                $processor = new HtmlProcessor(static::getIgnoreTags(), $table);
-                $content   = $processor->process($content);
-
-            } else {
-                // Replace the URLs
-                $content = strtr($content, $table);
-            }
-
+        if ($content) {
             if ($stripNewLine) {
-                $content = preg_replace('/\n/', '', $content);
+                return preg_replace('/\n/', '', static::getEmbera()->autoEmbed($content));
+            } else {
+                return static::getEmbera()->autoEmbed($content);
             }
         }
 

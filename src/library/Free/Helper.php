@@ -23,24 +23,22 @@
 
 namespace Alledia\OSEmbed\Free;
 
+use Joomla\CMS\Log\Log;
+
 defined('_JEXEC') or die();
-
-use JLog;
-
-jimport('joomla.log.log');
 
 abstract class Helper
 {
-    protected static $minPHPVersion = '5.3';
+    protected static $minPHPVersion = '5.6';
 
     public static function addLog()
     {
-        JLog::addLogger(
+        Log::addLogger(
             array(
                 // Sets file name
                 'text_file' => 'osembed.log.php'
             ),
-            JLog::ALL,
+            Log::ALL,
             array('osembed.library', 'osembed.content', 'osembed.system')
         );
     }
@@ -55,9 +53,9 @@ abstract class Helper
             $complies = false;
 
             if ($logWarnings) {
-                JLog::add(
+                Log::add(
                     'OSEmbed requires PHP ' . static::$minPHPVersion . ' or later. You are running the ' . $version,
-                    JLog::WARNING,
+                    Log::WARNING,
                     'osembed.library'
                 );
             }

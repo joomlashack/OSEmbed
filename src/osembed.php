@@ -23,139 +23,144 @@
 
 defined('_JEXEC') or die;
 
-use Alledia\Framework\Joomla\Extension;
+use Alledia\Framework\Joomla\Extension\AbstractPlugin;
 use Alledia\OSEmbed\Free\Embed;
 use Alledia\OSEmbed\Free\Helper;
 use Joomla\Event\Dispatcher;
 use Joomla\Registry\Registry;
 
 include_once 'include.php';
+if (!defined('OSEMBED_LOADED')) {
+    return;
+}
 
-if (defined('OSEMBED_LOADED')) {
+class PlgContentOSEmbed extends AbstractPlugin
+{
+    protected $namespace = 'OSEmbed';
+
     /**
-     * OSEmbed Content Plugin
+     * @var string
      */
-    class PlgContentOSEmbed extends Extension\AbstractPlugin
+    public $type = 'content';
+
+    /**
+     * @var bool
+     */
+    protected $allowedToRun = true;
+
+    /**
+     * @var string[]
+     */
+    protected $excludedContexts = array(
+        'com_finder.indexer',
+        'com_search.search'
+    );
+
+    /**
+     * PlgContentOSEmbed constructor.
+     *
+     * @param Dispatcher $subject
+     * @param array      $config
+     *
+     * @return void
+     * @throws Exception
+     */
+    public function __construct(&$subject, $config = array())
     {
-        protected $namespace = 'OSEmbed';
+        parent::__construct($subject, $config);
 
-        /**
-         * @var string
-         */
-        public $type = 'content';
+        $option  = JFactory::getApplication()->input->get('option');
+        $docType = JFactory::getDocument()->getType();
 
-        /**
-         * @var bool
-         */
-        protected $allowedToRun = true;
+        // Do not run if called from OSMap's XML view
+        if ($option === 'com_osmap' && $docType !== 'html') {
+            $this->allowedToRun = false;
+        }
 
-        /**
-         * @var string[]
-         */
-        protected $excludedContexts = array(
-            'com_finder.indexer',
-            'com_search.search'
-        );
+        if ($this->allowedToRun) {
+            $this->init();
 
-        /**
-         * PlgContentOSEmbed constructor.
-         *
-         * @param Dispatcher $subject
-         * @param array      $config
-         *
-         * @return void
-         * @throws Exception
-         */
-        public function __construct(&$subject, $config = array())
-        {
-            parent::__construct($subject, $config);
-
-            $option  = JFactory::getApplication()->input->get('option');
-            $docType = JFactory::getDocument()->getType();
-
-            // Do not run if called from OSMap's XML view
-            if ($option === 'com_osmap' && $docType !== 'html') {
+            // Check the minumum requirements
+            $helperClass = $this->getHelperClass();
+            if (!$helperClass::complyBasicRequirements()) {
                 $this->allowedToRun = false;
             }
+        }
+    }
 
-            if ($this->allowedToRun) {
-                $this->init();
-
-                // Check the minumum requirements
-                $helperClass = $this->getHelperClass();
-                if (!$helperClass::complyBasicRequirements()) {
-                    $this->allowedToRun = false;
-                }
-            }
+    /**
+     * @return Helper|string
+     */
+    protected function getHelperClass()
+    {
+        if ($this->isPro()) {
+            return 'Alledia\\OSEmbed\\Pro\\Helper';
         }
 
-        /**
-         * @return Helper|string
-         */
-        protected function getHelperClass()
-        {
-            if ($this->isPro()) {
-                return 'Alledia\\OSEmbed\\Pro\\Helper';
-            }
+        return 'Alledia\\OSEmbed\\Free\\Helper';
+    }
 
-            return 'Alledia\\OSEmbed\\Free\\Helper';
+    /**
+     * @return Embed|string
+     */
+    protected function getEmbedClass()
+    {
+        if ($this->isPro()) {
+            return 'Alledia\\OSEmbed\\Pro\\Embed';
         }
 
-        /**
-         * @return Embed|string
-         */
-        protected function getEmbedClass()
-        {
-            if ($this->isPro()) {
-                return 'Alledia\\OSEmbed\\Pro\\Embed';
-            }
+        return 'Alledia\\OSEmbed\\Free\\Embed';
+    }
 
-            return 'Alledia\\OSEmbed\\Free\\Embed';
+    /**
+     * Plugin that loads module positions within content
+     *
+     * @param string   $context
+     * @param object   $article
+     * @param Registry $params
+     * @param int      $page
+     *
+     * @return  void
+     * @throws Exception
+     */
+    public function onContentPrepare($context, $article, $params, $page = 0)
+    {
+        // Don't run this plugin in all contexts
+        if (!$this->allowedToRun || in_array($context, $this->excludedContexts)) {
+            return;
         }
 
-        /**
-         * Plugin that loads module positions within content
-         *
-         * @param string   $context
-         * @param object   $article
-         * @param Registry $params
-         * @param int      $page
-         *
-         * @return  void
-         * @throws Exception
-         */
-        public function onContentPrepare($context, $article, $params, $page = 0)
-        {
-            // Don't run this plugin in all contexts
-            if (!$this->allowedToRun || in_array($context, $this->excludedContexts)) {
-                return;
-            }
+        $versionUID = md5($this->extension->getVersion());
 
-            $versionUID = md5($this->extension->getVersion());
+        JHtml::_('jquery.framework');
 
-            JHtml::_('jquery.framework');
+        JHtml::_(
+            'stylesheet',
+            'plg_content_osembed/osembed.css',
+            array('relative' => true, 'version' => $versionUID)
+        );
 
-            JHtml::_(
-                'stylesheet',
-                'plg_content_osembed/osembed.css',
-                array('relative' => true, 'version' => $versionUID)
-            );
+        JHtml::_(
+            'script',
+            'plg_content_osembed/osembed.js',
+            array('relative' => true, 'version' => $versionUID)
+        );
 
-            JHtml::_(
-                'script',
-                'plg_content_osembed/osembed.js',
-                array('relative' => true, 'version' => $versionUID)
-            );
+        $embedClass    = $this->getEmbedClass();
+        $article->text = $embedClass::parseContent($article->text, false);
+    }
 
-            $embedClass    = $this->getEmbedClass();
-            $article->text = $embedClass::parseContent($article->text, false);
-        }
+    /**
+     * @param string $context
+     * @param object $article
+     * @param bool   $isNew
+     *
+     * @return bool
+     */
+    public function onContentBeforeSave($context, $article, $isNew)
+    {
+        $embedClass = $this->getEmbedClass();
 
-        public function onContentBeforeSave($context, $article, $isNew)
-        {
-            $embedClass = $this->getEmbedClass();
-
-            return $embedClass::onContentBeforeSave($article);
-        }
+        return $embedClass::onContentBeforeSave($article);
     }
 }
