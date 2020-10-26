@@ -6,20 +6,30 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit15b942fc6af6974ec5ec3a1e7a92e45dF
 {
-    public static $prefixesPsr0 = array (
+    public static $prefixLengthsPsr4 = array (
         'E' => 
         array (
-            'Embera' => 
-            array (
-                0 => __DIR__ . '/..' . '/mpratt/embera/Lib',
-            ),
+            'Embera\\' => 7,
         ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'Embera\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mpratt/embera/src/Embera',
+        ),
+    );
+
+    public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixesPsr0 = ComposerStaticInit15b942fc6af6974ec5ec3a1e7a92e45dF::$prefixesPsr0;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit15b942fc6af6974ec5ec3a1e7a92e45dF::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit15b942fc6af6974ec5ec3a1e7a92e45dF::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit15b942fc6af6974ec5ec3a1e7a92e45dF::$classMap;
 
         }, null, ClassLoader::class);
     }

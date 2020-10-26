@@ -30,6 +30,6 @@
         "vendor-dir": "src/library"
     },
     "require"          : {
-        "mpratt/embera": "^1"
+        "mpratt/embera": "^2"
     }
 }
