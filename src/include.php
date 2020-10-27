@@ -22,6 +22,7 @@
  */
 
 use Alledia\Framework;
+use Joomla\CMS\Factory;
 
 defined('_JEXEC') or die();
 
@@ -33,8 +34,9 @@ if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
 
     if (file_exists($allediaFrameworkPath)) {
         require_once $allediaFrameworkPath;
+
     } else {
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
 
         if ($app->isClient('administrator')) {
             $app->enqueueMessage('[OSEmbed] Alledia framework not found', 'error');
