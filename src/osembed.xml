@@ -48,6 +48,11 @@
                        showgoproad="https://www.joomlashack.com/joomla-extensions/osembed/"
                        jedurl="https://extensions.joomla.org/extension/osembed/"/>
             </fieldset>
+
+            <fieldset name="providers" label="PLG_CONTENT_OSEMBED_CONFIG_TAB_PROVIDERS">
+                <field name="providers"
+                       type="osembed.providers"/>
+            </fieldset>
         </fields>
     </config>
 
