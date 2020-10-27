@@ -78,6 +78,7 @@
             <folder>/plugins/content/osembed/library/joomlashack</folder>
             <folder>/plugins/content/osembed/library/ostraining</folder>
 
+            <file>/plugins/content/osembed/library/Free/Helper.php</file>
             <file>/plugins/content/osembed/library/Free/Provider/Facebook.php</file>
 
             <extension type="plugin"
