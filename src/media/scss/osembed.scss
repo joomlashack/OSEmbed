@@ -82,6 +82,10 @@ body {
     padding-bottom: 142%;
   }
 
+  .embera-embed-responsive-provider-sketchfab {
+    padding-bottom: 50%; // 50% is a test value. Not sure which aspect ratio is more appropriate
+  }
+
   /* Fix scrolling on iOS devices */
   .embera-embed-responsive-provider-google-docs {
     -webkit-overflow-scrolling: touch;
