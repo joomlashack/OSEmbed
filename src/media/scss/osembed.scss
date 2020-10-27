@@ -55,7 +55,8 @@ body {
   .embera-embed-responsive-provider-on-aol-com,
   .embera-embed-responsive-provider-animoto,
   .embera-embed-responsive-provider-videojug,
-  .embera-embed-responsive-provider-speakerdeck {
+  .embera-embed-responsive-provider-speakerdeck,
+  .embera-embed-responsive-provider-sketchfab {
     padding-bottom: 56.25%;
   }
 
@@ -81,10 +82,6 @@ body {
   .embera-embed-responsive-provider-google-docs.embera-embed-responsive-provider-google-docs-forms,
   .embera-embed-responsive-provider-google-docs.embera-embed-responsive-provider-google-docs-spreadsheets {
     padding-bottom: 142%;
-  }
-
-  .embera-embed-responsive-provider-sketchfab {
-    padding-bottom: 50%; // 50% is a test value. Not sure which aspect ratio is more appropriate
   }
 
   /* Fix scrolling on iOS devices */
