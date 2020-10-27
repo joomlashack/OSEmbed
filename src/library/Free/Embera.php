@@ -26,12 +26,19 @@ namespace Alledia\OSEmbed\Free;
 use Alledia\Framework\Factory;
 use Embera\Http\HttpClientInterface;
 use Embera\ProviderCollection\ProviderCollectionInterface;
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Log\Log;
 use Joomla\Registry\Registry;
 
 defined('_JEXEC') or die();
 
 class Embera extends \Embera\Embera
 {
+    /**
+     * @var CMSApplication
+     */
+    protected $app = null;
+
     /**
      * @var Registry
      */
@@ -47,6 +54,7 @@ class Embera extends \Embera\Embera
         Registry $params = null
     ) {
 
+        $this->app    = Factory::getApplication();
         $this->params = $params ?: new Registry();
 
         parent::__construct($config, $collection, $httpClient);
@@ -62,6 +70,9 @@ class Embera extends \Embera\Embera
         if ($this->params->get('debug', false)) {
             if ($errors = $this->getErrors()) {
                 Factory::getApplication()->enqueueMessage(join('<br>', $errors), 'error');
+                foreach ($errors as $error) {
+                    Log::add($error, Log::ERROR, 'osembed.content');
+                }
             }
         }
 

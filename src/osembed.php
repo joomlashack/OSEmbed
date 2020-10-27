@@ -24,7 +24,10 @@
 defined('_JEXEC') or die;
 
 use Alledia\Framework\Joomla\Extension\AbstractPlugin;
-use Alledia\OSEmbed\Free\Embed;
+use Alledia\OSEmbed\Free\Embera;
+use Embera\ProviderCollection\DefaultProviderCollection;
+use Embera\ProviderCollection\SlimProviderCollection;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Log\Log;
@@ -51,9 +54,19 @@ class PlgContentOSEmbed extends AbstractPlugin
     protected $minPHPVersion = '5.6';
 
     /**
+     * @var CMSApplication
+     */
+    protected $app = null;
+
+    /**
      * @var bool
      */
     protected $enabled = null;
+
+    /**
+     * @var Embera
+     */
+    protected $embera = null;
 
     /**
      * @var string[]
@@ -84,23 +97,6 @@ class PlgContentOSEmbed extends AbstractPlugin
     }
 
     /**
-     * @return Embed
-     */
-    protected function getEmbed()
-    {
-        $className = sprintf(
-            '\\Alledia\\OSEmbed\\%s\\Embed',
-            $this->isPro() ? 'Pro' : 'Free'
-        );
-
-        if (class_exists($className)) {
-            return new $className($this->params);
-        }
-
-        return null;
-    }
-
-    /**
      * @param string   $context
      * @param object   $article
      * @param Registry $params
@@ -128,24 +124,58 @@ class PlgContentOSEmbed extends AbstractPlugin
                 ['relative' => true, 'version' => $versionUID]
             );
 
-            $article->text = $this->getEmbed()->parseContent($article->text, false);
+            $article->text = $this->parseContent($article->text);
         }
     }
 
     /**
-     * @param string $context
-     * @param object $article
-     * @param bool   $isNew
+     * @param Registry $params
      *
-     * @return bool
+     * @return Embera
      */
-    public function onContentBeforeSave($context, $article, $isNew)
+    protected function getEmbera()
     {
-        if ($embed = $this->getEmbed()) {
-            return $this->getEmbed()->onContentBeforeSave($article);
+        if ($this->embera === null) {
+            $config = [
+                'responsive'  => (bool)$this->params->get('responsive', true),
+                'ignore_tags' => (array)$this->params->get('ignore_tags', ['pre', 'code', 'a', 'img', 'iframe'])
+            ];
+
+            if ($this->isPro()) {
+                $providers = new DefaultProviderCollection();
+
+            } else {
+                $providers = new SlimProviderCollection();
+
+                // @TODO: Disable certain options
+                //static::$embera->addProvider('youtu.be', '\\Alledia\\OSEmbed\\Free\\Provider\\Example');
+            }
+
+            $this->embera = new Embera($config, $providers, null, $this->params);
         }
 
-        return true;
+        return $this->embera;
+    }
+
+    /**
+     * @param string $content
+     *
+     * @return string
+     * @throws \Exception
+     */
+    protected function parseContent($content)
+    {
+        $embera = $this->getEmbera();
+        if ($content && $embera) {
+            if ($this->params->get('stripnewline', false)) {
+                return preg_replace('/\n/', '', $embera->autoEmbed($content));
+
+            } else {
+                return $embera->autoEmbed($content);
+            }
+        }
+
+        return $content;
     }
 
     /**
@@ -153,11 +183,15 @@ class PlgContentOSEmbed extends AbstractPlugin
      */
     protected function addLogger()
     {
-        Log::addLogger(
-            ['text_file' => 'osembed.log.php'],
-            Log::ALL,
-            ['osembed.library', 'osembed.content', 'osembed.system']
-        );
+        if ($this->params->get('debug') || $this->app->get('debug')) {
+            $this->params->set('debug', true);
+
+            Log::addLogger(
+                ['text_file' => 'osembed.log.php'],
+                Log::ALL,
+                ['osembed.library', 'osembed.content', 'osembed.system']
+            );
+        }
     }
 
     /**
