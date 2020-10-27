@@ -32,6 +32,15 @@
     <config>
         <fields name="params">
             <fieldset name="basic" addfieldpath="/plugins/content/osembed/form/fields">
+                <field name="debug"
+                       type="radio"
+                       label="PLG_CONTENT_OSEMBED_CONFIG_DEBUG_LABEL"
+                       class="btn-group btn-group-yesno"
+                       default="0">
+                    <option value="0">JOFF</option>
+                    <option value="1">JON</option>
+                </field>
+
                 <field name="customfooter"
                        type="customfooter"
                        media="plg_content_osembed"
