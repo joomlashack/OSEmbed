@@ -100,7 +100,7 @@
                        group="system"
                        element="osembedpreview"/>
         </obsolete>
-        <scss destination="media/css/" style="nested">
+        <scss destination="media/css/" style="compressed">
             <file>media/scss/osembed.scss</file>
         </scss>
     </alledia>
