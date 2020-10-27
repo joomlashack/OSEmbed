@@ -30,6 +30,7 @@
         "vendor-dir": "src/library"
     },
     "require"          : {
+        "ext-simplexml": "*",
         "mpratt/embera": "^2"
     }
 }
