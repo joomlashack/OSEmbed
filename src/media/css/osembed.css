@@ -51,41 +51,41 @@ body .embera-embed-responsive-provider-amcharts,
 body .embera-embed-responsive-provider-on-aol-com,
 body .embera-embed-responsive-provider-animoto,
 body .embera-embed-responsive-provider-videojug {
-    padding-bottom: 56.25%;
+  padding-bottom: 56.25%;
 }
 
 /* 1:1 aspect ratio */
 body .embera-embed-responsive-provider-vine {
-    padding-bottom: 100%;
+  padding-bottom: 100%;
 }
 
 /* Mixed aspect ratio */
 body .embera-embed-responsive-provider-ustream {
-    padding-bottom: 63.3%;
+  padding-bottom: 63.3%;
 }
 
 body .embera-embed-responsive-provider-google-docs {
-    padding-bottom: 62.6%;
+  padding-bottom: 62.6%;
 }
 
 body .embera-embed-responsive-provider-google-docs.embera-embed-responsive-provider-google-docs-drawings {
-    padding-bottom: 74.5%;
+  padding-bottom: 74.5%;
 }
 
 body .embera-embed-responsive-provider-google-docs.embera-embed-responsive-provider-google-docs-document,
 body .embera-embed-responsive-provider-google-docs.embera-embed-responsive-provider-google-docs-forms,
 body .embera-embed-responsive-provider-google-docs.embera-embed-responsive-provider-google-docs-spreadsheets {
-    padding-bottom: 142%;
+  padding-bottom: 142%;
 }
 
 /* Dynamic aspect ratio */
 body .embera-embed-responsive-provider-flickr .flickr-embed-frame {
-    max-width: 1024px !important;
-    width: 100% !important;
+  max-width: 1024px !important;
+  width: 100% !important;
 }
 
 /* Fix scrolling on iOS devices */
 body .embera-embed-responsive-provider-google-docs {
-    -webkit-overflow-scrolling: touch;
-    overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
 }
