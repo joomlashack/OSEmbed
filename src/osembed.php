@@ -39,7 +39,7 @@ if (!defined('OSEMBED_LOADED')) {
     return;
 }
 
-class PlgContentOSEmbed extends AbstractPlugin
+class Plgcontentosembed extends AbstractPlugin
 {
     protected $namespace = 'OSEmbed';
 
@@ -129,8 +129,6 @@ class PlgContentOSEmbed extends AbstractPlugin
     }
 
     /**
-     * @param Registry $params
-     *
      * @return Embera
      */
     protected function getEmbera()
@@ -161,7 +159,7 @@ class PlgContentOSEmbed extends AbstractPlugin
      * @param string $content
      *
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     protected function parseContent($content)
     {
@@ -202,7 +200,7 @@ class PlgContentOSEmbed extends AbstractPlugin
         if ($this->enabled === null) {
             $this->enabled = true;
 
-            $option  = Factory::getApplication()->input->get('option');
+            $option  = $this->app->input->get('option');
             $docType = Factory::getDocument()->getType();
             $version = phpversion();
 
