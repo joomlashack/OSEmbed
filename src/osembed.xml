@@ -27,6 +27,7 @@
         <folder>images</folder>
         <folder>fonts</folder>
         <folder>js</folder>
+        <folder>scss</folder>
     </media>
 
     <config>
@@ -94,5 +95,8 @@
                        group="system"
                        element="osembedpreview"/>
         </obsolete>
+        <scss destination="media/css/" style="nested">
+            <file>media/scss/osembed.scss</file>
+        </scss>
     </alledia>
 </extension>
