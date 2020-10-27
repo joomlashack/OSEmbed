@@ -46,6 +46,7 @@ abstract class Embed
     {
         if (static::$embera === null) {
             $config = [
+                'responsive'  => true,
                 'ignore_tags' => ['pre', 'code', 'a', 'img', 'iframe']
             ];
 
