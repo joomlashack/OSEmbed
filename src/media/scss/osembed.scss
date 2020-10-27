@@ -82,12 +82,6 @@ body {
     padding-bottom: 142%;
   }
 
-  /* Dynamic aspect ratio */
-  .embera-embed-responsive-provider-flickr .flickr-embed-frame {
-    max-width: 1024px !important;
-    width: 100% !important;
-  }
-
   /* Fix scrolling on iOS devices */
   .embera-embed-responsive-provider-google-docs {
     -webkit-overflow-scrolling: touch;
