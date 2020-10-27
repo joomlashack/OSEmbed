@@ -76,13 +76,7 @@ class PlgContentOSEmbed extends AbstractPlugin
     {
         parent::__construct($subject, $config);
 
-        $option  = Factory::getApplication()->input->get('option');
-        $docType = Factory::getDocument()->getType();
-
-        // Do not run if called from OSMap's XML view
-        if ($option === 'com_osmap' && $docType !== 'html') {
-            $this->allowedToRun = false;
-        }
+        $this->addLogger();
 
         if ($this->isEnabled()) {
             $this->init();
@@ -157,7 +151,7 @@ class PlgContentOSEmbed extends AbstractPlugin
     /**
      * @return void
      */
-    public static function addLog()
+    protected function addLogger()
     {
         Log::addLogger(
             ['text_file' => 'osembed.log.php'],
@@ -169,12 +163,20 @@ class PlgContentOSEmbed extends AbstractPlugin
     /**
      * @return bool
      */
-    public function isEnabled()
+    protected function isEnabled()
     {
         if ($this->enabled === null) {
             $this->enabled = true;
 
+            $option  = Factory::getApplication()->input->get('option');
+            $docType = Factory::getDocument()->getType();
             $version = phpversion();
+
+            // Do not run if called from OSMap's XML view
+            if ($option === 'com_osmap' && $docType !== 'html') {
+                $this->enabled = false;
+            }
+
             if (version_compare($version, $this->minPHPVersion, 'lt')) {
                 $this->enabled = false;
 
