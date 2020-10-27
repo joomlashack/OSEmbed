@@ -150,6 +150,14 @@ class Plgcontentosembed extends AbstractPlugin
             }
 
             $this->embera = new Embera($config, $providers, null, $this->params);
+
+            $this->embera->addFilter(function ($response) {
+                if (stripos($response['provider_url'], 'youtu.be') !== false) {
+                    return false;
+                }
+
+                return $response;
+            });
         }
 
         return $this->embera;
