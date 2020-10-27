@@ -26,39 +26,47 @@ namespace Alledia\OSEmbed\Free;
 defined('_JEXEC') or die();
 
 use Embera\ProviderCollection\SlimProviderCollection;
+use Joomla\Registry\Registry;
 
-abstract class Embed
+class Embed
 {
     /**
      * @var Embera
      */
-    protected static $embera = null;
+    protected $embera = null;
 
     /**
-     * @var string[]
+     * @var Registry
      */
-    protected static $ignoreTags = null;
+    protected $params = null;
+
+    public function __construct(Registry $params)
+    {
+        $this->params = $params;
+    }
 
     /**
+     * @param Registry $params
+     *
      * @return Embera
      */
-    protected static function getEmbera()
+    protected function getEmbera()
     {
-        if (static::$embera === null) {
+        if ($this->embera === null) {
             $config = [
                 'responsive'  => true,
-                'ignore_tags' => ['pre', 'code', 'a', 'img', 'iframe']
+                'ignore_tags' => (array)$this->params->get('ignore_tags', ['pre', 'code', 'a', 'img', 'iframe'])
             ];
 
             $providers = new SlimProviderCollection();
 
-            static::$embera = new Embera($config, $providers);
+            $this->embera = new Embera($config, $providers, null, $this->params);
 
             // @TODO: Disable certain options
             //static::$embera->addProvider('youtu.be', '\\Alledia\\OSEmbed\\Free\\Provider\\Example');
         }
 
-        return static::$embera;
+        return $this->embera;
     }
 
     /**
@@ -68,35 +76,22 @@ abstract class Embed
      * @return string
      * @throws \Exception
      */
-    public static function parseContent($content, $stripNewLine = false)
+    public function parseContent($content, $stripNewLine = false)
     {
-        if ($content) {
+        $embera = $this->getEmbera();
+        if ($content && $embera) {
             if ($stripNewLine) {
-                return preg_replace('/\n/', '', static::getEmbera()->autoEmbed($content));
+                return preg_replace('/\n/', '', $embera->autoEmbed($content));
             } else {
-                return static::getEmbera()->autoEmbed($content);
+                return $embera->autoEmbed($content);
             }
         }
 
         return $content;
     }
 
-    public static function onContentBeforeSave($article)
+    public function onContentBeforeSave($article)
     {
         return true;
-    }
-
-    /**
-     * Get the list of tags to ignore
-     *
-     * @return array
-     */
-    public static function getIgnoreTags()
-    {
-        if (!isset(static::$ignoreTags)) {
-            static::$ignoreTags = array('pre', 'code', 'a', 'img', 'iframe');
-        }
-
-        return static::$ignoreTags;
     }
 }

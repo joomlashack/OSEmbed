@@ -25,7 +25,9 @@ defined('_JEXEC') or die;
 
 use Alledia\Framework\Joomla\Extension\AbstractPlugin;
 use Alledia\OSEmbed\Free\Embed;
-use Alledia\OSEmbed\Free\Helper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Log\Log;
 use Joomla\Event\Dispatcher;
 use Joomla\Registry\Registry;
 
@@ -44,17 +46,22 @@ class PlgContentOSEmbed extends AbstractPlugin
     public $type = 'content';
 
     /**
+     * @var string
+     */
+    protected $minPHPVersion = '5.6';
+
+    /**
      * @var bool
      */
-    protected $allowedToRun = true;
+    protected $enabled = null;
 
     /**
      * @var string[]
      */
-    protected $excludedContexts = array(
+    protected $excludedContexts = [
         'com_finder.indexer',
         'com_search.search'
-    );
+    ];
 
     /**
      * PlgContentOSEmbed constructor.
@@ -65,56 +72,41 @@ class PlgContentOSEmbed extends AbstractPlugin
      * @return void
      * @throws Exception
      */
-    public function __construct(&$subject, $config = array())
+    public function __construct(&$subject, $config = [])
     {
         parent::__construct($subject, $config);
 
-        $option  = JFactory::getApplication()->input->get('option');
-        $docType = JFactory::getDocument()->getType();
+        $option  = Factory::getApplication()->input->get('option');
+        $docType = Factory::getDocument()->getType();
 
         // Do not run if called from OSMap's XML view
         if ($option === 'com_osmap' && $docType !== 'html') {
             $this->allowedToRun = false;
         }
 
-        if ($this->allowedToRun) {
+        if ($this->isEnabled()) {
             $this->init();
-
-            // Check the minumum requirements
-            $helperClass = $this->getHelperClass();
-            if (!$helperClass::complyBasicRequirements()) {
-                $this->allowedToRun = false;
-            }
         }
     }
 
     /**
-     * @return Helper|string
+     * @return Embed
      */
-    protected function getHelperClass()
+    protected function getEmbed()
     {
-        if ($this->isPro()) {
-            return 'Alledia\\OSEmbed\\Pro\\Helper';
+        $className = sprintf(
+            '\\Alledia\\OSEmbed\\%s\\Embed',
+            $this->isPro() ? 'Pro' : 'Free'
+        );
+
+        if (class_exists($className)) {
+            return new $className($this->params);
         }
 
-        return 'Alledia\\OSEmbed\\Free\\Helper';
+        return null;
     }
 
     /**
-     * @return Embed|string
-     */
-    protected function getEmbedClass()
-    {
-        if ($this->isPro()) {
-            return 'Alledia\\OSEmbed\\Pro\\Embed';
-        }
-
-        return 'Alledia\\OSEmbed\\Free\\Embed';
-    }
-
-    /**
-     * Plugin that loads module positions within content
-     *
      * @param string   $context
      * @param object   $article
      * @param Registry $params
@@ -125,29 +117,25 @@ class PlgContentOSEmbed extends AbstractPlugin
      */
     public function onContentPrepare($context, $article, $params, $page = 0)
     {
-        // Don't run this plugin in all contexts
-        if (!$this->allowedToRun || in_array($context, $this->excludedContexts)) {
-            return;
+        if ($this->isEnabled() || in_array($context, $this->excludedContexts)) {
+            $versionUID = md5($this->extension->getVersion());
+
+            HTMLHelper::_('jquery.framework');
+
+            HTMLHelper::_(
+                'stylesheet',
+                'plg_content_osembed/osembed.css',
+                ['relative' => true, 'version' => $versionUID]
+            );
+
+            HTMLHelper::_(
+                'script',
+                'plg_content_osembed/osembed.js',
+                ['relative' => true, 'version' => $versionUID]
+            );
+
+            $article->text = $this->getEmbed()->parseContent($article->text, false);
         }
-
-        $versionUID = md5($this->extension->getVersion());
-
-        JHtml::_('jquery.framework');
-
-        JHtml::_(
-            'stylesheet',
-            'plg_content_osembed/osembed.css',
-            array('relative' => true, 'version' => $versionUID)
-        );
-
-        JHtml::_(
-            'script',
-            'plg_content_osembed/osembed.js',
-            array('relative' => true, 'version' => $versionUID)
-        );
-
-        $embedClass    = $this->getEmbedClass();
-        $article->text = $embedClass::parseContent($article->text, false);
     }
 
     /**
@@ -159,8 +147,49 @@ class PlgContentOSEmbed extends AbstractPlugin
      */
     public function onContentBeforeSave($context, $article, $isNew)
     {
-        $embedClass = $this->getEmbedClass();
+        if ($embed = $this->getEmbed()) {
+            return $this->getEmbed()->onContentBeforeSave($article);
+        }
 
-        return $embedClass::onContentBeforeSave($article);
+        return true;
+    }
+
+    /**
+     * @return void
+     */
+    public static function addLog()
+    {
+        Log::addLogger(
+            ['text_file' => 'osembed.log.php'],
+            Log::ALL,
+            ['osembed.library', 'osembed.content', 'osembed.system']
+        );
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnabled()
+    {
+        if ($this->enabled === null) {
+            $this->enabled = true;
+
+            $version = phpversion();
+            if (version_compare($version, $this->minPHPVersion, 'lt')) {
+                $this->enabled = false;
+
+                Log::add(
+                    sprintf(
+                        'OSEmbed requires PHP %s or later. You are running VERSION %S',
+                        $this->minPHPVersion,
+                        $version
+                    ),
+                    Log::WARNING,
+                    'osembed.library'
+                );
+            }
+        }
+
+        return $this->enabled;
     }
 }

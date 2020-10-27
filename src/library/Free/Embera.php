@@ -23,8 +23,48 @@
 
 namespace Alledia\OSEmbed\Free;
 
+use Alledia\Framework\Factory;
+use Embera\Http\HttpClientInterface;
+use Embera\ProviderCollection\ProviderCollectionInterface;
+use Joomla\Registry\Registry;
+
 defined('_JEXEC') or die();
 
 class Embera extends \Embera\Embera
 {
+    /**
+     * @var Registry
+     */
+    protected $params = null;
+
+    /**
+     * @inheritDoc
+     */
+    public function __construct(
+        array $config = [],
+        ProviderCollectionInterface $collection = null,
+        HttpClientInterface $httpClient = null,
+        Registry $params = null
+    ) {
+
+        $this->params = $params ?: new Registry();
+
+        parent::__construct($config, $collection, $httpClient);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getUrlData($urls)
+    {
+        $return = parent::getUrlData($urls);
+
+        if ($this->params->get('debug', false)) {
+            if ($errors = $this->getErrors()) {
+                Factory::getApplication()->enqueueMessage(join('<br>', $errors), 'error');
+            }
+        }
+
+        return $return;
+    }
 }
