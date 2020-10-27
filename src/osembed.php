@@ -26,6 +26,7 @@ defined('_JEXEC') or die;
 use Alledia\Framework\Joomla\Extension\AbstractPlugin;
 use Alledia\OSEmbed\Free\Embera;
 use Embera\ProviderCollection\DefaultProviderCollection;
+use Embera\ProviderCollection\ProviderCollectionAdapter;
 use Embera\ProviderCollection\SlimProviderCollection;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
@@ -129,6 +130,32 @@ class Plgcontentosembed extends AbstractPlugin
     }
 
     /**
+     * @return object
+     */
+    public function onOsembedProviders()
+    {
+        try {
+            $providerList = $this->getProviderList();
+
+            $providersProperty = new ReflectionProperty($providerList, 'providers');
+            $providersProperty->setAccessible(true);
+
+            $providers = $providersProperty->getValue($providerList);
+            $filters   = $this->getHostFilters();
+
+            return (object)[
+                'providers'    => $providers,
+                'excludeHosts' => array_keys($filters)
+            ];
+
+        } catch (Exception $error) {
+            // Ignore
+        }
+
+        return null;
+    }
+
+    /**
      * @return Embera
      */
     protected function getEmbera()
@@ -139,28 +166,48 @@ class Plgcontentosembed extends AbstractPlugin
                 'ignore_tags' => (array)$this->params->get('ignore_tags', ['pre', 'code', 'a', 'img', 'iframe'])
             ];
 
-            if ($this->isPro()) {
-                $providers = new DefaultProviderCollection();
+            $this->embera = new Embera($config, $this->getProviderList(), null, $this->params);
 
-            } else {
-                $providers = new SlimProviderCollection();
-
-                // @TODO: Disable certain options
-                //static::$embera->addProvider('youtu.be', '\\Alledia\\OSEmbed\\Free\\Provider\\Example');
+            $urlFilters = $this->getHostFilters();
+            foreach ($urlFilters as $url => $urlFilter) {
+                $this->embera->addFilter($urlFilter);
             }
+        }
 
-            $this->embera = new Embera($config, $providers, null, $this->params);
+        return $this->embera;
+    }
 
-            $this->embera->addFilter(function ($response) {
+    /**
+     * @return ProviderCollectionAdapter
+     */
+    protected function getProviderList()
+    {
+        if ($this->isPro()) {
+            $providers = new DefaultProviderCollection();
+
+        } else {
+            $providers = new SlimProviderCollection();
+        }
+
+        return $providers;
+    }
+
+    /**
+     * @return Closure[]
+     */
+    protected function getHostFilters()
+    {
+        $filters = [
+            'youtu.be' => function ($response) {
                 if (stripos($response['provider_url'], 'youtu.be') !== false) {
                     return false;
                 }
 
                 return $response;
-            });
-        }
+            }
+        ];
 
-        return $this->embera;
+        return $filters;
     }
 
     /**
