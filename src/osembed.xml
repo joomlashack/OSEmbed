@@ -14,18 +14,20 @@
     <scriptfile>script.installer.php</scriptfile>
 
     <files>
+        <folder>field</folder>
+        <folder>form</folder>
         <folder>language</folder>
         <folder>library</folder>
         <folder>views</folder>
-        <folder>form</folder>
+
         <filename plugin="osembed">osembed.php</filename>
         <filename>include.php</filename>
     </files>
 
     <media destination="plg_content_osembed" folder="media">
         <folder>css</folder>
-        <folder>images</folder>
         <folder>fonts</folder>
+        <folder>images</folder>
         <folder>js</folder>
         <folder>scss</folder>
     </media>
