@@ -45,6 +45,11 @@ class Embera extends \Embera\Embera
     protected $params = null;
 
     /**
+     * @var string[]
+     */
+    protected $excludeUrls = [];
+
+    /**
      * @inheritDoc
      */
     public function __construct(
@@ -54,8 +59,9 @@ class Embera extends \Embera\Embera
         Registry $params = null
     ) {
 
-        $this->app    = Factory::getApplication();
-        $this->params = $params ?: new Registry();
+        $this->app         = Factory::getApplication();
+        $this->params      = $params ?: new Registry();
+        $this->excludeUrls = array_filter((array)$this->params->get('exclude_urls'));
 
         parent::__construct($config, $collection, $httpClient);
     }
@@ -65,27 +71,43 @@ class Embera extends \Embera\Embera
      */
     public function getUrlData($urls)
     {
-        $excludeUrls = array_filter((array)$this->params->get('exclude_urls'));
+        $return = parent::getUrlData($urls);
 
-        $urls = parent::getUrlData($urls);
-        foreach ($urls as $url => $data) {
-            foreach ($excludeUrls as $excludeUrl) {
-                if (stripos($url, $excludeUrl) !== false) {
-                    unset($urls[$url]);
-                    break;
-                }
+        if ($this->params->get('debug') && $this->hasErrors()) {
+            while ($error = array_pop($this->errors)) {
+                Factory::getApplication()->enqueueMessage('<p>' . $error . '</p>', 'error');
+                Log::add($error, Log::ERROR, 'osembed.content');
             }
         }
 
-        if ($this->params->get('debug', false)) {
-            if ($this->hasErrors()) {
-                while ($error = array_pop($this->errors)) {
-                    Factory::getApplication()->enqueueMessage('<p>' . $error . '</p>', 'error');
-                    Log::add($error, Log::ERROR, 'osembed.content');
+        return array_filter($return, [$this, 'filterExcluded'], ARRAY_FILTER_USE_KEY);
+    }
+
+    /**
+     * For use by array_filter() with ARRAY_FILTER_USE_KEY flag
+     *
+     * @param string $url
+     *
+     * @return bool
+     */
+    protected function filterExcluded($url)
+    {
+        foreach ($this->excludeUrls as $excludeUrl) {
+            if (preg_match('#' . preg_quote($excludeUrl, '#') . '#', $url)) {
+                if ($this->params->get('debug')) {
+                    $this->app->enqueueMessage(
+                        sprintf(
+                            '%s urls are disabled - %s',
+                            $excludeUrl,
+                            $url
+                        ),
+                        'notice'
+                    );
                 }
+                return false;
             }
         }
 
-        return $urls;
+        return true;
     }
 }
