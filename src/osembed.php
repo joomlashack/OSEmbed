@@ -95,6 +95,10 @@ class Plgcontentosembed extends AbstractPlugin
         if ($this->isEnabled()) {
             $this->init();
 
+            $this->params->def('responsive', true);
+            $this->params->def('ignore_tags', ['pre', 'code', 'a', 'img', 'iframe']);
+            $this->params->def('exclude_urls', ['youtu.be']);
+
             $excludeUrls = $this->params->get('exclude_urls');
             if (!is_array($excludeUrls)) {
                 $excludeUrls = array_filter(array_unique(explode(',', $excludeUrls)));
@@ -168,8 +172,8 @@ class Plgcontentosembed extends AbstractPlugin
     {
         if ($this->embera === null) {
             $config = [
-                'responsive'  => (bool)$this->params->get('responsive', true),
-                'ignore_tags' => (array)$this->params->get('ignore_tags', ['pre', 'code', 'a', 'img', 'iframe'])
+                'responsive'  => (bool)$this->params->get('responsive'),
+                'ignore_tags' => (array)$this->params->get('ignore_tags')
             ];
 
             $this->embera = new Embera($config, $this->getProviderList(), null, $this->params);
