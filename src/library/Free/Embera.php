@@ -68,9 +68,9 @@ class Embera extends \Embera\Embera
         $return = parent::getUrlData($urls);
 
         if ($this->params->get('debug', false)) {
-            if ($errors = $this->getErrors()) {
-                Factory::getApplication()->enqueueMessage(join('<br>', $errors), 'error');
-                foreach ($errors as $error) {
+            if ($this->hasErrors()) {
+                while ($error = array_pop($this->errors)) {
+                    Factory::getApplication()->enqueueMessage('<p>' . $error . '</p>', 'error');
                     Log::add($error, Log::ERROR, 'osembed.content');
                 }
             }
