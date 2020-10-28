@@ -108,7 +108,7 @@ class Plgcontentosembed extends AbstractPlugin
      */
     public function onContentPrepare($context, $article, $params, $page = 0)
     {
-        if ($this->isEnabled() || in_array($context, $this->excludedContexts)) {
+        if ($this->isEnabled() && !in_array($context, $this->excludedContexts)) {
             $versionUID = md5($this->extension->getVersion());
 
             HTMLHelper::_('jquery.framework');
