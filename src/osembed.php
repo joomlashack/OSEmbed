@@ -65,6 +65,11 @@ class Plgcontentosembed extends AbstractPlugin
     protected $enabled = null;
 
     /**
+     * @var bool
+     */
+    protected $debug = false;
+
+    /**
      * @var Embera
      */
     protected $embera = null;
@@ -98,6 +103,8 @@ class Plgcontentosembed extends AbstractPlugin
             $this->params->def('responsive', true);
             $this->params->def('ignore_tags', ['pre', 'code', 'a', 'img', 'iframe']);
             $this->params->def('exclude_urls', ['youtu.be']);
+
+            $this->debug = $this->params->get('debug', false);
 
             $excludeUrls = $this->params->get('exclude_urls');
             if (!is_array($excludeUrls)) {
@@ -135,7 +142,36 @@ class Plgcontentosembed extends AbstractPlugin
                 ['relative' => true, 'version' => $versionUID]
             );
 
-            $article->text = $this->parseContent($article->text);
+            $textField = null;
+            switch ($context) {
+                case 'com_content.category':
+                    if ($this->params->get('show_intro') && isset($article->introtext)) {
+                        $textField = 'introtext';
+                    }
+                    break;
+
+                case 'com_content.categories':
+                    if ($params->get('show_description')) {
+                        $textField = 'text';
+                    }
+                    break;
+
+                case 'com_content.category.title':
+                    // disable these
+                    break;
+
+                default:
+                    $textField = 'text';
+                    break;
+            }
+
+            if ($this->debug) {
+                $this->app->enqueueMessage(sprintf('%s: Field=%s', $context, $textField ?: 'null'), 'notice');
+            }
+
+            if ($textField && isset($article->{$textField})) {
+                $article->{$textField} = $this->parseContent($article->{$textField});
+            }
         }
     }
 
