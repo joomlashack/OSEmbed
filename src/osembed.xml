@@ -87,6 +87,7 @@
             <file>/plugins/content/osembed/library/Free/Embed.php</file>
             <file>/plugins/content/osembed/library/Free/Helper.php</file>
             <file>/plugins/content/osembed/library/Free/Provider/Facebook.php</file>
+            <file>/plugins/content/osembed/library/Free/Provider/Example.php</file>
 
             <extension type="plugin"
                        group="content"
