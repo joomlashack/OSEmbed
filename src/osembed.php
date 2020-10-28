@@ -94,6 +94,12 @@ class Plgcontentosembed extends AbstractPlugin
 
         if ($this->isEnabled()) {
             $this->init();
+
+            $excludeUrls = $this->params->get('exclude_urls');
+            if (!is_array($excludeUrls)) {
+                $excludeUrls = array_filter(array_unique(explode(',', $excludeUrls)));
+                $this->params->set('exclude_urls', array_map('trim', $excludeUrls));
+            }
         }
     }
 
@@ -167,11 +173,6 @@ class Plgcontentosembed extends AbstractPlugin
             ];
 
             $this->embera = new Embera($config, $this->getProviderList(), null, $this->params);
-
-            $urlFilters = $this->getHostFilters();
-            foreach ($urlFilters as $url => $urlFilter) {
-                $this->embera->addFilter($urlFilter);
-            }
         }
 
         return $this->embera;
@@ -190,24 +191,6 @@ class Plgcontentosembed extends AbstractPlugin
         }
 
         return $providers;
-    }
-
-    /**
-     * @return Closure[]
-     */
-    protected function getHostFilters()
-    {
-        $filters = [
-            'youtu.be' => function ($response) {
-                if (stripos($response['provider_url'], 'youtu.be') !== false) {
-                    return false;
-                }
-
-                return $response;
-            }
-        ];
-
-        return $filters;
     }
 
     /**

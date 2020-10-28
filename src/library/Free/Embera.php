@@ -65,7 +65,17 @@ class Embera extends \Embera\Embera
      */
     public function getUrlData($urls)
     {
-        $return = parent::getUrlData($urls);
+        $excludeUrls = array_filter((array)$this->params->get('exclude_urls'));
+
+        $urls = parent::getUrlData($urls);
+        foreach ($urls as $url => $data) {
+            foreach ($excludeUrls as $excludeUrl) {
+                if (stripos($url, $excludeUrl) !== false) {
+                    unset($urls[$url]);
+                    break;
+                }
+            }
+        }
 
         if ($this->params->get('debug', false)) {
             if ($this->hasErrors()) {
@@ -76,6 +86,6 @@ class Embera extends \Embera\Embera
             }
         }
 
-        return $return;
+        return $urls;
     }
 }
