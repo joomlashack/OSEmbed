@@ -25,9 +25,8 @@ defined('_JEXEC') or die;
 
 use Alledia\Framework\Joomla\Extension\AbstractPlugin;
 use Alledia\OSEmbed\Free\Embera;
-use Embera\ProviderCollection\DefaultProviderCollection;
+use Embera\ProviderCollection\CustomProviderCollection;
 use Embera\ProviderCollection\ProviderCollectionAdapter;
-use Embera\ProviderCollection\SlimProviderCollection;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -222,14 +221,15 @@ class Plgcontentosembed extends AbstractPlugin
      */
     protected function getProviderList()
     {
-        if ($this->isPro()) {
-            $providers = new DefaultProviderCollection();
-
-        } else {
-            $providers = new SlimProviderCollection();
+        $className = sprintf(
+            '\\Alledia\\OSEmbed\\%s\\ProviderCollection',
+            $this->isPro() ? 'Pro' : 'Free'
+        );
+        if (class_exists($className)) {
+            return new $className();
         }
 
-        return $providers;
+        return new CustomProviderCollection();
     }
 
     /**
