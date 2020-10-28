@@ -187,11 +187,10 @@ class Plgcontentosembed extends AbstractPlugin
             $providersProperty->setAccessible(true);
 
             $providers = $providersProperty->getValue($providerList);
-            $filters   = $this->getHostFilters();
 
             return (object)[
                 'providers'    => $providers,
-                'excludeHosts' => array_keys($filters)
+                'excludeHosts' => $this->params->get('exclude_urls')
             ];
 
         } catch (Exception $error) {
