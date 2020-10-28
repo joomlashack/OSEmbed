@@ -67,6 +67,10 @@
         <targetplatform>3.(9|10)</targetplatform>
         <phpminimum>5.6</phpminimum>
 
+        <scss destination="media/css/" style="compressed">
+            <file>media/scss/osembed.scss</file>
+        </scss>
+
         <relatedExtensions>
             <extension type="library"
                        element="allediaframework">AllediaFramework</extension>
@@ -101,8 +105,5 @@
                        group="system"
                        element="osembedpreview"/>
         </obsolete>
-        <scss destination="media/css/" style="compressed">
-            <file>media/scss/osembed.scss</file>
-        </scss>
     </alledia>
 </extension>
