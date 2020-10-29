@@ -23,7 +23,7 @@
 (function($)
 {
     $(window).on('load resize', function() {
-        $('.ose-flickr, .ose-facebook').each(function() {
+        $('.embera-embed-responsive-provider-flickr, .embera-embed-responsive-provider-facebook').each(function() {
 
             // Calculate old and new width/height values
             var $oldHeight  =  $(this).find('iframe').attr('height'); // Get iframe's height
