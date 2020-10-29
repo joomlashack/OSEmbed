@@ -27,6 +27,11 @@ use Joomla\CMS\Factory;
 
 defined('_JEXEC') or die();
 
+/**
+ * Class AbstractFail
+ *
+ * @package Alledia\OSEmbed\Free\Installer
+ */
 class AbstractFail
 {
     public function preFlight($type, $parent)

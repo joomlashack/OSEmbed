@@ -33,6 +33,11 @@ if ($includePath) {
     require_once __DIR__ . '/AbstractFail.php';
 }
 
+/**
+ * Class AbstractScript
+ *
+ * @package Alledia\OSEmbed\Free\Installer
+ */
 class AbstractScript extends \Alledia\Installer\AbstractScript
 {
 }
