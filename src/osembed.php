@@ -25,6 +25,7 @@ defined('_JEXEC') or die;
 
 use Alledia\Framework\Joomla\Extension\AbstractPlugin;
 use Alledia\OSEmbed\Free\Embera;
+use Alledia\OSEmbed\Free\Helper;
 use Embera\ProviderCollection\CustomProviderCollection;
 use Embera\ProviderCollection\ProviderCollectionAdapter;
 use Joomla\CMS\Application\CMSApplication;
@@ -94,7 +95,7 @@ class Plgcontentosembed extends AbstractPlugin
     {
         parent::__construct($subject, $config);
 
-        $this->addLogger();
+        Helper::addLogger($this->params);
 
         if ($this->isEnabled()) {
             $this->init();
@@ -251,22 +252,6 @@ class Plgcontentosembed extends AbstractPlugin
         }
 
         return $content;
-    }
-
-    /**
-     * @return void
-     */
-    protected function addLogger()
-    {
-        if ($this->params->get('debug') || $this->app->get('debug')) {
-            $this->params->set('debug', true);
-
-            Log::addLogger(
-                ['text_file' => 'osembed.log.php'],
-                Log::ALL,
-                ['osembed.library', 'osembed.content', 'osembed.system']
-            );
-        }
     }
 
     /**
