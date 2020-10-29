@@ -20,22 +20,26 @@
  * along with OSEmbed.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-(function($)
-{
+;jQuery(document).ready(function($) {
+    let $providers = $([
+        '.embera-embed-responsive-provider-flickr',
+        '.embera-embed-responsive-provider-facebook'
+    ].join(','));
+
     $(window).on('load resize', function() {
-        $('.embera-embed-responsive-provider-flickr, .embera-embed-responsive-provider-facebook').each(function() {
+        $providers.each(function() {
+            let oldHeight = $(this).find('iframe').attr('height'),
+                oldWidth  = $(this).find('iframe').attr('width');
 
-            // Calculate old and new width/height values
-            var $oldHeight  =  $(this).find('iframe').attr('height'); // Get iframe's height
-            var $oldWidth   =  $(this).find('iframe').attr('width'); // Get iframe's width
-            var $newWidth   =  $(this).width(); // Get wrapper's width
-            var $newHeight  = ($oldHeight/$oldWidth) * $newWidth;
+            if (oldHeight && oldWidth) {
+                let newWidth  = $(this).width(),
+                    newHeight = (oldHeight / oldWidth) * newWidth;
 
-            // Apply new width/height values
-            $(this).find('iframe').css({
-                "height" : $newHeight + "px",
-                "width" : $newWidth + "px"
-            });
+                $(this).find('iframe').css({
+                    height: newHeight + 'px',
+                    width : newWidth + 'px'
+                });
+            }
         });
     });
-})(jQuery);
+});
