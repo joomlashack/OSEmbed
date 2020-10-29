@@ -23,6 +23,9 @@
 
 namespace Alledia\OSEmbed\Free\Installer;
 
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Factory;
+
 defined('_JEXEC') or die();
 
 $includePath = realpath(__DIR__ . '/../../../library/Installer/include.php');
@@ -40,4 +43,15 @@ if ($includePath) {
  */
 class AbstractScript extends \Alledia\Installer\AbstractScript
 {
+    /**
+     * @var CMSApplication
+     */
+    protected $app = null;
+
+    public function __construct($parent)
+    {
+        parent::__construct($parent);
+
+        $this->app = Factory::getApplication();
+    }
 }
