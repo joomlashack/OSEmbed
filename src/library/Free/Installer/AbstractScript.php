@@ -2,8 +2,8 @@
 /**
  * @package   OSEmbed
  * @contact   www.joomlashack.com, help@joomlashack.com
- * @copyright 2016-2020 Joomlashack.com. All rights reserved
- * @license   http://www.gnu.org/licenses/gpl.html GNU/GPL
+ * @copyright 2020 Joomlashack.com. All rights reserved
+ * @license   https://www.gnu.org/licenses/gpl.html GNU/GPL
  *
  * This file is part of OSEmbed.
  *
@@ -18,15 +18,21 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OSEmbed.  If not, see <http://www.gnu.org/licenses/>.
+ * along with OSEmbed.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-use Alledia\OSEmbed\Free\Installer\AbstractScript;
+namespace Alledia\OSEmbed\Free\Installer;
 
 defined('_JEXEC') or die();
 
-require_once __DIR__ . '/library/Free/Installer/AbstractScript.php';
+$includePath = realpath(__DIR__ . '/../../../library/Installer/include.php');
+if ($includePath) {
+    require_once $includePath;
 
-class PlgcontentosembedInstallerScript extends AbstractScript
+} else {
+    require_once __DIR__ . '/AbstractFail.php';
+}
+
+class AbstractScript extends \Alledia\Installer\AbstractScript
 {
 }
