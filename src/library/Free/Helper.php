@@ -24,7 +24,9 @@
 namespace Alledia\OSEmbed\Free;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
+use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
 
 defined('_JEXEC') or die();
@@ -32,21 +34,64 @@ defined('_JEXEC') or die();
 abstract class Helper
 {
     /**
-     * @return void
+     * @var string
      */
-    public static function addLogger(Registry $params = null)
+    protected static $minPHPVersion = '5.6';
+
+    /**
+     * @var bool
+     */
+    protected static $systemRequirements = null;
+
+    /**
+     * @return bool
+     */
+    protected static function isDebugEnabled()
     {
+        $plugin = PluginHelper::getPlugin('content', 'osembed');
+        $params = new Registry($plugin ? $plugin->params : null);
+
         $params    = $params ?: new Registry();
         $appParams = Factory::getConfig();
 
-        if ($params->get('debug') || $appParams->get('debug')) {
-            $params->set('debug', true);
+        return $params->get('debug') || $appParams->get('debug');
+    }
 
+    /**
+     * @return void
+     */
+    public static function addLogger()
+    {
+        if (static::isDebugEnabled()) {
             Log::addLogger(
                 ['text_file' => 'osembed.log.php'],
                 Log::ALL,
                 ['osembed.library', 'osembed.content', 'osembed.system']
             );
         }
+    }
+
+    /**
+     * @return bool
+     * @throws \Exception
+     */
+    public static function complySystemRequirements()
+    {
+        if (static::$systemRequirements === null) {
+            static::$systemRequirements = version_compare(phpversion(), static::$minPHPVersion, 'ge');
+
+            if (!static::$systemRequirements) {
+                $message = Text::sprintf(
+                    'PLG_CONTENT_OSEMBED_ERROR_PHP_VERSION',
+                    static::$minPHPVersion,
+                    phpversion()
+                );
+
+                Factory::getApplication()->enqueueMessage($message);
+                Log::add($message, Log::ERROR, 'osembed.library');
+            }
+        }
+
+        return static::$systemRequirements;
     }
 }
