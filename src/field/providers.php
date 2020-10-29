@@ -22,6 +22,7 @@
  */
 
 use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Language\Text;
 
 defined('_JEXEC') or die();
 
@@ -77,6 +78,18 @@ class OsembedFormFieldProviders extends FormField
             }
         }
 
+        if ($providerNames) {
+            return $this->displayProviders($providerNames);
+        }
+
+        return sprintf(
+            '<span class="alert alert-error">%s</span>',
+            Text::_('PLG_CONTENT_OSEMBED_ERROR_NO_PROVIDERS')
+        );
+    }
+
+    protected function displayProviders(array $providerNames)
+    {
         $html = [
             '<table class="table table-striped">',
             '<thead>',
