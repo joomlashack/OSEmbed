@@ -97,7 +97,7 @@ class Plgcontentosembed extends AbstractPlugin
     {
         parent::__construct($subject, $config);
 
-        Helper::addLogger($this->params);
+        Helper::addLogger();
 
         if ($this->isEnabled()) {
             $this->init();
@@ -204,6 +204,7 @@ class Plgcontentosembed extends AbstractPlugin
 
     /**
      * @return Embera
+     * @throws Exception
      */
     protected function getEmbera()
     {
@@ -221,6 +222,7 @@ class Plgcontentosembed extends AbstractPlugin
 
     /**
      * @return ProviderCollectionAdapter
+     * @throws Exception
      */
     protected function getProviderList()
     {
@@ -258,6 +260,7 @@ class Plgcontentosembed extends AbstractPlugin
 
     /**
      * @return bool
+     * @throws Exception
      */
     protected function isEnabled()
     {
