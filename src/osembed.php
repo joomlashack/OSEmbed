@@ -23,6 +23,7 @@
 
 defined('_JEXEC') or die;
 
+use Alledia\Framework\Factory;
 use Alledia\Framework\Joomla\Extension\AbstractPlugin;
 use Alledia\OSEmbed\Free\Embera;
 use Alledia\OSEmbed\Free\Helper;
@@ -265,7 +266,9 @@ class Plgcontentosembed extends AbstractPlugin
     protected function isEnabled()
     {
         if ($this->enabled === null) {
-            $this->enabled = Helper::complySystemRequirements();
+            $isHTML = Factory::getDocument()->getType() == 'html';
+
+            $this->enabled = $isHTML && Helper::complySystemRequirements();
         }
 
         return $this->enabled;
