@@ -49,6 +49,8 @@ class Plgcontentosembed extends AbstractPlugin
      */
     public $type = 'content';
 
+    protected $autoloadLanguage = true;
+
     /**
      * @var string
      */
