@@ -25,6 +25,8 @@ namespace Alledia\OSEmbed\Free;
 
 use Alledia\Framework\Factory;
 use Embera\Http\HttpClientInterface;
+use Embera\Http\OembedClient;
+use Embera\Provider\ProviderInterface;
 use Embera\ProviderCollection\ProviderCollectionInterface;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Log\Log;
@@ -73,6 +75,8 @@ class Embera extends \Embera\Embera
     {
         $return = parent::getUrlData($urls);
 
+        $this->displayProviderInfo($this->providerCollection->findProviders($urls));
+
         if ($this->params->get('debug') && $this->hasErrors()) {
             while ($error = array_pop($this->errors)) {
                 Factory::getApplication()->enqueueMessage('<p>' . $error . '</p>', 'error');
@@ -109,5 +113,57 @@ class Embera extends \Embera\Embera
         }
 
         return true;
+    }
+
+    /**
+     * @param ProviderInterface[] $providers
+     *
+     * @return void
+     */
+    protected function displayProviderInfo($providers)
+    {
+        if ($this->params->get('debug')) {
+            /*
+              $response = $this->processFakeResponse($provider->getProviderName(), $provider->getFakeResponse());
+              $response = $this->lookup($provider);
+            */
+
+            try {
+                $oembedClient = new OembedClient($this->config, $this->httpClient);
+                $constructUrl = new \ReflectionMethod($oembedClient, 'constructUrl');
+                $constructUrl->setAccessible(true);
+
+            } catch (\Exception $error) {
+                $constructUrl = null;
+            }
+
+            $item = '<li><span style="display:inline-block;width:5em;">%s</span>: %s</li>';
+
+            foreach ($providers as $found => $provider) {
+                if ($constructUrl) {
+                    $url = urldecode(
+                        $constructUrl->invokeArgs(
+                            $oembedClient,
+                            [$provider->getEndpoint(), $provider->getParams()]
+                        )
+                    );
+                }
+
+                $this->app->enqueueMessage(
+                    sprintf(
+                        '<dl>' .
+                        '<dt>%s</dt>' .
+                        '<dd><ul>' .
+                        sprintf($item, 'Found', $found) .
+                        sprintf($item, 'Endpoint', $provider->getEndpoint()) .
+                        sprintf($item, 'URL', empty($url) ? '*error*' : $url) .
+                        '</ul></dd>' .
+                        '</dl>',
+                        $provider->getProviderName()
+                    ),
+                    'notice'
+                );
+            }
+        }
     }
 }
