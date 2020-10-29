@@ -29,9 +29,7 @@ use Alledia\OSEmbed\Free\Helper;
 use Embera\ProviderCollection\CustomProviderCollection;
 use Embera\ProviderCollection\ProviderCollectionAdapter;
 use Joomla\CMS\Application\CMSApplication;
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Log\Log;
 use Joomla\Event\Dispatcher;
 use Joomla\Registry\Registry;
 
@@ -226,12 +224,14 @@ class Plgcontentosembed extends AbstractPlugin
      */
     protected function getProviderList()
     {
-        $className = sprintf(
-            '\\Alledia\\OSEmbed\\%s\\ProviderCollection',
-            $this->isPro() ? 'Pro' : 'Free'
-        );
-        if (class_exists($className)) {
-            return new $className();
+        if ($this->isEnabled()) {
+            $className = sprintf(
+                '\\Alledia\\OSEmbed\\%s\\ProviderCollection',
+                $this->isPro() ? 'Pro' : 'Free'
+            );
+            if (class_exists($className)) {
+                return new $className();
+            }
         }
 
         return new CustomProviderCollection();
@@ -265,30 +265,7 @@ class Plgcontentosembed extends AbstractPlugin
     protected function isEnabled()
     {
         if ($this->enabled === null) {
-            $this->enabled = true;
-
-            $option  = $this->app->input->get('option');
-            $docType = Factory::getDocument()->getType();
-            $version = phpversion();
-
-            // Do not run if called from OSMap's XML view
-            if ($option === 'com_osmap' && $docType !== 'html') {
-                $this->enabled = false;
-            }
-
-            if (version_compare($version, $this->minPHPVersion, 'lt')) {
-                $this->enabled = false;
-
-                Log::add(
-                    sprintf(
-                        'OSEmbed requires PHP %s or later. You are running VERSION %S',
-                        $this->minPHPVersion,
-                        $version
-                    ),
-                    Log::WARNING,
-                    'osembed.library'
-                );
-            }
+            $this->enabled = Helper::complySystemRequirements();
         }
 
         return $this->enabled;
