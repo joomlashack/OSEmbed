@@ -32,6 +32,8 @@ class ProviderCollection extends CustomProviderCollection
     public function __construct(array $config = [])
     {
         parent::__construct($config);
+
+        // List based on Embera\ProviderCollection\SlimProviderCollection
         $this->registerProvider([
             'CodePen',
             'DailyMotion',
