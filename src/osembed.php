@@ -137,7 +137,7 @@ class Plgcontentosembed extends AbstractPlugin
 
             HTMLHelper::_(
                 'script',
-                'plg_content_osembed/osembed.js',
+                'plg_content_osembed/osembed.min.js',
                 ['relative' => true, 'version' => $versionUID]
             );
 
