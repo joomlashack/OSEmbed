@@ -46,7 +46,7 @@ abstract class Helper
     /**
      * @return bool
      */
-    protected static function isDebugEnabled()
+    public static function isDebugEnabled()
     {
         $plugin = PluginHelper::getPlugin('content', 'osembed');
         $params = new Registry($plugin ? $plugin->params : null);
@@ -73,7 +73,6 @@ abstract class Helper
 
     /**
      * @return bool
-     * @throws \Exception
      */
     public static function complySystemRequirements()
     {
