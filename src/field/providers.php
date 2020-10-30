@@ -21,8 +21,10 @@
  * along with OSEmbed.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+use Alledia\OSEmbed\Free\Helper;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
 
 defined('_JEXEC') or die();
 
@@ -36,13 +38,10 @@ class OsembedFormFieldProviders extends FormField
      */
     public function setup(SimpleXMLElement $element, $value, $group = null)
     {
-        if (parent::setup($element, $value, $group)) {
-            $this->hidden = true;
+        $return       = parent::setup($element, $value, $group);
+        $this->hidden = true;
 
-            return true;
-        }
-
-        return false;
+        return $return;
     }
 
     /**
@@ -50,12 +49,11 @@ class OsembedFormFieldProviders extends FormField
      */
     protected function getInput()
     {
-        $dispatcher = JEventDispatcher::getInstance();
-
-        $providerLists = $dispatcher->trigger('onOsembedProviders');
-
+        $dispatcher   = JEventDispatcher::getInstance();
         $providers    = [];
         $excludeHosts = [];
+
+        $providerLists = $dispatcher->trigger('onOsembedProviders');
         foreach ($providerLists as $providerList) {
             if (isset($providerList->providers)) {
                 $providers = array_merge($providerList->providers);
@@ -81,6 +79,8 @@ class OsembedFormFieldProviders extends FormField
         if ($providerNames) {
             return $this->displayProviders($providerNames);
         }
+
+        Log::add(Text::_('PLG_CONTENT_OSEMBED_ERROR_NO_PROVIDERS_LOG'), Log::WARNING, Helper::LOG_SYSTEM);
 
         return sprintf(
             '<span class="alert alert-error">%s</span>',
