@@ -31,7 +31,8 @@ use Embera\ProviderCollection\CustomProviderCollection;
 use Embera\ProviderCollection\ProviderCollectionAdapter;
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\Event\Dispatcher;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
 use Joomla\Registry\Registry;
 
 include_once 'include.php';
@@ -84,23 +85,25 @@ class Plgcontentosembed extends AbstractPlugin
     ];
 
     /**
-     * PlgContentOSEmbed constructor.
-     *
-     * @param Dispatcher $subject
-     * @param array      $config
-     *
-     * @return void
-     * @throws Exception
+     * @inheritDoc
      */
     public function __construct(&$subject, $config = [])
     {
         parent::__construct($subject, $config);
 
-        Helper::addLogger();
+        $this->init();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function init()
+    {
+        parent::init();
+
+        $this->callHelper('addLogger');
 
         if ($this->isEnabled()) {
-            $this->init();
-
             $this->params->def('responsive', true);
             $this->params->def('ignore_tags', ['pre', 'code', 'a', 'img', 'iframe']);
             $this->params->def('exclude_urls', ['youtu.be']);
@@ -196,6 +199,16 @@ class Plgcontentosembed extends AbstractPlugin
 
         } catch (Exception $error) {
             // Ignore
+        } catch (Throwable $error) {
+            // ignore
+        }
+
+        if (!empty($error)) {
+            $message = Text::sprintf('PLG_CONTENT_OSEMBED_ERROR_PROVIDERS', $error->getMessage());
+            Log::add($message, Log::ERROR, Helper::LOG_SYSTEM);
+            if (Helper::isDebugEnabled()) {
+                $this->app->enqueueMessage($message, 'error');
+            }
         }
 
         return null;
@@ -230,6 +243,7 @@ class Plgcontentosembed extends AbstractPlugin
                 '\\Alledia\\OSEmbed\\%s\\ProviderCollection',
                 $this->isPro() ? 'Pro' : 'Free'
             );
+
             if (class_exists($className)) {
                 return new $className();
             }
@@ -268,9 +282,49 @@ class Plgcontentosembed extends AbstractPlugin
         if ($this->enabled === null) {
             $isHTML = Factory::getDocument()->getType() == 'html';
 
-            $this->enabled = $isHTML && Helper::complySystemRequirements();
+            $this->enabled = $isHTML && $this->callHelper('complySystemRequirements');
         }
 
         return $this->enabled;
+    }
+
+    /**
+     * @param string $method
+     * @param array  $arguments
+     *
+     * @return mixed
+     */
+    protected function callHelper($method, array $arguments = [])
+    {
+        $helper = sprintf(
+            '\\Alledia\\OSEmbed\\%s\\Helper',
+            $this->isPro() ? 'Pro' : 'Free'
+        );
+
+        try {
+            $callable = [$helper, $method];
+            if (is_callable($callable)) {
+                $result = call_user_func_array($callable, $arguments);
+
+                return $result;
+            }
+
+        } catch (Exception $error) {
+            // Handle below
+
+        } catch (Throwable $error) {
+            // Handle below
+        }
+
+        if (empty($error)) {
+            $message = Text::sprintf('PLG_CONTENT_OSEMBED_ERROR_HELPER_METHOD', $helper, $method);
+            Log::add($message, Log::ERROR, Helper::LOG_LIBRARY);
+
+            if (Helper::isDebugEnabled()) {
+                $this->app->enqueueMessage($message, 'error');
+            }
+        }
+
+        return null;
     }
 }
