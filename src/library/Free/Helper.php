@@ -33,6 +33,10 @@ defined('_JEXEC') or die();
 
 abstract class Helper
 {
+    const LOG_LIBRARY = 'osembed.library';
+    const LOG_CONTENT = 'osembed.content';
+    const LOG_SYSTEM  = 'osembed.system';
+
     /**
      * @var string
      */
@@ -66,7 +70,7 @@ abstract class Helper
             Log::addLogger(
                 ['text_file' => 'osembed.log.php'],
                 Log::ALL,
-                ['osembed.library', 'osembed.content', 'osembed.system']
+                [static::LOG_CONTENT, static::LOG_LIBRARY, static::LOG_SYSTEM]
             );
         }
     }
@@ -87,7 +91,7 @@ abstract class Helper
                 );
 
                 Factory::getApplication()->enqueueMessage($message);
-                Log::add($message, Log::ERROR, 'osembed.library');
+                Log::add($message, Log::ERROR, static::LOG_LIBRARY);
             }
         }
 
