@@ -72,22 +72,22 @@ body {
     padding-bottom: 63.3%;
   }
 
-  .embera-embed-responsive-provider-google-docs {
+  .embera-embed-responsive-provider-googledocs {
     padding-bottom: 62.6%;
   }
 
-  .embera-embed-responsive-provider-google-docs.embera-embed-responsive-provider-google-docs-drawings {
+  .embera-embed-responsive-provider-googledocs.embera-embed-responsive-provider-googledocs-drawings {
     padding-bottom: 74.5%;
   }
 
-  .embera-embed-responsive-provider-google-docs.embera-embed-responsive-provider-google-docs-document,
-  .embera-embed-responsive-provider-google-docs.embera-embed-responsive-provider-google-docs-forms,
-  .embera-embed-responsive-provider-google-docs.embera-embed-responsive-provider-google-docs-spreadsheets {
+  .embera-embed-responsive-provider-googledocs.embera-embed-responsive-provider-googledocs-document,
+  .embera-embed-responsive-provider-googledocs.embera-embed-responsive-provider-googledocs-forms,
+  .embera-embed-responsive-provider-googledocs.embera-embed-responsive-provider-googledocs-spreadsheets {
     padding-bottom: 142%;
   }
 
   /* Fix scrolling on iOS devices */
-  .embera-embed-responsive-provider-google-docs {
+  .embera-embed-responsive-provider-googledocs {
     -webkit-overflow-scrolling: touch;
     overflow-y: auto;
   }
