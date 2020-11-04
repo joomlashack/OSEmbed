@@ -95,8 +95,11 @@ class OsembedFormFieldProviders extends FormField
      */
     protected function displayProviders(array $providerNames)
     {
-        $html = [
-            '<table class="table table-striped">',
+        ksort($providerNames, SORT_NATURAL | SORT_FLAG_CASE);
+
+        $tableStart = [
+            '<div class="span6">',
+            '<table class="table table-striped" style="border: 1px solid #ddd">',
             '<thead>',
             '<tr>',
             '<th>Provider</th>',
@@ -106,19 +109,29 @@ class OsembedFormFieldProviders extends FormField
             '<tbody>'
         ];
 
-        $row = 0;
-        foreach ($providerNames as $providerName => $hosts) {
-            $html[] = sprintf(
-                '<tr class="%s"><td width="5%%">%s</td><td>%s</td></tr>',
-                'row' . $row++,
-                $providerName,
-                join('<br>', $hosts)
-            );
+        $tableEnd = [
+            '</tbody>',
+            '</table>',
+            '</div>'
+        ];
+
+        $html    = [];
+        $columns = $this->createColumns($providerNames);
+        foreach ($columns as $providerNames) {
+            $row  = 0;
+            $html = array_merge($html, $tableStart);
+            foreach ($providerNames as $providerName => $hosts) {
+                $html[] = sprintf(
+                    '<tr class="%s"><td width="5%%">%s</td><td>%s</td></tr>',
+                    'row' . $row++,
+                    $providerName,
+                    join('<br>', $hosts)
+                );
+            }
+            $html = array_merge($html, $tableEnd);
         }
 
-        $html[] = '</tbody></table>';
-
-        return join("\n", $html);
+        return sprintf('<div class="row-fluid">%s</div>', join("\n", $html));
     }
 
     /**
@@ -127,5 +140,53 @@ class OsembedFormFieldProviders extends FormField
     protected function getLayoutData()
     {
         return [];
+    }
+
+    /**
+     * Split $list into two roughly even columns accounting
+     * for the number of items in each element of $list
+     *
+     * @param string[][] $list
+     *
+     * @return string[][][]
+     */
+    protected function createColumns(array $list)
+    {
+        $columns = array_chunk($list, ceil(count($list) / 2), true);
+
+        $countDiff = (int)((($this->getHostCount($columns[0]) - $this->getHostCount($columns[1])) / 2) / 2);
+        if ($countDiff > 0) {
+            // Move end of column 1 to top of column 2
+            $move = array_slice($columns[0], -$countDiff, null, true);
+
+            $columns[0] = array_slice($columns[0], 0, count($columns[0]) - $countDiff, true);
+            $columns[1] = array_merge($move, $columns[1]);
+
+        } elseif ($countDiff < 0) {
+            // Move top of column 2 to bottom of column 1
+            $countDiff  = abs($countDiff);
+            $move       = array_slice($columns[1], 0, $countDiff, true);
+            $columns[1] = array_slice($columns[1], $countDiff, null, true);
+            $columns[0] = array_merge($columns[0], $move);
+        }
+
+        return $columns;
+    }
+
+    /**
+     * @param string[][] $providers
+     *
+     * @return int
+     */
+    protected function getHostCount(array $providers)
+    {
+        return (int)array_sum(
+            array_map(
+                function ($hosts) {
+                    return count($hosts);
+                },
+                $providers
+            )
+        );
     }
 }
