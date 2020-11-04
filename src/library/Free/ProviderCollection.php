@@ -34,6 +34,13 @@ defined('_JEXEC') or die();
 class ProviderCollection extends ProviderCollectionAdapter
 {
     /**
+     * @var string[]
+     */
+    protected $excludeUrls = [
+        'youtu.be'
+    ];
+
+    /**
      * List based on Embera\ProviderCollection\SlimProviderCollection
      *
      * @var string[]
@@ -75,13 +82,6 @@ class ProviderCollection extends ProviderCollectionAdapter
         'Sketchfab',
         'Twitch',
         'Wordpress',
-    ];
-
-    /**
-     * @var string[]
-     */
-    protected $excludeUrls = [
-        'youtu.be'
     ];
 
     /**
