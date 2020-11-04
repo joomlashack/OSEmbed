@@ -88,6 +88,11 @@ class OsembedFormFieldProviders extends FormField
         );
     }
 
+    /**
+     * @param string[][] $providerNames
+     *
+     * @return string
+     */
     protected function displayProviders(array $providerNames)
     {
         $html = [
