@@ -155,19 +155,23 @@ class OsembedFormFieldProviders extends FormField
         $columns = array_chunk($list, ceil(count($list) / 2), true);
 
         $countDiff = (int)((($this->getHostCount($columns[0]) - $this->getHostCount($columns[1])) / 2) / 2);
-        if ($countDiff > 0) {
-            // Move end of column 1 to top of column 2
-            $move = array_slice($columns[0], -$countDiff, null, true);
 
-            $columns[0] = array_slice($columns[0], 0, count($columns[0]) - $countDiff, true);
-            $columns[1] = array_merge($move, $columns[1]);
+        if ($countDiff && $countDiff < (count($list) / 4)) {
+            // Even out the columns only if it's a relatively minor difference
+            if ($countDiff > 0) {
+                // Move end of column 1 to top of column 2
+                $move = array_slice($columns[0], -$countDiff, null, true);
 
-        } elseif ($countDiff < 0) {
-            // Move top of column 2 to bottom of column 1
-            $countDiff  = abs($countDiff);
-            $move       = array_slice($columns[1], 0, $countDiff, true);
-            $columns[1] = array_slice($columns[1], $countDiff, null, true);
-            $columns[0] = array_merge($columns[0], $move);
+                $columns[0] = array_slice($columns[0], 0, count($columns[0]) - $countDiff, true);
+                $columns[1] = array_merge($move, $columns[1]);
+
+            } elseif ($countDiff < 0) {
+                // Move top of column 2 to bottom of column 1
+                $countDiff  = abs($countDiff);
+                $move       = array_slice($columns[1], 0, $countDiff, true);
+                $columns[1] = array_slice($columns[1], $countDiff, null, true);
+                $columns[0] = array_merge($columns[0], $move);
+            }
         }
 
         return $columns;
