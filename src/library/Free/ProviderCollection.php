@@ -34,6 +34,38 @@ defined('_JEXEC') or die();
 class ProviderCollection extends ProviderCollectionAdapter
 {
     /**
+     * List based on Embera\ProviderCollection\SlimProviderCollection
+     *
+     * @var string[]
+     */
+    protected $supportedProviders = [
+        'CodePen',
+        'DailyMotion',
+        'Deviantart',
+        'Flickr',
+        'GettyImages',
+        'Gfycat',
+        'Giphy',
+        'Hulu',
+        'Kickstarter',
+        'Livestream',
+        'Meetup',
+        'Reddit',
+        'Scribd',
+        'Sketchfab',
+        'Slideshare',
+        'SoundCloud',
+        'SpeakerDeck',
+        'Spotify',
+        'Ted',
+        'Twitch',
+        'Twitter',
+        'Vimeo',
+        'Wordpress',
+        'Youtube',
+    ];
+
+    /**
      * @var string[] A list of providers to never enable
      */
     protected $brokenProviders = [
@@ -45,6 +77,9 @@ class ProviderCollection extends ProviderCollectionAdapter
         'Wordpress',
     ];
 
+    /**
+     * @var string[]
+     */
     protected $excludeUrls = [
         'youtu.be'
     ];
@@ -69,33 +104,7 @@ class ProviderCollection extends ProviderCollectionAdapter
         $this->app    = empty($config['app']) ? Factory::getApplication() : $config['app'];
         $this->params = empty($config['params']) ? new Registry() : $config['params'];
 
-        // List based on Embera\ProviderCollection\SlimProviderCollection
-        $this->registerProvider([
-            'CodePen',
-            'DailyMotion',
-            'Deviantart',
-            'Flickr',
-            'GettyImages',
-            'Gfycat',
-            'Giphy',
-            'Hulu',
-            'Kickstarter',
-            'Livestream',
-            'Meetup',
-            'Reddit',
-            'Scribd',
-            'Sketchfab',
-            'Slideshare',
-            'SoundCloud',
-            'SpeakerDeck',
-            'Spotify',
-            'Ted',
-            'Twitch',
-            'Twitter',
-            'Vimeo',
-            'Wordpress',
-            'Youtube',
-        ]);
+        $this->registerProvider($this->supportedProviders);
     }
 
     /**
