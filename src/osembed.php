@@ -106,15 +106,8 @@ class Plgcontentosembed extends AbstractPlugin
         if ($this->isEnabled()) {
             $this->params->def('responsive', true);
             $this->params->def('ignore_tags', ['pre', 'code', 'a', 'img', 'iframe']);
-            $this->params->def('exclude_urls', ['youtu.be']);
 
             $this->debug = $this->params->get('debug', false);
-
-            $excludeUrls = $this->params->get('exclude_urls');
-            if (!is_array($excludeUrls)) {
-                $excludeUrls = array_filter(array_unique(explode(',', $excludeUrls)));
-                $this->params->set('exclude_urls', array_map('trim', $excludeUrls));
-            }
         }
     }
 
@@ -192,10 +185,7 @@ class Plgcontentosembed extends AbstractPlugin
 
             $providers = $providersProperty->getValue($providerList);
 
-            return (object)[
-                'providers'    => $providers,
-                'excludeHosts' => $this->params->get('exclude_urls')
-            ];
+            return $providers;
 
         } catch (Exception $error) {
             // Ignore
@@ -245,7 +235,7 @@ class Plgcontentosembed extends AbstractPlugin
             );
 
             if (class_exists($className)) {
-                return new $className();
+                return new $className(['params' => $this->params]);
             }
         }
 

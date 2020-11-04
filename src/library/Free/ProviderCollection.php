@@ -23,12 +23,42 @@
 
 namespace Alledia\OSEmbed\Free;
 
-use Embera\ProviderCollection\CustomProviderCollection;
+use Embera\ProviderCollection\ProviderCollectionAdapter;
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\Registry\Registry;
 
 defined('_JEXEC') or die();
 
-class ProviderCollection extends CustomProviderCollection
+class ProviderCollection extends ProviderCollectionAdapter
 {
+    /**
+     * @var string[] A list of providers to never enable
+     */
+    protected $brokenProviders = [
+        'Hulu',
+        'Meetup',
+        'Scribd',
+        'Sketchfab',
+        'Twitch',
+        'Wordpress',
+    ];
+
+    protected $excludeUrls = [
+        'youtu.be'
+    ];
+
+    /**
+     * @var CMSApplication
+     */
+    protected $app = null;
+
+    /**
+     * @var Registry
+     */
+    protected $params = null;
+
     /**
      * @inheritDoc
      */
@@ -36,34 +66,77 @@ class ProviderCollection extends CustomProviderCollection
     {
         parent::__construct($config);
 
+        $this->app    = empty($config['app']) ? Factory::getApplication() : $config['app'];
+        $this->params = empty($config['params']) ? new Registry() : $config['params'];
+
         // List based on Embera\ProviderCollection\SlimProviderCollection
         $this->registerProvider([
             'CodePen',
             'DailyMotion',
             'Deviantart',
-            //'Facebook',
             'Flickr',
             'GettyImages',
             'Gfycat',
             'Giphy',
-            //'Hulu',
-            //'Instagram',
+            'Hulu',
             'Kickstarter',
             'Livestream',
-            //'Meetup',
+            'Meetup',
             'Reddit',
-            //'Scribd',
-            //'Sketchfab',
+            'Scribd',
+            'Sketchfab',
             'Slideshare',
             'SoundCloud',
             'SpeakerDeck',
             'Spotify',
             'Ted',
-            //'Twitch',
+            'Twitch',
             'Twitter',
             'Vimeo',
-            //'Wordpress',
+            'Wordpress',
             'Youtube',
         ]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function registerProvider($names, $prefix = true)
+    {
+        if (!is_array($names)) {
+            $names = [$names];
+        }
+
+        // Don't allow the ones we know don't work
+        if ($names = array_diff($names, $this->brokenProviders)) {
+            parent::registerProvider($names, $prefix);
+
+            // Filter out any URLs this collection doesn't support
+            $this->providers = array_filter($this->providers, [$this, 'filterUrls'], ARRAY_FILTER_USE_KEY);
+        }
+    }
+
+    /**
+     * For use by array_filter() with ARRAY_FILTER_USE_KEY flag
+     *
+     * @param string $url
+     *
+     * @return bool
+     */
+    protected function filterUrls($url)
+    {
+        foreach ($this->excludeUrls as $excludeUrl) {
+            if (preg_match('#' . preg_quote($excludeUrl, '#') . '#', $url)) {
+                if ($this->params->get('debug')) {
+                    $this->app->enqueueMessage(
+                        Text::sprintf('PLG_CONTENT_OSEMBED_URL_DISABLED', $url),
+                        'notice'
+                    );
+                }
+                return false;
+            }
+        }
+
+        return true;
     }
 }

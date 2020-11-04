@@ -47,11 +47,6 @@ class Embera extends \Embera\Embera
     protected $params = null;
 
     /**
-     * @var string[]
-     */
-    protected $excludeUrls = [];
-
-    /**
      * @inheritDoc
      */
     public function __construct(
@@ -63,7 +58,6 @@ class Embera extends \Embera\Embera
 
         $this->app         = Factory::getApplication();
         $this->params      = $params ?: new Registry();
-        $this->excludeUrls = array_filter((array)$this->params->get('exclude_urls'));
 
         parent::__construct($config, $collection, $httpClient);
     }
@@ -84,35 +78,7 @@ class Embera extends \Embera\Embera
             }
         }
 
-        return array_filter($return, [$this, 'filterExcluded'], ARRAY_FILTER_USE_KEY);
-    }
-
-    /**
-     * For use by array_filter() with ARRAY_FILTER_USE_KEY flag
-     *
-     * @param string $url
-     *
-     * @return bool
-     */
-    protected function filterExcluded($url)
-    {
-        foreach ($this->excludeUrls as $excludeUrl) {
-            if (preg_match('#' . preg_quote($excludeUrl, '#') . '#', $url)) {
-                if ($this->params->get('debug')) {
-                    $this->app->enqueueMessage(
-                        sprintf(
-                            '%s urls are disabled - %s',
-                            $excludeUrl,
-                            $url
-                        ),
-                        'notice'
-                    );
-                }
-                return false;
-            }
-        }
-
-        return true;
+        return $return;
     }
 
     /**

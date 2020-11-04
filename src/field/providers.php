@@ -49,35 +49,30 @@ class OsembedFormFieldProviders extends FormField
      */
     protected function getInput()
     {
-        $dispatcher   = JEventDispatcher::getInstance();
-        $providers    = [];
-        $excludeHosts = [];
+        $dispatcher = JEventDispatcher::getInstance();
 
         $providerLists = $dispatcher->trigger('onOsembedProviders');
-        foreach ($providerLists as $providerList) {
-            if (isset($providerList->providers)) {
-                $providers = array_merge($providerList->providers);
-            }
-            if (isset($providerList->excludeHosts)) {
-                $excludeHosts = array_merge($excludeHosts, $providerList->excludeHosts);
-            }
-        }
 
         $providerNames = [];
-        foreach ($providers as $host => $provider) {
-            $providerParts = explode('\\', $provider);
-            $providerName  = array_pop($providerParts);
+        foreach ($providerLists as $providers) {
+            foreach ($providers as $host => $provider) {
+                $providerParts = explode('\\', $provider);
+                $providerName  = array_pop($providerParts);
 
-            if (!isset($providerNames[$providerName])) {
-                $providerNames[$providerName] = [];
-            }
-            if (!in_array($host, $excludeHosts)) {
+                if (!isset($providerNames[$providerName])) {
+                    $providerNames[$providerName] = [];
+                }
                 $providerNames[$providerName][] = $host;
             }
         }
 
         if ($providerNames) {
-            return $this->displayProviders($providerNames);
+            $header = sprintf(
+                '<div class="alert alert-info">%s</div>',
+                Text::plural('PLG_CONTENT_OSEMBED_PROVIDER_COUNT', count($providerNames))
+            );
+
+            return $header . $this->displayProviders($providerNames);
         }
 
         Log::add(Text::_('PLG_CONTENT_OSEMBED_ERROR_NO_PROVIDERS_LOG'), Log::WARNING, Helper::LOG_SYSTEM);
