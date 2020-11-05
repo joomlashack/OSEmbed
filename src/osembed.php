@@ -213,8 +213,16 @@ class Plgcontentosembed extends AbstractPlugin
         if ($this->embera === null) {
             $config = [
                 'responsive'  => (bool)$this->params->get('responsive'),
-                'ignore_tags' => (array)$this->params->get('ignore_tags')
+                'ignore_tags' => $this->params->get('ignore_tags')
             ];
+
+            if (!is_array($config['ignore_tags'])) {
+                $config['ignore_tags'] = array_filter(
+                    array_unique(
+                        array_map('trim', explode(',', $config['ignore_tags']))
+                    )
+                );
+            }
 
             $this->embera = new Embera($config, $this->getProviderList(), null, $this->params);
         }
