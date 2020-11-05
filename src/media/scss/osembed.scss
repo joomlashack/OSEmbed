@@ -24,7 +24,7 @@ body {
 
   .embera-embed-responsive {
 
-    &:not(.embera-embed-responsive-provider-flickr) {
+    &:not(.embera-embed-responsive-provider-flickr):not(.embera-embed-responsive-provider-facebook) {
       position: relative;
       display: block;
       width: 100%;
