@@ -68,22 +68,18 @@ body {
   }
 
   .embera-embed-responsive-provider-googledocs {
-    padding-bottom: 62.6%;
-  }
-
-  .embera-embed-responsive-provider-googledocs.embera-embed-responsive-provider-googledocs-drawings {
-    padding-bottom: 74.5%;
-  }
-
-  .embera-embed-responsive-provider-googledocs.embera-embed-responsive-provider-googledocs-document,
-  .embera-embed-responsive-provider-googledocs.embera-embed-responsive-provider-googledocs-forms,
-  .embera-embed-responsive-provider-googledocs.embera-embed-responsive-provider-googledocs-spreadsheets {
-    padding-bottom: 142%;
-  }
-
-  /* Fix scrolling on iOS devices */
-  .embera-embed-responsive-provider-googledocs {
     -webkit-overflow-scrolling: touch;
     overflow-y: auto;
+    padding-bottom: 62.6%;
+
+    &.embera-embed-responsive-googledocs-drawings {
+      padding-bottom: 74.5%;
+    }
+
+    &.embera-embed-responsive-googledocs-document,
+    &.embera-embed-responsive-googledocs-forms,
+    &.embera-embed-responsive-googledocs-spreadsheets {
+      padding-bottom: 142%;
+    }
   }
 }
