@@ -97,8 +97,8 @@ class OsembedFormFieldProviders extends FormField
             '<table class="table table-striped" style="border: 1px solid #ddd">',
             '<thead>',
             '<tr>',
-            '<th>Provider</th>',
-            '<th>Host Names</th>',
+            sprintf('<th>%s</th>', Text::_('PLG_CONTENT_OSEMBED_PROVIDER')),
+            sprintf('<th>%s</th>', Text::_('PLG_CONTENT_OSEMBED_PROVIDER_HOSTS')),
             '</tr>',
             '</thead>',
             '<tbody>'
