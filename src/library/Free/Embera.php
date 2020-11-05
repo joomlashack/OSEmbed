@@ -59,8 +59,6 @@ class Embera extends \Embera\Embera
         $this->app         = Factory::getApplication();
         $this->params      = $params ?: new Registry();
 
-        $config['access_token'] = '1263231580713122|6f21ffe14b7890ef67a67838b5e61db5';
-
         parent::__construct($config, $collection, $httpClient);
     }
 
