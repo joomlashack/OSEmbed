@@ -148,7 +148,7 @@ class Plgcontentosembed extends AbstractPlugin
                     break;
 
                 case 'com_content.categories':
-                    if ($params->get('show_description')) {
+                    if ($params && $params->get('show_description')) {
                         $textField = 'text';
                     }
                     break;
