@@ -211,10 +211,7 @@ class Plgcontentosembed extends AbstractPlugin
     protected function getEmbera()
     {
         if ($this->embera === null) {
-            $config = [
-                'responsive'  => (bool)$this->params->get('responsive'),
-                'ignore_tags' => $this->params->get('ignore_tags')
-            ];
+            $config = $this->params->toArray();
 
             if (!is_array($config['ignore_tags'])) {
                 $config['ignore_tags'] = array_filter(
