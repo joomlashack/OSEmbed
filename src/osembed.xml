@@ -2,41 +2,58 @@
 <extension version="3.9" type="plugin" group="content" method="upgrade">
     <name>PLG_CONTENT_OSEMBED</name>
     <author>Joomlashack</author>
-    <creationDate>May 26 2020</creationDate>
+    <creationDate>October 26 2020</creationDate>
     <copyright>Copyright 2016-2020 Joomlashack.com, All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl.html GNU/GPL</license>
     <authorEmail>help@joomlashack.com</authorEmail>
     <authorUrl>http://www.joomlashack.com</authorUrl>
-    <version>1.4.15</version>
+    <version>1.4.16b1</version>
     <variant>FREE</variant>
     <description>PLG_CONTENT_OSEMBED_DESCRIPTION</description>
 
     <scriptfile>script.installer.php</scriptfile>
 
     <files>
+        <folder>field</folder>
+        <folder>form</folder>
         <folder>language</folder>
         <folder>library</folder>
         <folder>views</folder>
-        <folder>form</folder>
+
         <filename plugin="osembed">osembed.php</filename>
         <filename>include.php</filename>
     </files>
 
     <media destination="plg_content_osembed" folder="media">
         <folder>css</folder>
-        <folder>images</folder>
         <folder>fonts</folder>
+        <folder>images</folder>
         <folder>js</folder>
+        <folder>scss</folder>
     </media>
 
     <config>
         <fields name="params">
             <fieldset name="basic" addfieldpath="/plugins/content/osembed/form/fields">
+                <field name="debug"
+                       type="radio"
+                       label="PLG_CONTENT_OSEMBED_CONFIG_DEBUG_LABEL"
+                       class="btn-group btn-group-yesno"
+                       default="0">
+                    <option value="0">JOFF</option>
+                    <option value="1">JON</option>
+                </field>
+
                 <field name="customfooter"
                        type="customfooter"
                        media="plg_content_osembed"
                        showgoproad="https://www.joomlashack.com/joomla-extensions/osembed/"
                        jedurl="https://extensions.joomla.org/extension/osembed/"/>
+            </fieldset>
+
+            <fieldset name="providers" label="PLG_CONTENT_OSEMBED_CONFIG_TAB_PROVIDERS">
+                <field name="providers"
+                       type="osembed.providers"/>
             </fieldset>
         </fields>
     </config>
@@ -51,6 +68,14 @@
         <license>free</license>
         <targetplatform>3.(9|10)</targetplatform>
         <phpminimum>5.6</phpminimum>
+
+        <minify>
+            <script>media/js/osembed.js</script>
+        </minify>
+
+        <scss destination="media/css/" style="compressed">
+            <file>media/scss/osembed.scss</file>
+        </scss>
 
         <relatedExtensions>
             <extension type="library"
@@ -69,7 +94,9 @@
             <folder>/plugins/content/osembed/library/joomlashack</folder>
             <folder>/plugins/content/osembed/library/ostraining</folder>
 
+            <file>/plugins/content/osembed/library/Free/Embed.php</file>
             <file>/plugins/content/osembed/library/Free/Provider/Facebook.php</file>
+            <file>/plugins/content/osembed/library/Free/Provider/Example.php</file>
 
             <extension type="plugin"
                        group="content"

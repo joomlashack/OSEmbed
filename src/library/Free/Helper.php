@@ -2,8 +2,8 @@
 /**
  * @package   OSEmbed
  * @contact   www.joomlashack.com, help@joomlashack.com
- * @copyright 2016-2020 Joomlashack.com. All rights reserved
- * @license   http://www.gnu.org/licenses/gpl.html GNU/GPL
+ * @copyright 2020 Joomlashack.com. All rights reserved
+ * @license   https://www.gnu.org/licenses/gpl.html GNU/GPL
  *
  * This file is part of OSEmbed.
  *
@@ -18,51 +18,83 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OSEmbed.  If not, see <http://www.gnu.org/licenses/>.
+ * along with OSEmbed.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 namespace Alledia\OSEmbed\Free;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Registry\Registry;
+
 defined('_JEXEC') or die();
-
-use JLog;
-
-jimport('joomla.log.log');
 
 abstract class Helper
 {
-    protected static $minPHPVersion = '5.3';
+    const LOG_LIBRARY = 'osembed.library';
+    const LOG_CONTENT = 'osembed.content';
+    const LOG_SYSTEM  = 'osembed.system';
 
-    public static function addLog()
+    /**
+     * @var string
+     */
+    protected static $minPHPVersion = '5.6';
+
+    /**
+     * @var bool
+     */
+    protected static $systemRequirements = null;
+
+    /**
+     * @return bool
+     */
+    public static function isDebugEnabled()
     {
-        JLog::addLogger(
-            array(
-                // Sets file name
-                'text_file' => 'osembed.log.php'
-            ),
-            JLog::ALL,
-            array('osembed.library', 'osembed.content', 'osembed.system')
-        );
+        $plugin = PluginHelper::getPlugin('content', 'osembed');
+        $params = new Registry($plugin ? $plugin->params : null);
+
+        $params    = $params ?: new Registry();
+        $appParams = Factory::getConfig();
+
+        return $params->get('debug') || $appParams->get('debug');
     }
 
-    public static function complyBasicRequirements($logWarnings = false)
+    /**
+     * @return void
+     */
+    public static function addLogger()
     {
-        $complies = true;
+        if (static::isDebugEnabled()) {
+            Log::addLogger(
+                ['text_file' => 'osembed.log.php'],
+                Log::ALL,
+                [static::LOG_CONTENT, static::LOG_LIBRARY, static::LOG_SYSTEM]
+            );
+        }
+    }
 
-        // PHP Version
-        $version = phpversion();
-        if (version_compare($version, static::$minPHPVersion, 'lt')) {
-            $complies = false;
+    /**
+     * @return bool
+     */
+    public static function complySystemRequirements()
+    {
+        if (static::$systemRequirements === null) {
+            static::$systemRequirements = version_compare(phpversion(), static::$minPHPVersion, 'ge');
 
-            if ($logWarnings) {
-                JLog::add(
-                    'OSEmbed requires PHP ' . static::$minPHPVersion . ' or later. You are running the ' . $version,
-                    JLog::WARNING,
-                    'osembed.library'
+            if (!static::$systemRequirements) {
+                $message = Text::sprintf(
+                    'PLG_CONTENT_OSEMBED_ERROR_PHP_VERSION',
+                    static::$minPHPVersion,
+                    phpversion()
                 );
+
+                Factory::getApplication()->enqueueMessage($message);
+                Log::add($message, Log::ERROR, static::LOG_LIBRARY);
             }
         }
 
-        return $complies;
+        return static::$systemRequirements;
     }
 }

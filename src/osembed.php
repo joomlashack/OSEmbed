@@ -23,139 +23,303 @@
 
 defined('_JEXEC') or die;
 
-use Alledia\Framework\Joomla\Extension;
-use Alledia\OSEmbed\Free\Embed;
+use Alledia\Framework\Factory;
+use Alledia\Framework\Joomla\Extension\AbstractPlugin;
+use Alledia\OSEmbed\Free\Embera;
 use Alledia\OSEmbed\Free\Helper;
-use Joomla\Event\Dispatcher;
+use Embera\ProviderCollection\CustomProviderCollection;
+use Embera\ProviderCollection\ProviderCollectionAdapter;
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
 use Joomla\Registry\Registry;
 
 include_once 'include.php';
+if (!defined('OSEMBED_LOADED')) {
+    return;
+}
 
-if (defined('OSEMBED_LOADED')) {
+class Plgcontentosembed extends AbstractPlugin
+{
+    protected $namespace = 'OSEmbed';
+
     /**
-     * OSEmbed Content Plugin
+     * @var string
      */
-    class PlgContentOSEmbed extends Extension\AbstractPlugin
+    public $type = 'content';
+
+    protected $autoloadLanguage = true;
+
+    /**
+     * @var string
+     */
+    protected $minPHPVersion = '5.6';
+
+    /**
+     * @var CMSApplication
+     */
+    protected $app = null;
+
+    /**
+     * @var bool
+     */
+    protected $enabled = null;
+
+    /**
+     * @var bool
+     */
+    protected $debug = false;
+
+    /**
+     * @var Embera
+     */
+    protected $embera = null;
+
+    /**
+     * @var string[]
+     */
+    protected $excludedContexts = [
+        'com_finder.indexer',
+        'com_search.search'
+    ];
+
+    /**
+     * @inheritDoc
+     */
+    public function __construct(&$subject, $config = [])
     {
-        protected $namespace = 'OSEmbed';
+        parent::__construct($subject, $config);
 
-        /**
-         * @var string
-         */
-        public $type = 'content';
+        $this->init();
+    }
 
-        /**
-         * @var bool
-         */
-        protected $allowedToRun = true;
+    /**
+     * @inheritDoc
+     */
+    protected function init()
+    {
+        parent::init();
 
-        /**
-         * @var string[]
-         */
-        protected $excludedContexts = array(
-            'com_finder.indexer',
-            'com_search.search'
-        );
+        $this->callHelper('addLogger');
 
-        /**
-         * PlgContentOSEmbed constructor.
-         *
-         * @param Dispatcher $subject
-         * @param array      $config
-         *
-         * @return void
-         * @throws Exception
-         */
-        public function __construct(&$subject, $config = array())
-        {
-            parent::__construct($subject, $config);
+        if ($this->isEnabled()) {
+            $this->params->def('responsive', true);
+            $this->params->def('ignore_tags', ['pre', 'code', 'a', 'img', 'iframe']);
 
-            $option  = JFactory::getApplication()->input->get('option');
-            $docType = JFactory::getDocument()->getType();
-
-            // Do not run if called from OSMap's XML view
-            if ($option === 'com_osmap' && $docType !== 'html') {
-                $this->allowedToRun = false;
-            }
-
-            if ($this->allowedToRun) {
-                $this->init();
-
-                // Check the minumum requirements
-                $helperClass = $this->getHelperClass();
-                if (!$helperClass::complyBasicRequirements()) {
-                    $this->allowedToRun = false;
-                }
-            }
+            $this->debug = $this->params->get('debug', false);
         }
+    }
 
-        /**
-         * @return Helper|string
-         */
-        protected function getHelperClass()
-        {
-            if ($this->isPro()) {
-                return 'Alledia\\OSEmbed\\Pro\\Helper';
-            }
-
-            return 'Alledia\\OSEmbed\\Free\\Helper';
-        }
-
-        /**
-         * @return Embed|string
-         */
-        protected function getEmbedClass()
-        {
-            if ($this->isPro()) {
-                return 'Alledia\\OSEmbed\\Pro\\Embed';
-            }
-
-            return 'Alledia\\OSEmbed\\Free\\Embed';
-        }
-
-        /**
-         * Plugin that loads module positions within content
-         *
-         * @param string   $context
-         * @param object   $article
-         * @param Registry $params
-         * @param int      $page
-         *
-         * @return  void
-         * @throws Exception
-         */
-        public function onContentPrepare($context, $article, $params, $page = 0)
-        {
-            // Don't run this plugin in all contexts
-            if (!$this->allowedToRun || in_array($context, $this->excludedContexts)) {
-                return;
-            }
-
+    /**
+     * @param string   $context
+     * @param object   $article
+     * @param Registry $params
+     * @param int      $page
+     *
+     * @return  void
+     * @throws Exception
+     */
+    public function onContentPrepare($context, $article, $params, $page = 0)
+    {
+        if ($this->isEnabled() && !in_array($context, $this->excludedContexts)) {
             $versionUID = md5($this->extension->getVersion());
 
-            JHtml::_('jquery.framework');
+            HTMLHelper::_('jquery.framework');
 
-            JHtml::_(
+            HTMLHelper::_(
                 'stylesheet',
                 'plg_content_osembed/osembed.css',
-                array('relative' => true, 'version' => $versionUID)
+                ['relative' => true, 'version' => $versionUID]
             );
 
-            JHtml::_(
+            HTMLHelper::_(
                 'script',
-                'plg_content_osembed/osembed.js',
-                array('relative' => true, 'version' => $versionUID)
+                'plg_content_osembed/osembed.min.js',
+                ['relative' => true, 'version' => $versionUID]
             );
 
-            $embedClass    = $this->getEmbedClass();
-            $article->text = $embedClass::parseContent($article->text, false);
+            $textField = null;
+            switch ($context) {
+                case 'com_content.category':
+                    if ($this->params->get('show_intro') && isset($article->introtext)) {
+                        $textField = 'introtext';
+                    }
+                    break;
+
+                case 'com_content.categories':
+                    if ($params && $params->get('show_description')) {
+                        $textField = 'text';
+                    }
+                    break;
+
+                case 'com_content.category.title':
+                    // disable these
+                    break;
+
+                default:
+                    $textField = 'text';
+                    break;
+            }
+
+            if ($this->debug) {
+                $this->app->enqueueMessage(sprintf('%s: Field=%s', $context, $textField ?: 'null'), 'notice');
+            }
+
+            if ($textField && isset($article->{$textField})) {
+                $article->{$textField} = $this->parseContent($article->{$textField});
+            }
+        }
+    }
+
+    /**
+     * @return object
+     */
+    public function onOsembedProviders()
+    {
+        try {
+            $providerList = $this->getProviderList();
+
+            $providersProperty = new ReflectionProperty($providerList, 'providers');
+            $providersProperty->setAccessible(true);
+
+            $providers = $providersProperty->getValue($providerList);
+
+            return $providers;
+
+        } catch (Exception $error) {
+            // Ignore
+        } catch (Throwable $error) {
+            // ignore
         }
 
-        public function onContentBeforeSave($context, $article, $isNew)
-        {
-            $embedClass = $this->getEmbedClass();
-
-            return $embedClass::onContentBeforeSave($article);
+        if (!empty($error)) {
+            $message = Text::sprintf('PLG_CONTENT_OSEMBED_ERROR_PROVIDERS', $error->getMessage());
+            Log::add($message, Log::ERROR, Helper::LOG_SYSTEM);
+            if (Helper::isDebugEnabled()) {
+                $this->app->enqueueMessage($message, 'error');
+            }
         }
+
+        return null;
+    }
+
+    /**
+     * @return Embera
+     * @throws Exception
+     */
+    protected function getEmbera()
+    {
+        if ($this->embera === null) {
+            $config = $this->params->toArray();
+
+            if (!is_array($config['ignore_tags'])) {
+                $config['ignore_tags'] = array_filter(
+                    array_unique(
+                        array_map('trim', explode(',', $config['ignore_tags']))
+                    )
+                );
+            }
+
+            $this->embera = new Embera($config, $this->getProviderList(), null, $this->params);
+        }
+
+        return $this->embera;
+    }
+
+    /**
+     * @return ProviderCollectionAdapter
+     * @throws Exception
+     */
+    protected function getProviderList()
+    {
+        if ($this->isEnabled()) {
+            $className = sprintf(
+                '\\Alledia\\OSEmbed\\%s\\ProviderCollection',
+                $this->isPro() ? 'Pro' : 'Free'
+            );
+
+            if (class_exists($className)) {
+                return new $className(['params' => $this->params]);
+            }
+        }
+
+        return new CustomProviderCollection();
+    }
+
+    /**
+     * @param string $content
+     *
+     * @return string
+     * @throws Exception
+     */
+    protected function parseContent($content)
+    {
+        $embera = $this->getEmbera();
+        if ($content && $embera) {
+            if ($this->params->get('stripnewline', false)) {
+                return preg_replace('/\n/', '', $embera->autoEmbed($content));
+
+            } else {
+                return $embera->autoEmbed($content);
+            }
+        }
+
+        return $content;
+    }
+
+    /**
+     * @return bool
+     * @throws Exception
+     */
+    protected function isEnabled()
+    {
+        if ($this->enabled === null) {
+            $isHTML = Factory::getDocument()->getType() == 'html';
+
+            $this->enabled = $isHTML && $this->callHelper('complySystemRequirements');
+        }
+
+        return $this->enabled;
+    }
+
+    /**
+     * @param string $method
+     * @param array  $arguments
+     *
+     * @return mixed
+     */
+    protected function callHelper($method, array $arguments = [])
+    {
+        $helper = sprintf(
+            '\\Alledia\\OSEmbed\\%s\\Helper',
+            $this->isPro() ? 'Pro' : 'Free'
+        );
+
+        try {
+            $callable = [$helper, $method];
+            if (is_callable($callable)) {
+                $result = call_user_func_array($callable, $arguments);
+
+                return $result;
+            }
+
+        } catch (Exception $error) {
+            // Handle below
+
+        } catch (Throwable $error) {
+            // Handle below
+        }
+
+        if (empty($error)) {
+            $message = Text::sprintf('PLG_CONTENT_OSEMBED_ERROR_HELPER_METHOD', $helper, $method);
+            Log::add($message, Log::ERROR, Helper::LOG_LIBRARY);
+
+            if (Helper::isDebugEnabled()) {
+                $this->app->enqueueMessage($message, 'error');
+            }
+        }
+
+        return null;
     }
 }

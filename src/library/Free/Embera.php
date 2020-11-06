@@ -23,50 +23,107 @@
 
 namespace Alledia\OSEmbed\Free;
 
-use Embera\Adapters\Service;
-use ReflectionException;
+use Alledia\Framework\Factory;
+use Embera\Http\HttpClientInterface;
+use Embera\Http\OembedClient;
+use Embera\Provider\ProviderInterface;
+use Embera\ProviderCollection\ProviderCollectionInterface;
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Log\Log;
+use Joomla\Registry\Registry;
 
 defined('_JEXEC') or die();
 
 class Embera extends \Embera\Embera
 {
     /**
-     * @param string $body
-     *
-     * @return array
-     * @throws ReflectionException
+     * @var CMSApplication
      */
-    public function getUrlInfo($body = null)
+    protected $app = null;
+
+    /**
+     * @var Registry
+     */
+    protected $params = null;
+
+    /**
+     * @inheritDoc
+     */
+    public function __construct(
+        array $config = [],
+        ProviderCollectionInterface $collection = null,
+        HttpClientInterface $httpClient = null,
+        Registry $params = null
+    ) {
+        $this->app         = Factory::getApplication();
+        $this->params      = $params ?: new Registry();
+
+        parent::__construct($config, $collection, $httpClient);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getUrlData($urls)
     {
-        $results = array();
-        if ($providers = $this->getProviders($body)) {
-            /** @var Service $service */
-            foreach ($providers as $url => $service) {
-                $serviceInfo = $service->getInfo();
+        $return = parent::getUrlData($urls);
 
-                if (!isset($serviceInfo['provider_name'])) {
-                    $reflect = new \ReflectionClass($service);
+        $this->displayProviderInfo($this->providerCollection->findProviders($urls));
 
-                    $serviceInfo['provider_name'] = $reflect->getShortName();
-                    unset($reflect);
-                }
-
-                if (!isset($serviceInfo['provider_alias'])) {
-                    $alias = preg_replace('/[^a-z0-9\-]/i', '-', $serviceInfo['provider_name']);
-                    $alias = strtolower(str_replace('--', '-', $alias));
-
-                    $serviceInfo['provider_alias'] = $alias;
-                }
-
-                if (!isset($serviceInfo['wrapper_class'])) {
-                    $serviceInfo['wrapper_class'] = '';
-                }
-
-                $results[$url] = $serviceInfo;
-                $this->errors  = array_merge($this->errors, $service->getErrors());
+        if ($this->params->get('debug') && $this->hasErrors()) {
+            while ($error = array_pop($this->errors)) {
+                Factory::getApplication()->enqueueMessage('<p>' . $error . '</p>', 'error');
+                Log::add($error, Log::ERROR, 'osembed.content');
             }
         }
 
-        return array_filter($results);
+        return $return;
+    }
+
+    /**
+     * @param ProviderInterface[] $providers
+     *
+     * @return void
+     */
+    protected function displayProviderInfo($providers)
+    {
+        if ($this->params->get('debug')) {
+            try {
+                $oembedClient = new OembedClient($this->config, $this->httpClient);
+                $constructUrl = new \ReflectionMethod($oembedClient, 'constructUrl');
+                $constructUrl->setAccessible(true);
+
+            } catch (\Exception $error) {
+                $constructUrl = null;
+            }
+
+            $item = '<li><span style="display:inline-block;width:5em;">%s</span>: %s</li>';
+
+            foreach ($providers as $found => $provider) {
+                if ($constructUrl) {
+                    $url = urldecode(
+                        $constructUrl->invokeArgs(
+                            $oembedClient,
+                            [$provider->getEndpoint(), $provider->getParams()]
+                        )
+                    );
+                }
+
+                $this->app->enqueueMessage(
+                    sprintf(
+                        '<dl>' .
+                        '<dt>%s</dt>' .
+                        '<dd><ul>' .
+                        sprintf($item, 'Found', $found) .
+                        sprintf($item, 'Endpoint', $provider->getEndpoint()) .
+                        sprintf($item, 'URL', empty($url) ? '*error*' : $url) .
+                        '</ul></dd>' .
+                        '</dl>',
+                        $provider->getProviderName()
+                    ),
+                    'notice'
+                );
+            }
+        }
     }
 }

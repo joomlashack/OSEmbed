@@ -4,30 +4,47 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "025e0c9a96969026ecb8c65df2ebc0db",
+    "content-hash": "3b94f7c31c67d7d58d144fabfb1d9555",
     "packages": [
         {
             "name": "mpratt/embera",
-            "version": "1.9.6",
+            "version": "2.0.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mpratt/Embera.git",
-                "reference": "47bcef7f8d7ee60fdc51b55ab25444b1ead06f2f"
+                "reference": "7081e4d3b13ed82b25fd125fb38af796a34bf234"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mpratt/Embera/zipball/47bcef7f8d7ee60fdc51b55ab25444b1ead06f2f",
-                "reference": "47bcef7f8d7ee60fdc51b55ab25444b1ead06f2f",
+                "url": "https://api.github.com/repos/mpratt/Embera/zipball/7081e4d3b13ed82b25fd125fb38af796a34bf234",
+                "reference": "7081e4d3b13ed82b25fd125fb38af796a34bf234",
                 "shasum": ""
             },
             "require": {
+                "ext-json": "*",
                 "php": ">=5.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.3"
+            },
+            "suggest": {
+                "ext-curl": "Allow to fetch data using curl instead of using file_get_contents"
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "Embera": "Lib/"
+                "psr-4": {
+                    "Embera\\": "src/Embera"
                 }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Embera\\": "tests/Embera"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "phpunit"
+                ]
             },
             "license": [
                 "MIT"
@@ -35,12 +52,12 @@
             "authors": [
                 {
                     "name": "Michael Pratt",
-                    "email": "pratt@hablarmierda.net",
+                    "email": "yo@michael-pratt.com",
                     "homepage": "http://www.michael-pratt.com",
                     "role": "Author/Developer"
                 }
             ],
-            "description": "Oembed consumer library, that gives information about urls. It helps you replace urls to 60+ sites like youtube or vimeo, with their html embed code.",
+            "description": "Oembed consumer library. Converts urls into their html embed code. Supports 150+ sites, such as Youtube, Twitter, vimeo, Instagram etc.",
             "homepage": "https://github.com/mpratt/Embera",
             "keywords": [
                 "Auto embed",
@@ -48,6 +65,7 @@
                 "Embed Text",
                 "Instagram",
                 "Oembed",
+                "Responsive Embeds",
                 "Twitter",
                 "Url Embed",
                 "Vimeo",
@@ -55,10 +73,10 @@
                 "Youtube"
             ],
             "support": {
-                "source": "https://github.com/mpratt/Embera/tree/1.9.6",
+                "source": "https://github.com/mpratt/Embera/tree/2.0.13",
                 "issues": "https://github.com/mpratt/Embera/issues"
             },
-            "time": "2020-01-03T00:35:55+00:00"
+            "time": "2020-08-26T17:29:36+00:00"
         }
     ],
     "packages-dev": [],
@@ -68,5 +86,6 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
 }

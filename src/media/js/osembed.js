@@ -20,22 +20,38 @@
  * along with OSEmbed.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-(function($)
-{
+;jQuery(document).ready(function($) {
+    let $providers = $([
+        '.embera-embed-responsive-provider-flickr',
+        '.embera-embed-responsive-provider-facebook'
+    ].join(','));
+
+    $providers.find('iframe:not(width,height)').each(function() {
+        let $this  = $(this),
+            src    = $this.attr('src'),
+            width  = src.match(/width=(\d+)/).pop(),
+            height = src.match(/height=(\d+)/).pop();
+
+        $this.attr({
+            width : width,
+            height: height
+        })
+    });
+
     $(window).on('load resize', function() {
-        $('.ose-flickr, .ose-facebook').each(function() {
+        $providers.each(function() {
+            let oldHeight = $(this).find('iframe').attr('height'),
+                oldWidth  = $(this).find('iframe').attr('width');
 
-            // Calculate old and new width/height values
-            var $oldHeight  =  $(this).find('iframe').attr('height'); // Get iframe's height
-            var $oldWidth   =  $(this).find('iframe').attr('width'); // Get iframe's width
-            var $newWidth   =  $(this).width(); // Get wrapper's width
-            var $newHeight  = ($oldHeight/$oldWidth) * $newWidth;
+            if (oldHeight && oldWidth) {
+                let newWidth  = $(this).width(),
+                    newHeight = (oldHeight / oldWidth) * newWidth;
 
-            // Apply new width/height values
-            $(this).find('iframe').css({
-                "height" : $newHeight + "px",
-                "width" : $newWidth + "px"
-            });
+                $(this).find('iframe').css({
+                    height: newHeight + 'px',
+                    width : newWidth + 'px'
+                });
+            }
         });
     });
-})(jQuery);
+});

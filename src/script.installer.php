@@ -21,13 +21,12 @@
  * along with OSEmbed.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use Alledia\OSEmbed\Free\Installer\AbstractScript;
+
 defined('_JEXEC') or die();
 
-require_once 'library/Installer/include.php';
+require_once __DIR__ . '/library/Free/Installer/AbstractScript.php';
 
-use Alledia\Installer\AbstractScript;
-
-class PlgContentOSEmbedInstallerScript extends AbstractScript
+class PlgcontentosembedInstallerScript extends AbstractScript
 {
-
 }
