@@ -26,6 +26,18 @@
         '.embera-embed-responsive-provider-facebook'
     ].join(','));
 
+    $providers.find('iframe:not(width,height)').each(function() {
+        let $this  = $(this),
+            src    = $this.attr('src'),
+            width  = src.match(/width=(\d+)/).pop(),
+            height = src.match(/height=(\d+)/).pop();
+
+        $this.attr({
+            width : width,
+            height: height
+        })
+    });
+
     $(window).on('load resize', function() {
         $providers.each(function() {
             let oldHeight = $(this).find('iframe').attr('height'),
