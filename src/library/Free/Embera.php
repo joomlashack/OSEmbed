@@ -55,7 +55,6 @@ class Embera extends \Embera\Embera
         HttpClientInterface $httpClient = null,
         Registry $params = null
     ) {
-
         $this->app         = Factory::getApplication();
         $this->params      = $params ?: new Registry();
 
@@ -89,11 +88,6 @@ class Embera extends \Embera\Embera
     protected function displayProviderInfo($providers)
     {
         if ($this->params->get('debug')) {
-            /*
-              $response = $this->processFakeResponse($provider->getProviderName(), $provider->getFakeResponse());
-              $response = $this->lookup($provider);
-            */
-
             try {
                 $oembedClient = new OembedClient($this->config, $this->httpClient);
                 $constructUrl = new \ReflectionMethod($oembedClient, 'constructUrl');
