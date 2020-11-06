@@ -22,7 +22,8 @@
 
 ;jQuery(document).ready(function($) {
     let $providers = $([
-        '.embera-embed-responsive-provider-flickr'
+        '.embera-embed-responsive-provider-flickr',
+        '.embera-embed-responsive-provider-facebook'
     ].join(','));
 
     $(window).on('load resize', function() {
