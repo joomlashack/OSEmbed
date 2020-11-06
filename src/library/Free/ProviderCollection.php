@@ -76,12 +76,11 @@ class ProviderCollection extends ProviderCollectionAdapter
      * @var string[] A list of providers to never enable
      */
     protected $brokenProviders = [
-        'Hulu',
-        'Meetup',
-        'Scribd',
-        'Sketchfab',
-        'Twitch',
-        'Wordpress',
+        'Hulu',      // Discontinued support
+        'Meetup',    // Apparently discontinued
+        'Sketchfab', // Unable to get it working
+        'Twitch',    // Unclear how well or if this is supported
+        'Wordpress', // Not clear this is useful or works
     ];
 
     /**
