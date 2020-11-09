@@ -10,6 +10,7 @@ if (!(PHP_VERSION_ID >= 50600)) {
 
 $missingExtensions = array();
 extension_loaded('json') || $missingExtensions[] = 'json';
+extension_loaded('simplexml') || $missingExtensions[] = 'simplexml';
 
 if ($missingExtensions) {
     $issues[] = 'Your Composer dependencies require the following PHP extensions to be installed: ' . implode(', ', $missingExtensions);

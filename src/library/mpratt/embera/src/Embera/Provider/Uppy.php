@@ -1,6 +1,6 @@
 <?php
 /**
- * Hulu.php
+ * Uppy.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,37 +15,38 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Hulu Provider
- * @link https://hulu.com
+ * Uppy Provider
+ * @link https://app.uppy.jp
  */
-class Hulu extends ProviderAdapter implements ProviderInterface
+class Uppy extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://www.hulu.com/api/oembed.json';
+    protected $endpoint = 'https://api.uppy.jp/v1/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'hulu.com'
+        'app.uppy.jp'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
+    protected $responsiveSupport = false;
+
+    /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~hulu\.com/watch/(?:[0-9]+)~i', (string) $url));
+        return (bool) (preg_match('~app\.uppy\.jp/shares/video\?([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
     public function normalizeUrl(Url $url)
     {
-        if (preg_match('~/watch/([0-9]+)~i', (string) $url, $matches)) {
-            $url->overwrite('https://www.hulu.com/watch/' . $matches['1']);
-        }
-
         $url->convertToHttps();
-        $url->removeQueryString();
         $url->removeLastSlash();
 
         return $url;

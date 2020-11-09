@@ -53,7 +53,6 @@ class ProviderCollection extends ProviderCollectionAdapter
         'GettyImages',
         'Gfycat',
         'Giphy',
-        'Hulu',
         'Kickstarter',
         'Livestream',
         'Meetup',
@@ -65,7 +64,6 @@ class ProviderCollection extends ProviderCollectionAdapter
         'SpeakerDeck',
         'Spotify',
         'Ted',
-        'Twitch',
         'Twitter',
         'Vimeo',
         'Wordpress',
@@ -76,11 +74,8 @@ class ProviderCollection extends ProviderCollectionAdapter
      * @var string[] A list of providers to never enable
      */
     protected $brokenProviders = [
-        'Hulu',      // Discontinued support
-        'Meetup',    // Apparently discontinued
         'Sketchfab', // Unable to get it working
-        'Twitch',    // Unclear how well or if this is supported
-        'Wordpress', // Not clear this is useful or works
+        'Wordpress', // Need to check 2.0.14 updates
     ];
 
     /**

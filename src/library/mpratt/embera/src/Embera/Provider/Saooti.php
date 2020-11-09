@@ -1,6 +1,6 @@
 <?php
 /**
- * Twitch.php
+ * Saooti.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,29 +15,32 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Twitch Provider
- * @link https://*.twitch
+ * Saooti Provider
+ * @link https://octopus.saooti.com
  */
-class Twitch extends ProviderAdapter implements ProviderInterface
+class Saooti extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://api.twitch.tv/v5/oembed?format=json';
+    protected $endpoint = 'https://octopus.saooti.com/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        '*.twitch.tv'
+        'octopus.saooti.com'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
+    protected $responsiveSupport = false;
+
+    /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (
-            preg_match('~twitch\.tv/videos/([^/]+)~i', (string) $url) ||
-            preg_match('~twitch\.tv/([^/]+)/(clip|v)/([^/]+)~i', (string) $url)
-        );
+        return (bool) (preg_match('~saooti\.com/main/pub/podcast/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */

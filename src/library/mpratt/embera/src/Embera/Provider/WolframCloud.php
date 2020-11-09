@@ -1,6 +1,6 @@
 <?php
 /**
- * Chainflix.php
+ * WolframCloud.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,33 +15,42 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Chainflix Provider
- * @link https://*.chainflix.net
+ * WolframCloud Provider
+ * @link https://*.wolframcloud.com
  */
-class Chainflix extends ProviderAdapter implements ProviderInterface
+class WolframCloud extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://beta.chainflix.net/video/oembed?format=json';
+    protected $endpoint = 'https://www.wolframcloud.com/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        '*.chainflix.net'
+        '*.wolframcloud.com'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
+    protected $responsiveSupport = true;
+
+    /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~chainflix\.net/video(/embed/?)?([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~wolframcloud\.com/obj/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
     public function normalizeUrl(Url $url)
     {
         $url->convertToHttps();
+        $url->removeQueryString();
         $url->removeLastSlash();
+
         return $url;
     }
+
 }

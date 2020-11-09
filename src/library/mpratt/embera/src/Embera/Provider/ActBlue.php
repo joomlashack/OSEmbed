@@ -1,6 +1,6 @@
 <?php
 /**
- * Instagram.php
+ * ActBlue.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,21 +15,21 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Instagram Provider
- * @link https://instagram.com
+ * ActBlue Provider
+ * @link https://*.actblue.com
  */
-class Instagram extends ProviderAdapter implements ProviderInterface
+class ActBlue extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://graph.facebook.com/v8.0/instagram_oembed';
+    protected $endpoint = 'https://secure.actblue.com/cf/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'instagram.com', 'instagr.am'
+        '*.actblue.com'
     ];
 
     /** inline {@inheritdoc} */
-    protected $allowedParams = [ 'maxwidth', 'maxheight', 'callback', 'omitscript', 'breaking_change', 'access_token', 'fields' ];
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
@@ -40,10 +40,7 @@ class Instagram extends ProviderAdapter implements ProviderInterface
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (
-            preg_match('~(instagram\.com|instagr\.am)/(?:p|tv)/([^/]+)/?$~i', (string) $url) ||
-            preg_match('~(instagram\.com|instagr\.am)/([^/]+)/(?:p|tv)/([^/]+)/?$~i', (string) $url)
-        );
+        return (bool) (preg_match('~actblue\.com/donate/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
@@ -51,6 +48,7 @@ class Instagram extends ProviderAdapter implements ProviderInterface
     {
         $url->convertToHttps();
         $url->removeQueryString();
+        $url->removeLastSlash();
 
         return $url;
     }

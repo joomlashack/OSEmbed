@@ -1,6 +1,6 @@
 <?php
 /**
- * Kitchenbowl.php
+ * Lumiere.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,29 +15,32 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Kitchenbowl Provider
- * @link https://kitchenbowl.com
+ * Lumiere Provider
+ * @link https://*.lumiere.is
  */
-class Kitchenbowl extends ProviderAdapter implements ProviderInterface
+class Lumiere extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://www.kitchenbowl.com/oembed?format=json';
+    protected $endpoint = 'https://dev.admin.lumiere.is/api/services/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'kitchenbowl.com'
+        '*.lumiere.is'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
-    protected $responsiveSupport = true;
+    protected $responsiveSupport = false;
 
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~kitchenbowl\.com/recipe/([^/]+)/([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~lumiere\.is/v/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */

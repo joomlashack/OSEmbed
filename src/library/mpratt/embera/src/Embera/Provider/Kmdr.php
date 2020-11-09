@@ -1,6 +1,6 @@
 <?php
 /**
- * Instagram.php
+ * Kmdr.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,35 +15,32 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Instagram Provider
- * @link https://instagram.com
+ * Kmdr Provider
+ * @link https://app.kmdr.sh
  */
-class Instagram extends ProviderAdapter implements ProviderInterface
+class Kmdr extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://graph.facebook.com/v8.0/instagram_oembed';
+    protected $endpoint = 'https://api.kmdr.sh/services/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'instagram.com', 'instagr.am'
+        'app.kmdr.sh'
     ];
 
     /** inline {@inheritdoc} */
-    protected $allowedParams = [ 'maxwidth', 'maxheight', 'callback', 'omitscript', 'breaking_change', 'access_token', 'fields' ];
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
-    protected $responsiveSupport = true;
+    protected $responsiveSupport = false;
 
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (
-            preg_match('~(instagram\.com|instagr\.am)/(?:p|tv)/([^/]+)/?$~i', (string) $url) ||
-            preg_match('~(instagram\.com|instagr\.am)/([^/]+)/(?:p|tv)/([^/]+)/?$~i', (string) $url)
-        );
+        return (bool) (preg_match('~app\.kmdr\.sh/(history|h)/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
@@ -51,6 +48,7 @@ class Instagram extends ProviderAdapter implements ProviderInterface
     {
         $url->convertToHttps();
         $url->removeQueryString();
+        $url->removeLastSlash();
 
         return $url;
     }
