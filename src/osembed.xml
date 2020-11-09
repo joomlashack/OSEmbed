@@ -91,12 +91,20 @@
         <include>AllediaFreeDefaultFiles</include>
 
         <obsolete>
+            <folder>/plugins/content/osembed/library/Free/Provider</folder>
             <folder>/plugins/content/osembed/library/joomlashack</folder>
+            <folder>/plugins/content/osembed/library/mpratt/embera/Lib</folder>
+            <folder>/plugins/content/osembed/library/mpratt/embera/Tests</folder>
             <folder>/plugins/content/osembed/library/ostraining</folder>
+            <folder>/plugins/content/osembed/library/Pro</folder>
 
             <file>/plugins/content/osembed/library/Free/Embed.php</file>
-            <file>/plugins/content/osembed/library/Free/Provider/Facebook.php</file>
             <file>/plugins/content/osembed/library/Free/Provider/Example.php</file>
+            <file>/plugins/content/osembed/library/Free/Provider/Facebook.php</file>
+            <file>/plugins/content/osembed/library/mpratt/embera/phpdoc.xml</file>
+            <file>/plugins/content/osembed/library/mpratt/embera/phpunit.full-urls.xml</file>
+            <file>/plugins/content/osembed/library/mpratt/embera/phpunit.xml</file>
+            <file>/plugins/content/osembed/library/mpratt/embera/PROVIDERS.md</file>
 
             <extension type="plugin"
                        group="content"
