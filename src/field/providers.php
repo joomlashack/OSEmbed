@@ -22,6 +22,7 @@
  */
 
 use Alledia\OSEmbed\Free\Helper;
+use Embera\Embera;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
@@ -68,8 +69,9 @@ class OsembedFormFieldProviders extends FormField
 
         if ($providerNames) {
             $header = sprintf(
-                '<div class="alert alert-info">%s</div>',
-                Text::plural('PLG_CONTENT_OSEMBED_PROVIDER_COUNT', count($providerNames))
+                '<div class="alert alert-info">%s<br>%s</div>',
+                Text::plural('PLG_CONTENT_OSEMBED_PROVIDER_COUNT', count($providerNames)),
+                Text::sprintf('PLG_CONTENT_OSEMBED_EMBERA_VERSION', Embera::VERSION)
             );
 
             return $header . $this->displayProviders($providerNames);
