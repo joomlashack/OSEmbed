@@ -55,8 +55,8 @@ class Embera extends \Embera\Embera
         HttpClientInterface $httpClient = null,
         Registry $params = null
     ) {
-        $this->app         = Factory::getApplication();
-        $this->params      = $params ?: new Registry();
+        $this->app    = Factory::getApplication();
+        $this->params = $params ?: new Registry();
 
         parent::__construct($config, $collection, $httpClient);
     }
@@ -72,7 +72,7 @@ class Embera extends \Embera\Embera
 
         if ($this->params->get('debug') && $this->hasErrors()) {
             while ($error = array_pop($this->errors)) {
-                Factory::getApplication()->enqueueMessage('<p>' . $error . '</p>', 'error');
+                $this->app->enqueueMessage('<p>' . $error . '</p>', 'error');
                 Log::add($error, Log::ERROR, 'osembed.content');
             }
         }
