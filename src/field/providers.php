@@ -68,9 +68,14 @@ class OsembedFormFieldProviders extends FormField
         }
 
         if ($providerNames) {
+            $hostCount = Text::plural(
+                'PLG_CONTENT_OSEMBED_PROVIDER_HOST_COUNT',
+                count($providerNames, COUNT_RECURSIVE) - count($providerNames)
+            );
+
             $header = sprintf(
                 '<div class="alert alert-info">%s<br>%s</div>',
-                Text::plural('PLG_CONTENT_OSEMBED_PROVIDER_COUNT', count($providerNames)),
+                Text::plural('PLG_CONTENT_OSEMBED_PROVIDER_COUNT', count($providerNames), $hostCount),
                 Text::sprintf('PLG_CONTENT_OSEMBED_EMBERA_VERSION', Embera::VERSION)
             );
 
@@ -119,7 +124,7 @@ class OsembedFormFieldProviders extends FormField
             $html = array_merge($html, $tableStart);
             foreach ($providerNames as $providerName => $hosts) {
                 $html[] = sprintf(
-                    '<tr class="%s"><td width="5%%">%s</td><td>%s</td></tr>',
+                    '<tr class="%s"><td style="width: 5%%">%s</td><td>%s</td></tr>',
                     'row' . $row++,
                     $providerName,
                     join('<br>', $hosts)

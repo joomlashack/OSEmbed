@@ -68,7 +68,7 @@ class Embera extends \Embera\Embera
     {
         $return = parent::getUrlData($urls);
 
-        $this->displayProviderInfo($this->providerCollection->findProviders($urls));
+        $this->displayProviderInfo($this->providerCollection->findProviders($urls), $return);
 
         if ($this->params->get('debug') && $this->hasErrors()) {
             while ($error = array_pop($this->errors)) {
@@ -82,10 +82,11 @@ class Embera extends \Embera\Embera
 
     /**
      * @param ProviderInterface[] $providers
+     * @param array               $urlData
      *
      * @return void
      */
-    protected function displayProviderInfo($providers)
+    protected function displayProviderInfo($providers, $urlData)
     {
         if ($this->params->get('debug')) {
             try {
@@ -100,6 +101,7 @@ class Embera extends \Embera\Embera
             $item = '<li><span style="display:inline-block;width:5em;">%s</span>: %s</li>';
 
             foreach ($providers as $found => $provider) {
+                $url = null;
                 if ($constructUrl) {
                     $url = urldecode(
                         $constructUrl->invokeArgs(
@@ -109,17 +111,21 @@ class Embera extends \Embera\Embera
                     );
                 }
 
+                if (isset($urlData[$found]['embera_using_fake_response'])) {
+                    $fakeResponse = $urlData[$found]['embera_using_fake_response'] ? 'YES' : 'NO';
+
+                } else {
+                    $fakeResponse = '*';
+                }
+
                 $this->app->enqueueMessage(
                     sprintf(
-                        '<dl>' .
-                        '<dt>%s</dt>' .
-                        '<dd><ul>' .
-                        sprintf($item, 'Found', $found) .
-                        sprintf($item, 'Endpoint', $provider->getEndpoint()) .
-                        sprintf($item, 'URL', empty($url) ? '*error*' : $url) .
-                        '</ul></dd>' .
-                        '</dl>',
-                        $provider->getProviderName()
+                        '<dl><dt>%s</dt><dd><ul>%s%s%s%s</ul></dd></dl>',
+                        $provider->getProviderName(),
+                        sprintf($item, 'Found', $found),
+                        sprintf($item, 'Endpoint', $provider->getEndpoint()),
+                        sprintf($item, 'URL', $url ? $url : '*error*'),
+                        sprintf($item, 'Offline', $fakeResponse)
                     ),
                     'notice'
                 );
