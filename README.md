@@ -17,20 +17,5 @@ Joomla 3.x
 
 Supported Sites
 ===============
-OSEmbed supports **60+** sites. Sites marked with an `*` allow offline html embedding
-
-- [Facebook](http://www.facebook.com/)
-- * [Youtube](http://www.youtube.com/)
-- * [Vimeo](http://vimeo.com/)
-- * [DailyMotion](http://www.dailymotion.com/)
-- [Instagram](http://instagram.com)
-- [SoundCloud](http://soundcloud.com)
-- [Twitter](https://twitter.com)
-- * [Ted](http://ted.com)
-- [Flickr](http://flickr.com)
-- [Hulu](http://www.hulu.com)
-- * [Kickstarter](http://www.kickstarter.com)
-- [Deviantart](http://deviantart.com)
-- * [Scribd](http://www.scribd.com)
-
-Full list: [PROVIDERS.md](https://github.com/ostraining/OSEmbed/blob/master/PROVIDERS.md)
+OSEmbed Free supports 51 sites from 20 oembed providers. To see the full list, see
+the *Providers* page in the plugin configuration. 
