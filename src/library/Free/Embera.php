@@ -125,7 +125,7 @@ class Embera extends \Embera\Embera
                         sprintf($item, 'Found', $found),
                         sprintf($item, 'Endpoint', $provider->getEndpoint()),
                         sprintf($item, 'URL', $url ? $url : '*error*'),
-                        sprintf($item, 'Offline', $fakeResponse)
+                        sprintf($item, 'Fake Rsp', $fakeResponse)
                     ),
                     'notice'
                 );
