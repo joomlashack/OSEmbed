@@ -32,9 +32,9 @@
         <folder>scss</folder>
     </media>
 
-    <config>
+    <config addfieldpath="/plugins/content/osembed/form/fields">
         <fields name="params">
-            <fieldset name="basic" addfieldpath="/plugins/content/osembed/form/fields">
+            <fieldset name="basic">
                 <field name="debug"
                        type="radio"
                        label="PLG_CONTENT_OSEMBED_CONFIG_DEBUG_LABEL"
