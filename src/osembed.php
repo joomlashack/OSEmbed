@@ -275,7 +275,7 @@ class Plgcontentosembed extends AbstractPlugin
     protected function isEnabled()
     {
         if ($this->enabled === null) {
-            $isHTML = Factory::getDocument()->getType() == 'html';
+            $isHTML = in_array(Factory::getDocument()->getType(), ['html', 'raw']);
 
             $this->enabled = $isHTML && $this->callHelper('complySystemRequirements');
         }
