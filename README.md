@@ -5,15 +5,11 @@ OSEmbed
 
 ## About
 
-Help to Embed hypermedia into content.
+Embed hypermedia from any service that supports OEmbed API and some others that do not 
 
 ## Requirements
 
 Joomla 3.x
-
-## License
-
-[GNU General Public License v2 or later](http://www.gnu.org/copyleft/gpl.html)
 
 Supported Sites
 ===============
