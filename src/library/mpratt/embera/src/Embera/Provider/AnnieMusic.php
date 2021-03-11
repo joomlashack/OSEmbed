@@ -1,6 +1,6 @@
 <?php
 /**
- * Polldaddy.php
+ * AnnieMusic.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,33 +15,32 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Polldaddy Provider
- * Crowdsignal
+ * AnnieMusic Provider
+ * @link https://anniemusic.app
  */
-class Polldaddy extends ProviderAdapter implements ProviderInterface
+class AnnieMusic extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://api.crowdsignal.com/oembed?format=json';
+    protected $endpoint = 'https://api.anniemusic.app/api/v1/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        '*.poll.fm',
-        '*.survey.fm',
+        'anniemusic.app'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
-    protected $responsiveSupport = true;
+    protected $responsiveSupport = false;
 
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (
-            preg_match('~polldaddy\.com/(?:poll|s|ratings)/(?:[^/]+)/?$~i', (string) $url) ||
-            preg_match('~(?:poll|survey)\.fm/([^/]+)~i', (string) $url)
-        );
+        return (bool) (preg_match('~anniemusic\.app/(?:t|p)/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
@@ -49,6 +48,7 @@ class Polldaddy extends ProviderAdapter implements ProviderInterface
     {
         $url->convertToHttps();
         $url->removeQueryString();
+        $url->removeLastSlash();
 
         return $url;
     }

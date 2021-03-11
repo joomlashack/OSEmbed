@@ -1,6 +1,6 @@
 <?php
 /**
- * Polldaddy.php
+ * GetShow.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,32 +15,34 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Polldaddy Provider
- * Crowdsignal
+ * GetShow Provider
+ * @link https://*.getshow.io
  */
-class Polldaddy extends ProviderAdapter implements ProviderInterface
+class GetShow extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://api.crowdsignal.com/oembed?format=json';
+    protected $endpoint = 'https://api.getshow.io/oembed.json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        '*.poll.fm',
-        '*.survey.fm',
+        '*.getshow.io'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
-    protected $responsiveSupport = true;
+    protected $responsiveSupport = false;
 
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
         return (bool) (
-            preg_match('~polldaddy\.com/(?:poll|s|ratings)/(?:[^/]+)/?$~i', (string) $url) ||
-            preg_match('~(?:poll|survey)\.fm/([^/]+)~i', (string) $url)
+            preg_match('~getshow\.io/share/([^/]+)~i', (string) $url) ||
+            preg_match('~getshow\.io/embed/iframe/~i', (string) $url)
         );
     }
 
@@ -48,7 +50,7 @@ class Polldaddy extends ProviderAdapter implements ProviderInterface
     public function normalizeUrl(Url $url)
     {
         $url->convertToHttps();
-        $url->removeQueryString();
+        $url->removeLastSlash();
 
         return $url;
     }

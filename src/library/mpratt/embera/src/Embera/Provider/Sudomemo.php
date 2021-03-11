@@ -1,6 +1,6 @@
 <?php
 /**
- * Polldaddy.php
+ * Sudomemo.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,32 +15,34 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Polldaddy Provider
- * Crowdsignal
+ * Sudomemo Provider
+ * @link https://sudomemo.net
  */
-class Polldaddy extends ProviderAdapter implements ProviderInterface
+class Sudomemo extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://api.crowdsignal.com/oembed?format=json';
+    protected $endpoint = 'https://www.sudomemo.net/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        '*.poll.fm',
-        '*.survey.fm',
+        'sudomemo.net', 'flipnot.es'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
-    protected $responsiveSupport = true;
+    protected $responsiveSupport = false;
 
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
         return (bool) (
-            preg_match('~polldaddy\.com/(?:poll|s|ratings)/(?:[^/]+)/?$~i', (string) $url) ||
-            preg_match('~(?:poll|survey)\.fm/([^/]+)~i', (string) $url)
+            preg_match('~sudomemo\.net/watch/([^/]+)~i', (string) $url) ||
+            preg_match('~flipnot\.es/([^/]+)~i', (string) $url)
         );
     }
 
@@ -49,6 +51,7 @@ class Polldaddy extends ProviderAdapter implements ProviderInterface
     {
         $url->convertToHttps();
         $url->removeQueryString();
+        $url->removeLastSlash();
 
         return $url;
     }
