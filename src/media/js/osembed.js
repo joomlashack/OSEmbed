@@ -22,8 +22,7 @@
 
 ;jQuery(document).ready(function($) {
     let $providers = $([
-        '.embera-embed-responsive-provider-flickr',
-        '.embera-embed-responsive-provider-facebook'
+        '.embera-embed-responsive-provider-flickr'
     ].join(','));
 
     $providers.find('iframe:not(width,height)').each(function() {
