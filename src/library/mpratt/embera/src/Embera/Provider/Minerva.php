@@ -1,6 +1,6 @@
 <?php
 /**
- * Playbuzz.php
+ * Minerva.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,31 +15,34 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Playbuzz Provider
- * @link https://playbuzz.com
+ * Minerva Provider
+ * @link https://*.minervaknows.com
  */
-class Playbuzz extends ProviderAdapter implements ProviderInterface
+class Minerva extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://oembed.ex.co/item?format=json';
+    protected $endpoint = 'https://oembed.minervaknows.com?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'playbuzz.com', 'app.ex.co'
+        '*.minervaknows.com'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
-    protected $responsiveSupport = true;
+    protected $responsiveSupport = false;
 
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
         return (bool) (
-            preg_match('~playbuzz\.com/([^/]+)/([^/]+)~i', (string) $url) ||
-            preg_match('~app\.ex\.co/stories/([^/]+)/([^/]+)~i', (string) $url)
+            preg_match('~\.minervaknows\.com/(themes|featured-recipes|recipes)/([^/]+)~i', (string) $url) ||
+            preg_match('~\.minervaknows\.com/(themes|recipes)/([^/]+)/(follow|recipes)~i', (string) $url)
         );
     }
 

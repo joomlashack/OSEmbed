@@ -1,6 +1,6 @@
 <?php
 /**
- * Playbuzz.php
+ * HippoVideo.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,32 +15,32 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Playbuzz Provider
- * @link https://playbuzz.com
+ * HippoVideo Provider
+ * @link https://*.hippovideo.io
  */
-class Playbuzz extends ProviderAdapter implements ProviderInterface
+class HippoVideo extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://oembed.ex.co/item?format=json';
+    protected $endpoint = 'https://www.hippovideo.io/services/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'playbuzz.com', 'app.ex.co'
+        '*.hippovideo.io'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
-    protected $responsiveSupport = true;
+    protected $responsiveSupport = false;
 
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (
-            preg_match('~playbuzz\.com/([^/]+)/([^/]+)~i', (string) $url) ||
-            preg_match('~app\.ex\.co/stories/([^/]+)/([^/]+)~i', (string) $url)
-        );
+        return (bool) (preg_match('~\.hippovideo\.io/video/play/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
@@ -52,5 +52,4 @@ class Playbuzz extends ProviderAdapter implements ProviderInterface
 
         return $url;
     }
-
 }

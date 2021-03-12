@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'e37d7ea30d8e817d11a51a5d8db103509890909c',
+    'reference' => 'baf87efca3ca9b0e96af616a9d74b8724a148714',
     'name' => 'joomlashack/osembed',
   ),
   'versions' => 
@@ -18,16 +18,16 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'e37d7ea30d8e817d11a51a5d8db103509890909c',
+      'reference' => 'baf87efca3ca9b0e96af616a9d74b8724a148714',
     ),
     'mpratt/embera' => 
     array (
-      'pretty_version' => '2.0.16',
-      'version' => '2.0.16.0',
+      'pretty_version' => '2.0.17',
+      'version' => '2.0.17.0',
       'aliases' => 
       array (
       ),
-      'reference' => '59155a8fd7d268a10bb79477f21e4865186f83d3',
+      'reference' => 'e5a1131773236d2f56a5416ef064328cc91a973e',
     ),
   ),
 );

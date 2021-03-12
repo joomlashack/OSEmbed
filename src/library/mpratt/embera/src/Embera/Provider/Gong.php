@@ -1,6 +1,6 @@
 <?php
 /**
- * Playbuzz.php
+ * Gong.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,31 +15,34 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Playbuzz Provider
- * @link https://playbuzz.com
+ * Gong Provider
+ * @link https://app.gong.io
  */
-class Playbuzz extends ProviderAdapter implements ProviderInterface
+class Gong extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://oembed.ex.co/item?format=json';
+    protected $endpoint = 'https://app.gong.io/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'playbuzz.com', 'app.ex.co'
+        'app.gong.io'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
-    protected $responsiveSupport = true;
+    protected $responsiveSupport = false;
 
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
         return (bool) (
-            preg_match('~playbuzz\.com/([^/]+)/([^/]+)~i', (string) $url) ||
-            preg_match('~app\.ex\.co/stories/([^/]+)/([^/]+)~i', (string) $url)
+            preg_match('~app\.gong\.io(:[0-9]+)?/call~i', (string) $url) &&
+            preg_match('~id=(.+)~i', (string) $url)
         );
     }
 
@@ -47,7 +50,6 @@ class Playbuzz extends ProviderAdapter implements ProviderInterface
     public function normalizeUrl(Url $url)
     {
         $url->convertToHttps();
-        $url->removeQueryString();
         $url->removeLastSlash();
 
         return $url;
