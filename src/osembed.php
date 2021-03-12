@@ -29,7 +29,7 @@ use Alledia\OSEmbed\Free\Embera;
 use Alledia\OSEmbed\Free\Helper;
 use Embera\ProviderCollection\CustomProviderCollection;
 use Embera\ProviderCollection\ProviderCollectionAdapter;
-use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
@@ -52,12 +52,7 @@ class Plgcontentosembed extends AbstractPlugin
     protected $autoloadLanguage = true;
 
     /**
-     * @var string
-     */
-    protected $minPHPVersion = '5.6';
-
-    /**
-     * @var CMSApplication
+     * @var SiteApplication
      */
     protected $app = null;
 
@@ -183,9 +178,7 @@ class Plgcontentosembed extends AbstractPlugin
             $providersProperty = new ReflectionProperty($providerList, 'providers');
             $providersProperty->setAccessible(true);
 
-            $providers = $providersProperty->getValue($providerList);
-
-            return $providers;
+            return $providersProperty->getValue($providerList);
 
         } catch (Exception $error) {
             // Ignore
@@ -270,7 +263,6 @@ class Plgcontentosembed extends AbstractPlugin
 
     /**
      * @return bool
-     * @throws Exception
      */
     protected function isEnabled()
     {
@@ -299,9 +291,7 @@ class Plgcontentosembed extends AbstractPlugin
         try {
             $callable = [$helper, $method];
             if (is_callable($callable)) {
-                $result = call_user_func_array($callable, $arguments);
-
-                return $result;
+                return call_user_func_array($callable, $arguments);
             }
 
         } catch (Exception $error) {

@@ -26,9 +26,6 @@ use Joomla\CMS\Factory;
 
 defined('_JEXEC') or die();
 
-define('OSEMBED_PLUGIN_PATH', __DIR__);
-
-// Alledia Framework
 if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
     $allediaFrameworkPath = JPATH_SITE . '/libraries/allediaframework/include.php';
 
@@ -50,4 +47,5 @@ if (defined('ALLEDIA_FRAMEWORK_LOADED') && !defined('OSEMBED_LOADED')) {
     Framework\Joomla\Extension\Helper::loadLibrary('plg_content_osembed');
 
     define('OSEMBED_LOADED', 1);
+    define('OSEMBED_PLUGIN_PATH', __DIR__);
 }
