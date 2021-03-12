@@ -37,20 +37,29 @@
         })
     });
 
+    let reset = null;
     $(window).on('load resize', function() {
-        $providers.each(function() {
-            let oldHeight = $(this).find('iframe').attr('height'),
-                oldWidth  = $(this).find('iframe').attr('width');
+        if (reset) {
+            clearTimeout(reset)
+        }
 
-            if (oldHeight && oldWidth) {
-                let newWidth  = $(this).width(),
-                    newHeight = (oldHeight / oldWidth) * newWidth;
+        reset = setTimeout(function() {
+                $providers.each(function() {
+                    let oldHeight = $(this).find('iframe').attr('height'),
+                        oldWidth  = $(this).find('iframe').attr('width');
 
-                $(this).find('iframe').css({
-                    height: newHeight + 'px',
-                    width : newWidth + 'px'
+                    if (oldHeight && oldWidth) {
+                        let newWidth  = $(this).width(),
+                            newHeight = (oldHeight / oldWidth) * newWidth;
+
+                        $(this).find('iframe').css({
+                            height: newHeight + 'px',
+                            width : newWidth + 'px'
+                        });
+                    }
                 });
-            }
-        });
+            },
+            350
+        );
     });
 });
