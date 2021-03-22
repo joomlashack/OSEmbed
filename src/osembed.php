@@ -110,12 +110,11 @@ class Plgcontentosembed extends AbstractPlugin
      * @param string   $context
      * @param object   $article
      * @param Registry $params
-     * @param int      $page
      *
      * @return  void
      * @throws Exception
      */
-    public function onContentPrepare($context, $article, $params, $page = 0)
+    public function onContentPrepare($context, $article, $params)
     {
         if ($this->isEnabled() && !in_array($context, $this->excludedContexts)) {
             $versionUID = md5($this->extension->getVersion());

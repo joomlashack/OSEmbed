@@ -48,6 +48,7 @@ class Embera extends \Embera\Embera
 
     /**
      * @inheritDoc
+     * @throws \Exception
      */
     public function __construct(
         array $config = [],
@@ -89,46 +90,47 @@ class Embera extends \Embera\Embera
     protected function displayProviderInfo($providers, $urlData)
     {
         if ($this->params->get('debug')) {
+            $oembedClient = new OembedClient($this->config, $this->httpClient);
+
             try {
-                $oembedClient = new OembedClient($this->config, $this->httpClient);
                 $constructUrl = new \ReflectionMethod($oembedClient, 'constructUrl');
                 $constructUrl->setAccessible(true);
 
-            } catch (\Exception $error) {
-                $constructUrl = null;
-            }
+                $item = '<li><span style="display:inline-block;width:5em;">%s</span>: %s</li>';
 
-            $item = '<li><span style="display:inline-block;width:5em;">%s</span>: %s</li>';
+                foreach ($providers as $found => $provider) {
+                    $url = null;
+                    if ($constructUrl) {
+                        $url = urldecode(
+                            $constructUrl->invokeArgs(
+                                $oembedClient,
+                                [$provider->getEndpoint(), $provider->getParams()]
+                            )
+                        );
+                    }
 
-            foreach ($providers as $found => $provider) {
-                $url = null;
-                if ($constructUrl) {
-                    $url = urldecode(
-                        $constructUrl->invokeArgs(
-                            $oembedClient,
-                            [$provider->getEndpoint(), $provider->getParams()]
-                        )
+                    if (isset($urlData[$found]['embera_using_fake_response'])) {
+                        $fakeResponse = $urlData[$found]['embera_using_fake_response'] ? 'YES' : 'NO';
+
+                    } else {
+                        $fakeResponse = '*';
+                    }
+
+                    $this->app->enqueueMessage(
+                        sprintf(
+                            '<dl><dt>%s</dt><dd><ul>%s%s%s%s</ul></dd></dl>',
+                            $provider->getProviderName(),
+                            sprintf($item, 'Found', $found),
+                            sprintf($item, 'Endpoint', $provider->getEndpoint()),
+                            sprintf($item, 'URL', $url ? $url : '*error*'),
+                            sprintf($item, 'Fake Rsp', $fakeResponse)
+                        ),
+                        'notice'
                     );
                 }
 
-                if (isset($urlData[$found]['embera_using_fake_response'])) {
-                    $fakeResponse = $urlData[$found]['embera_using_fake_response'] ? 'YES' : 'NO';
-
-                } else {
-                    $fakeResponse = '*';
-                }
-
-                $this->app->enqueueMessage(
-                    sprintf(
-                        '<dl><dt>%s</dt><dd><ul>%s%s%s%s</ul></dd></dl>',
-                        $provider->getProviderName(),
-                        sprintf($item, 'Found', $found),
-                        sprintf($item, 'Endpoint', $provider->getEndpoint()),
-                        sprintf($item, 'URL', $url ? $url : '*error*'),
-                        sprintf($item, 'Fake Rsp', $fakeResponse)
-                    ),
-                    'notice'
-                );
+            } catch (\Exception $error) {
+                $this->app->enqueueMessage('Error: ' . $error->getMessage(), 'notice');
             }
         }
     }

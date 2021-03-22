@@ -90,6 +90,7 @@ class ProviderCollection extends ProviderCollectionAdapter
 
     /**
      * @inheritDoc
+     * @throws \Exception
      */
     public function __construct(array $config = [])
     {

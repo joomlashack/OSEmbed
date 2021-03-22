@@ -77,6 +77,7 @@ abstract class Helper
 
     /**
      * @return bool
+     * @throws \Exception
      */
     public static function complySystemRequirements()
     {
