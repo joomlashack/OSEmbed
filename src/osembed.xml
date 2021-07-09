@@ -105,6 +105,9 @@
             <file>/plugins/content/osembed/library/mpratt/embera/phpunit.full-urls.xml</file>
             <file>/plugins/content/osembed/library/mpratt/embera/phpunit.xml</file>
             <file>/plugins/content/osembed/library/mpratt/embera/PROVIDERS.md</file>
+            <file>/plugins/content/osembed/library/mpratt/embera/src/Embera/Provider/Omniscope.php</file>
+            <file>/plugins/content/osembed/library/mpratt/embera/src/Embera/Provider/Posixion.php</file>
+            <file>/plugins/content/osembed/library/mpratt/embera/src/Embera/Provider/Simplecast.php</file>
 
             <extension type="plugin"
                        group="content"

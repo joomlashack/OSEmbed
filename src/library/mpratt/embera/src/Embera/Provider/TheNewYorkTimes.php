@@ -16,7 +16,10 @@ use Embera\Url;
 
 /**
  * TheNewYorkTimes Provider
+ * Live news, investigations, opinion, photos and video by the journalists of The New York Times f...
+ *
  * @link https://nytimes.com
+ *
  */
 class TheNewYorkTimes extends ProviderAdapter implements ProviderInterface
 {
@@ -45,16 +48,6 @@ class TheNewYorkTimes extends ProviderAdapter implements ProviderInterface
         $url->removeLastSlash();
 
         return $url;
-    }
-
-    /** inline {@inheritdoc} */
-    public function modifyResponse(array $response = [])
-    {
-        if (!empty($response['html'])) {
-            $response['html'] = preg_replace('~title="(.+)"~i', 'title=""', $response['html']);
-        }
-
-        return $response;
     }
 
     /** inline {@inheritdoc} */

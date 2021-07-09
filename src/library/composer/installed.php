@@ -1,33 +1,32 @@
-<?php return array (
-  'root' => 
-  array (
-    'pretty_version' => 'dev-master',
-    'version' => 'dev-master',
-    'aliases' => 
-    array (
+<?php return array(
+    'root' => array(
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'type' => 'joomla-plugin',
+        'install_path' => __DIR__ . '/../../../',
+        'aliases' => array(),
+        'reference' => '8f377211a4cbcdbb76ec3c386d36f9a0acc886ab',
+        'name' => 'joomlashack/osembed',
+        'dev' => false,
     ),
-    'reference' => 'baf87efca3ca9b0e96af616a9d74b8724a148714',
-    'name' => 'joomlashack/osembed',
-  ),
-  'versions' => 
-  array (
-    'joomlashack/osembed' => 
-    array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'baf87efca3ca9b0e96af616a9d74b8724a148714',
+    'versions' => array(
+        'joomlashack/osembed' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'type' => 'joomla-plugin',
+            'install_path' => __DIR__ . '/../../../',
+            'aliases' => array(),
+            'reference' => '8f377211a4cbcdbb76ec3c386d36f9a0acc886ab',
+            'dev_requirement' => false,
+        ),
+        'mpratt/embera' => array(
+            'pretty_version' => '2.0.19',
+            'version' => '2.0.19.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../mpratt/embera',
+            'aliases' => array(),
+            'reference' => '2d12e16d9c4d3b9f026f3537512fd16869604cab',
+            'dev_requirement' => false,
+        ),
     ),
-    'mpratt/embera' => 
-    array (
-      'pretty_version' => '2.0.17',
-      'version' => '2.0.17.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'e5a1131773236d2f56a5416ef064328cc91a973e',
-    ),
-  ),
 );

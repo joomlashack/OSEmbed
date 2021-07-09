@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "mpratt/embera",
-            "version": "2.0.17",
+            "version": "2.0.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mpratt/Embera.git",
-                "reference": "e5a1131773236d2f56a5416ef064328cc91a973e"
+                "reference": "2d12e16d9c4d3b9f026f3537512fd16869604cab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mpratt/Embera/zipball/e5a1131773236d2f56a5416ef064328cc91a973e",
-                "reference": "e5a1131773236d2f56a5416ef064328cc91a973e",
+                "url": "https://api.github.com/repos/mpratt/Embera/zipball/2d12e16d9c4d3b9f026f3537512fd16869604cab",
+                "reference": "2d12e16d9c4d3b9f026f3537512fd16869604cab",
                 "shasum": ""
             },
             "require": {
@@ -25,7 +25,7 @@
                 "php": ">=5.6"
             },
             "require-dev": {
-                "phpunit/phpunit": "^8.3"
+                "phpunit/phpunit": "^9.0"
             },
             "suggest": {
                 "ext-curl": "Allow to fetch data using curl instead of using file_get_contents"
@@ -73,10 +73,10 @@
                 "Youtube"
             ],
             "support": {
-                "source": "https://github.com/mpratt/Embera/tree/2.0.17",
+                "source": "https://github.com/mpratt/Embera/tree/2.0.19",
                 "issues": "https://github.com/mpratt/Embera/issues"
             },
-            "time": "2021-03-12T01:38:04+00:00"
+            "time": "2021-05-28T00:35:13+00:00"
         }
     ],
     "packages-dev": [],
@@ -89,5 +89,5 @@
         "ext-simplexml": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
