@@ -167,9 +167,9 @@ class Plgcontentosembed extends AbstractPlugin
     }
 
     /**
-     * @return object
+     * @return string[]
      */
-    public function onOsembedProviders()
+    public function onOsembedProviders(): array
     {
         try {
             $providerList = $this->getProviderList();
@@ -179,13 +179,7 @@ class Plgcontentosembed extends AbstractPlugin
 
             return $providersProperty->getValue($providerList);
 
-        } catch (Exception $error) {
-            // Ignore
         } catch (Throwable $error) {
-            // ignore
-        }
-
-        if (!empty($error)) {
             $message = Text::sprintf('PLG_CONTENT_OSEMBED_ERROR_PROVIDERS', $error->getMessage());
             Log::add($message, Log::ERROR, Helper::LOG_SYSTEM);
             if (Helper::isDebugEnabled()) {
@@ -193,14 +187,14 @@ class Plgcontentosembed extends AbstractPlugin
             }
         }
 
-        return null;
+        return [];
     }
 
     /**
      * @return Embera
      * @throws Exception
      */
-    protected function getEmbera()
+    protected function getEmbera(): Embera
     {
         if ($this->embera === null) {
             $config = $this->params->toArray();
@@ -221,31 +215,28 @@ class Plgcontentosembed extends AbstractPlugin
 
     /**
      * @return ProviderCollectionAdapter
-     * @throws Exception
      */
-    protected function getProviderList()
+    protected function getProviderList(): ProviderCollectionAdapter
     {
-        if ($this->isEnabled()) {
-            $className = sprintf(
-                '\\Alledia\\OSEmbed\\%s\\ProviderCollection',
-                $this->isPro() ? 'Pro' : 'Free'
-            );
+        $className = sprintf(
+            '\\Alledia\\OSEmbed\\%s\\ProviderCollection',
+            $this->isPro() ? 'Pro' : 'Free'
+        );
 
-            if (class_exists($className)) {
-                return new $className(['params' => $this->params]);
-            }
+        if (class_exists($className)) {
+            return new $className(['params' => $this->params]);
         }
 
         return new CustomProviderCollection();
     }
 
     /**
-     * @param string $content
+     * @param ?string $content
      *
-     * @return string
+     * @return ?string
      * @throws Exception
      */
-    protected function parseContent($content)
+    protected function parseContent(?string $content): ?string
     {
         $embera = $this->getEmbera();
         if ($content && $embera) {
@@ -263,7 +254,7 @@ class Plgcontentosembed extends AbstractPlugin
     /**
      * @return bool
      */
-    protected function isEnabled()
+    protected function isEnabled(): bool
     {
         if ($this->enabled === null) {
             $isHTML = in_array(Factory::getDocument()->getType(), ['html', 'raw']);
@@ -280,7 +271,7 @@ class Plgcontentosembed extends AbstractPlugin
      *
      * @return mixed
      */
-    protected function callHelper($method, array $arguments = [])
+    protected function callHelper(string $method, array $arguments = [])
     {
         $helper = sprintf(
             '\\Alledia\\OSEmbed\\%s\\Helper',
@@ -293,14 +284,7 @@ class Plgcontentosembed extends AbstractPlugin
                 return call_user_func_array($callable, $arguments);
             }
 
-        } catch (Exception $error) {
-            // Handle below
-
         } catch (Throwable $error) {
-            // Handle below
-        }
-
-        if (empty($error)) {
             $message = Text::sprintf('PLG_CONTENT_OSEMBED_ERROR_HELPER_METHOD', $helper, $method);
             Log::add($message, Log::ERROR, Helper::LOG_LIBRARY);
 
