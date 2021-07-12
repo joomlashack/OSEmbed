@@ -16,16 +16,19 @@ use Embera\Url;
 
 /**
  * Spotify Provider
- * @link https://play.spotify.com
+ * En Spotify, puedes encontrar toda la música que necesitas.
+ *
+ * @link https://spotify.com
+ *
  */
 class Spotify extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://embed.spotify.com/oembed?format=json';
+    protected $endpoint = 'https://open.spotify.com/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        '*.spotify.com'
+        'open.spotify.com'
     ];
 
     /** inline {@inheritdoc} */

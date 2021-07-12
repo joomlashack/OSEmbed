@@ -1,6 +1,6 @@
 <?php
 /**
- * Simplecast.php
+ * Framer.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,29 +15,37 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Simplecast Provider
- * @link https://simplecast.com
+ * Framer Provider
+ * Design how it works. Framer is an all-in-one tool that helps teams
+ * design every part of the product experience.
+ *
+ * @link https://framer.com
+ * @todo Might support fake responses.
+ *
  */
-class Simplecast extends ProviderAdapter implements ProviderInterface
+class Framer extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://simplecast.com/oembed?format=json';
+    protected $endpoint = 'https://api.framer.com/web/oembed';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        '*.simplecast.com'
+        'framer.com'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
-    protected $responsiveSupport = true;
+    protected $responsiveSupport = false;
 
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~simplecast\.com/s/([^/]+)$~i', (string) $url));
+        return (bool) (preg_match('~framer\.com/(share|embed)/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
