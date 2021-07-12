@@ -66,8 +66,8 @@
         <element publish="true">osembed</element>
         <namespace>OSEmbed</namespace>
         <license>free</license>
-        <targetplatform>3.(9|10)</targetplatform>
-        <phpminimum>5.6</phpminimum>
+        <targetplatform>3.9</targetplatform>
+        <phpminimum>7.2.5</phpminimum>
 
         <minify>
             <script>media/js/osembed.js</script>
