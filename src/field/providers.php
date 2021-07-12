@@ -23,6 +23,7 @@
 
 use Alledia\OSEmbed\Free\Helper;
 use Embera\Embera;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
@@ -39,7 +40,14 @@ class OsembedFormFieldProviders extends FormField
      */
     public function setup(SimpleXMLElement $element, $value, $group = null)
     {
-        $return       = parent::setup($element, $value, $group);
+        if ($return = parent::setup($element, $value, $group)) {
+            if (!defined('OSEMBED_LOADED')) {
+                $path = JPATH_PLUGINS . '/content/osembed/include.php';
+                if ($return = is_file($path)) {
+                    require_once $path;
+                }
+            }
+        }
         $this->hidden = true;
 
         return $return;
