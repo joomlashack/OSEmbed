@@ -27,6 +27,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
+use Joomla\CMS\Plugin\PluginHelper;
 
 defined('_JEXEC') or die();
 
@@ -58,41 +59,49 @@ class OsembedFormFieldProviders extends FormField
      */
     protected function getInput()
     {
-        $providerLists = Factory::getApplication()->triggerEvent('onOsembedProviders');
+        if (PluginHelper::isEnabled('content', 'osembed')) {
+            $providerLists = Factory::getApplication()->triggerEvent('onOsembedProviders');
 
-        $providerNames = [];
-        foreach ($providerLists as $providers) {
-            foreach ($providers as $host => $provider) {
-                $providerParts = explode('\\', $provider);
-                $providerName  = array_pop($providerParts);
+            $providerNames = [];
+            foreach ($providerLists as $providers) {
+                foreach ($providers as $host => $provider) {
+                    $providerParts = explode('\\', $provider);
+                    $providerName  = array_pop($providerParts);
 
-                if (!isset($providerNames[$providerName])) {
-                    $providerNames[$providerName] = [];
+                    if (!isset($providerNames[$providerName])) {
+                        $providerNames[$providerName] = [];
+                    }
+                    $providerNames[$providerName][] = $host;
                 }
-                $providerNames[$providerName][] = $host;
             }
-        }
 
-        if ($providerNames) {
-            $hostCount = Text::plural(
-                'PLG_CONTENT_OSEMBED_PROVIDER_HOST_COUNT',
-                count($providerNames, COUNT_RECURSIVE) - count($providerNames)
+            if ($providerNames) {
+                $hostCount = Text::plural(
+                    'PLG_CONTENT_OSEMBED_PROVIDER_HOST_COUNT',
+                    count($providerNames, COUNT_RECURSIVE) - count($providerNames)
+                );
+
+                $header = sprintf(
+                    '<div class="alert alert-info">%s<br>%s</div>',
+                    Text::plural('PLG_CONTENT_OSEMBED_PROVIDER_COUNT', count($providerNames), $hostCount),
+                    Text::sprintf('PLG_CONTENT_OSEMBED_EMBERA_VERSION', Embera::VERSION)
+                );
+
+                return $header . $this->displayProviders($providerNames);
+            }
+
+            Log::add(Text::_('PLG_CONTENT_OSEMBED_ERROR_NO_PROVIDERS_LOG'), Log::WARNING, Helper::LOG_SYSTEM);
+
+            return sprintf(
+                '<span class="alert alert-error">%s</span>',
+                Text::_('PLG_CONTENT_OSEMBED_ERROR_NO_PROVIDERS')
             );
 
-            $header = sprintf(
-                '<div class="alert alert-info">%s<br>%s</div>',
-                Text::plural('PLG_CONTENT_OSEMBED_PROVIDER_COUNT', count($providerNames), $hostCount),
-                Text::sprintf('PLG_CONTENT_OSEMBED_EMBERA_VERSION', Embera::VERSION)
-            );
-
-            return $header . $this->displayProviders($providerNames);
         }
-
-        Log::add(Text::_('PLG_CONTENT_OSEMBED_ERROR_NO_PROVIDERS_LOG'), Log::WARNING, Helper::LOG_SYSTEM);
 
         return sprintf(
-            '<span class="alert alert-error">%s</span>',
-            Text::_('PLG_CONTENT_OSEMBED_ERROR_NO_PROVIDERS')
+            '<span class="alert alert-warning">%s</span>',
+            Text::_('PLG_CONTENT_OSEMBED_WARNING_DISABLED')
         );
     }
 
