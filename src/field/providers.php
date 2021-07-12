@@ -50,9 +50,7 @@ class OsembedFormFieldProviders extends FormField
      */
     protected function getInput()
     {
-        $dispatcher = JEventDispatcher::getInstance();
-
-        $providerLists = $dispatcher->trigger('onOsembedProviders');
+        $providerLists = Factory::getApplication()->triggerEvent('onOsembedProviders');
 
         $providerNames = [];
         foreach ($providerLists as $providers) {
