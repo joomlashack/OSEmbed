@@ -80,3 +80,18 @@ body {
     }
   }
 }
+
+/* Debug displays */
+div.osembed-debug {
+  word-break: break-all;
+}
+div.osembed-debug span {
+  font-weight: bold;
+}
+div.osembed-debug ul li div:first-child {
+  float: left;
+  width: 5em
+}
+div.osembed-debug ul li div:nth-child(2) {
+  margin-left: 5em;
+}

@@ -87,7 +87,7 @@ class Embera extends \Embera\Embera
      *
      * @return void
      */
-    protected function displayProviderInfo($providers, $urlData)
+    protected function displayProviderInfo(array $providers, array $urlData)
     {
         if ($this->params->get('debug')) {
             $oembedClient = new OembedClient($this->config, $this->httpClient);
@@ -96,8 +96,7 @@ class Embera extends \Embera\Embera
                 $constructUrl = new \ReflectionMethod($oembedClient, 'constructUrl');
                 $constructUrl->setAccessible(true);
 
-                $item = '<li><span style="display:inline-block;width:5em;">%s</span>: %s</li>';
-
+                $itemTemplate = '<li><div>%s: </div><div>%s</div></li>';
                 foreach ($providers as $found => $provider) {
                     $url = null;
                     if ($constructUrl) {
@@ -118,12 +117,12 @@ class Embera extends \Embera\Embera
 
                     $this->app->enqueueMessage(
                         sprintf(
-                            '<dl><dt>%s</dt><dd><ul>%s%s%s%s</ul></dd></dl>',
+                            '<div class="osembed-debug"><span>%s</span><ul>%s%s%s%s</ul></div>',
                             $provider->getProviderName(),
-                            sprintf($item, 'Found', $found),
-                            sprintf($item, 'Endpoint', $provider->getEndpoint()),
-                            sprintf($item, 'URL', $url ? $url : '*error*'),
-                            sprintf($item, 'Fake Rsp', $fakeResponse)
+                            sprintf($itemTemplate, 'Found', $found),
+                            sprintf($itemTemplate, 'Endpoint', $provider->getEndpoint()),
+                            sprintf($itemTemplate, 'URL', $url ? $url : '*error*'),
+                            sprintf($itemTemplate, 'Fake Rsp', $fakeResponse)
                         ),
                         'notice'
                     );
