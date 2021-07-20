@@ -2,12 +2,12 @@
 <extension type="plugin" group="content" method="upgrade">
     <name>PLG_CONTENT_OSEMBED</name>
     <author>Joomlashack</author>
-    <creationDate>July 12 2021</creationDate>
+    <creationDate>July 20 2021</creationDate>
     <copyright>Copyright 2016-2021 Joomlashack.com, All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl.html GNU/GPL</license>
     <authorEmail>help@joomlashack.com</authorEmail>
     <authorUrl>http://www.joomlashack.com</authorUrl>
-    <version>1.5.6</version>
+    <version>1.5.7b1</version>
     <variant>FREE</variant>
     <description>PLG_CONTENT_OSEMBED_DESCRIPTION</description>
 
