@@ -3,7 +3,7 @@
     "description"      : "OSEmbed",
     "minimum-stability": "stable",
     "license"          : "GPL-2+",
-    "type"             : "joomla.plugin",
+    "type"             : "joomla-plugin",
     "extra"            : {
         "element"        : "plg_content_osembed",
         "element-short"  : "osembed",

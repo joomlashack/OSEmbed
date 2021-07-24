@@ -43,15 +43,4 @@ if ($includePath) {
  */
 class AbstractScript extends \Alledia\Installer\AbstractScript
 {
-    /**
-     * @var CMSApplication
-     */
-    protected $app = null;
-
-    public function __construct($parent)
-    {
-        parent::__construct($parent);
-
-        $this->app = Factory::getApplication();
-    }
 }
