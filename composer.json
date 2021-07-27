@@ -2,7 +2,7 @@
     "name"             : "joomlashack/osembed",
     "description"      : "OSEmbed",
     "minimum-stability": "stable",
-    "license"          : "GPL-2+",
+    "license"          : "GPL-2.0-or-later",
     "type"             : "joomla-plugin",
     "extra"            : {
         "element"        : "plg_content_osembed",

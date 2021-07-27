@@ -28,7 +28,6 @@
 
     <media destination="plg_content_osembed" folder="media">
         <folder>css</folder>
-        <folder>fonts</folder>
         <folder>images</folder>
         <folder>js</folder>
         <folder>scss</folder>
