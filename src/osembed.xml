@@ -11,8 +11,6 @@
     <creationDate>July 26 2021</creationDate>
     <variant>FREE</variant>
 
-    <variant>PRO</variant>
-
     <scriptfile>script.installer.php</scriptfile>
 
     <files>
@@ -80,16 +78,16 @@
 
         <relatedExtensions>
             <extension type="library"
-                       element="allediaframework">AllediaFramework</extension>
+                       element="allediaframework">ShackFramework</extension>
 
             <extension type="plugin"
                        group="system"
-                       element="ossystem"
+                       element="osmylicensesmanager"
                        publish="true"
-                       ordering="first">OSSystem</extension>
+                       ordering="first">ShackExtensionSupport</extension>
         </relatedExtensions>
 
-        <include>AllediaFreeDefaultFiles</include>
+        <include>ShackDefaultFiles</include>
 
         <obsolete>
             <folder>/plugins/content/osembed/library/Free/Provider</folder>
