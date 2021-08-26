@@ -35,264 +35,261 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\Registry\Registry;
 
-include_once 'include.php';
-if (!defined('OSEMBED_LOADED')) {
-    return;
-}
-
-class Plgcontentosembed extends AbstractPlugin
-{
-    protected $namespace = 'OSEmbed';
-
-    /**
-     * @var string
-     */
-    public $type = 'content';
-
-    protected $autoloadLanguage = true;
-
-    /**
-     * @var SiteApplication
-     */
-    protected $app = null;
-
-    /**
-     * @var bool
-     */
-    protected $enabled = null;
-
-    /**
-     * @var bool
-     */
-    protected $debug = false;
-
-    /**
-     * @var Embera
-     */
-    protected $embera = null;
-
-    /**
-     * @var string[]
-     */
-    protected $excludedContexts = [
-        'com_finder.indexer',
-        'com_search.search'
-    ];
-
-    /**
-     * @inheritDoc
-     */
-    public function __construct(&$subject, $config = [])
+if (include 'include.php') {
+    class Plgcontentosembed extends AbstractPlugin
     {
-        parent::__construct($subject, $config);
+        protected $namespace = 'OSEmbed';
 
-        $this->init();
-    }
+        /**
+         * @var string
+         */
+        public $type = 'content';
 
-    /**
-     * @inheritDoc
-     */
-    protected function init()
-    {
-        parent::init();
+        protected $autoloadLanguage = true;
 
-        $this->callHelper('addLogger');
+        /**
+         * @var SiteApplication
+         */
+        protected $app = null;
 
-        if ($this->isEnabled()) {
-            $this->params->def('responsive', true);
-            $this->params->def('ignore_tags', ['pre', 'code', 'a', 'img', 'iframe']);
+        /**
+         * @var bool
+         */
+        protected $enabled = null;
 
-            $this->debug = $this->params->get('debug', false);
+        /**
+         * @var bool
+         */
+        protected $debug = false;
+
+        /**
+         * @var Embera
+         */
+        protected $embera = null;
+
+        /**
+         * @var string[]
+         */
+        protected $excludedContexts = [
+            'com_finder.indexer',
+            'com_search.search'
+        ];
+
+        /**
+         * @inheritDoc
+         */
+        public function __construct(&$subject, $config = [])
+        {
+            parent::__construct($subject, $config);
+
+            $this->init();
         }
-    }
 
-    /**
-     * @param string   $context
-     * @param object   $article
-     * @param Registry $params
-     *
-     * @return  void
-     * @throws Exception
-     */
-    public function onContentPrepare($context, $article, $params)
-    {
-        if ($this->isEnabled() && !in_array($context, $this->excludedContexts)) {
-            $versionUID = md5($this->extension->getVersion());
+        /**
+         * @inheritDoc
+         */
+        protected function init()
+        {
+            parent::init();
 
-            HTMLHelper::_('jquery.framework');
+            $this->callHelper('addLogger');
 
-            HTMLHelper::_(
-                'stylesheet',
-                'plg_content_osembed/osembed.css',
-                ['relative' => true, 'version' => $versionUID]
-            );
+            if ($this->isEnabled()) {
+                $this->params->def('responsive', true);
+                $this->params->def('ignore_tags', ['pre', 'code', 'a', 'img', 'iframe']);
 
-            HTMLHelper::_(
-                'script',
-                'plg_content_osembed/osembed.min.js',
-                ['relative' => true, 'version' => $versionUID]
-            );
-
-            $textField = null;
-            switch ($context) {
-                case 'com_content.category':
-                    if ($this->params->get('show_intro') && isset($article->introtext)) {
-                        $textField = 'introtext';
-                    }
-                    break;
-
-                case 'com_content.categories':
-                    if ($params && $params->get('show_description')) {
-                        $textField = 'text';
-                    }
-                    break;
-
-                case 'com_content.category.title':
-                    // disable these
-                    break;
-
-                default:
-                    $textField = 'text';
-                    break;
-            }
-
-            if ($this->debug) {
-                $this->app->enqueueMessage(sprintf('%s: Field=%s', $context, $textField ?: 'null'), 'notice');
-            }
-
-            if ($textField && isset($article->{$textField})) {
-                $article->{$textField} = $this->parseContent($article->{$textField});
-            }
-        }
-    }
-
-    /**
-     * @return string[]
-     */
-    public function onOsembedProviders(): array
-    {
-        try {
-            $providerList = $this->getProviderList();
-
-            $providersProperty = new ReflectionProperty($providerList, 'providers');
-            $providersProperty->setAccessible(true);
-
-            return $providersProperty->getValue($providerList);
-
-        } catch (Throwable $error) {
-            $message = Text::sprintf('PLG_CONTENT_OSEMBED_ERROR_PROVIDERS', $error->getMessage());
-            Log::add($message, Log::ERROR, Helper::LOG_SYSTEM);
-            if (Helper::isDebugEnabled()) {
-                $this->app->enqueueMessage($message, 'error');
+                $this->debug = $this->params->get('debug', false);
             }
         }
 
-        return [];
-    }
+        /**
+         * @param string   $context
+         * @param object   $article
+         * @param Registry $params
+         *
+         * @return  void
+         * @throws Exception
+         */
+        public function onContentPrepare($context, $article, $params)
+        {
+            if ($this->isEnabled() && !in_array($context, $this->excludedContexts)) {
+                $versionUID = md5($this->extension->getVersion());
 
-    /**
-     * @return Embera
-     * @throws Exception
-     */
-    protected function getEmbera(): Embera
-    {
-        if ($this->embera === null) {
-            $config = $this->params->toArray();
+                HTMLHelper::_('jquery.framework');
 
-            if (!is_array($config['ignore_tags'])) {
-                $config['ignore_tags'] = array_filter(
-                    array_unique(
-                        array_map('trim', explode(',', $config['ignore_tags']))
-                    )
+                HTMLHelper::_(
+                    'stylesheet',
+                    'plg_content_osembed/osembed.css',
+                    ['relative' => true, 'version' => $versionUID]
                 );
-            }
 
-            $this->embera = new Embera($config, $this->getProviderList(), null, $this->params);
-        }
+                HTMLHelper::_(
+                    'script',
+                    'plg_content_osembed/osembed.min.js',
+                    ['relative' => true, 'version' => $versionUID]
+                );
 
-        return $this->embera;
-    }
+                $textField = null;
+                switch ($context) {
+                    case 'com_content.category':
+                        if ($this->params->get('show_intro') && isset($article->introtext)) {
+                            $textField = 'introtext';
+                        }
+                        break;
 
-    /**
-     * @return ProviderCollectionAdapter
-     */
-    protected function getProviderList(): ProviderCollectionAdapter
-    {
-        $className = sprintf(
-            '\\Alledia\\OSEmbed\\%s\\ProviderCollection',
-            $this->isPro() ? 'Pro' : 'Free'
-        );
+                    case 'com_content.categories':
+                        if ($params && $params->get('show_description')) {
+                            $textField = 'text';
+                        }
+                        break;
 
-        if (class_exists($className)) {
-            return new $className(['params' => $this->params]);
-        }
+                    case 'com_content.category.title':
+                        // disable these
+                        break;
 
-        return new CustomProviderCollection();
-    }
+                    default:
+                        $textField = 'text';
+                        break;
+                }
 
-    /**
-     * @param ?string $content
-     *
-     * @return ?string
-     * @throws Exception
-     */
-    protected function parseContent(?string $content): ?string
-    {
-        $embera = $this->getEmbera();
-        if ($content && $embera) {
-            if ($this->params->get('stripnewline', false)) {
-                return preg_replace('/\n/', '', $embera->autoEmbed($content));
+                if ($this->debug) {
+                    $this->app->enqueueMessage(sprintf('%s: Field=%s', $context, $textField ?: 'null'), 'notice');
+                }
 
-            } else {
-                return $embera->autoEmbed($content);
+                if ($textField && isset($article->{$textField})) {
+                    $article->{$textField} = $this->parseContent($article->{$textField});
+                }
             }
         }
 
-        return $content;
-    }
+        /**
+         * @return string[]
+         */
+        public function onOsembedProviders(): array
+        {
+            try {
+                $providerList = $this->getProviderList();
 
-    /**
-     * @return bool
-     */
-    protected function isEnabled(): bool
-    {
-        if ($this->enabled === null) {
-            $isHTML = in_array(Factory::getDocument()->getType(), ['html', 'raw']);
+                $providersProperty = new ReflectionProperty($providerList, 'providers');
+                $providersProperty->setAccessible(true);
 
-            $this->enabled = $isHTML && $this->callHelper('complySystemRequirements');
-        }
+                return $providersProperty->getValue($providerList);
 
-        return $this->enabled;
-    }
-
-    /**
-     * @param string $method
-     * @param array  $arguments
-     *
-     * @return mixed
-     */
-    protected function callHelper(string $method, array $arguments = [])
-    {
-        $helper = sprintf(
-            '\\Alledia\\OSEmbed\\%s\\Helper',
-            $this->isPro() ? 'Pro' : 'Free'
-        );
-
-        try {
-            $callable = [$helper, $method];
-            if (is_callable($callable)) {
-                return call_user_func_array($callable, $arguments);
+            } catch (Throwable $error) {
+                $message = Text::sprintf('PLG_CONTENT_OSEMBED_ERROR_PROVIDERS', $error->getMessage());
+                Log::add($message, Log::ERROR, Helper::LOG_SYSTEM);
+                if (Helper::isDebugEnabled()) {
+                    $this->app->enqueueMessage($message, 'error');
+                }
             }
 
-        } catch (Throwable $error) {
-            $message = Text::sprintf('PLG_CONTENT_OSEMBED_ERROR_HELPER_METHOD', $helper, $method);
-            Log::add($message, Log::ERROR, Helper::LOG_LIBRARY);
-
-            if (Helper::isDebugEnabled()) {
-                $this->app->enqueueMessage($message, 'error');
-            }
+            return [];
         }
 
-        return null;
+        /**
+         * @return Embera
+         * @throws Exception
+         */
+        protected function getEmbera(): Embera
+        {
+            if ($this->embera === null) {
+                $config = $this->params->toArray();
+
+                if (!is_array($config['ignore_tags'])) {
+                    $config['ignore_tags'] = array_filter(
+                        array_unique(
+                            array_map('trim', explode(',', $config['ignore_tags']))
+                        )
+                    );
+                }
+
+                $this->embera = new Embera($config, $this->getProviderList(), null, $this->params);
+            }
+
+            return $this->embera;
+        }
+
+        /**
+         * @return ProviderCollectionAdapter
+         */
+        protected function getProviderList(): ProviderCollectionAdapter
+        {
+            $className = sprintf(
+                '\\Alledia\\OSEmbed\\%s\\ProviderCollection',
+                $this->isPro() ? 'Pro' : 'Free'
+            );
+
+            if (class_exists($className)) {
+                return new $className(['params' => $this->params]);
+            }
+
+            return new CustomProviderCollection();
+        }
+
+        /**
+         * @param ?string $content
+         *
+         * @return ?string
+         * @throws Exception
+         */
+        protected function parseContent(?string $content): ?string
+        {
+            $embera = $this->getEmbera();
+            if ($content && $embera) {
+                if ($this->params->get('stripnewline', false)) {
+                    return preg_replace('/\n/', '', $embera->autoEmbed($content));
+
+                } else {
+                    return $embera->autoEmbed($content);
+                }
+            }
+
+            return $content;
+        }
+
+        /**
+         * @return bool
+         */
+        protected function isEnabled(): bool
+        {
+            if ($this->enabled === null) {
+                $isHTML = in_array(Factory::getDocument()->getType(), ['html', 'raw']);
+
+                $this->enabled = $isHTML && $this->callHelper('complySystemRequirements');
+            }
+
+            return $this->enabled;
+        }
+
+        /**
+         * @param string $method
+         * @param array  $arguments
+         *
+         * @return mixed
+         */
+        protected function callHelper(string $method, array $arguments = [])
+        {
+            $helper = sprintf(
+                '\\Alledia\\OSEmbed\\%s\\Helper',
+                $this->isPro() ? 'Pro' : 'Free'
+            );
+
+            try {
+                $callable = [$helper, $method];
+                if (is_callable($callable)) {
+                    return call_user_func_array($callable, $arguments);
+                }
+
+            } catch (Throwable $error) {
+                $message = Text::sprintf('PLG_CONTENT_OSEMBED_ERROR_HELPER_METHOD', $helper, $method);
+                Log::add($message, Log::ERROR, Helper::LOG_LIBRARY);
+
+                if (Helper::isDebugEnabled()) {
+                    $this->app->enqueueMessage($message, 'error');
+                }
+            }
+
+            return null;
+        }
     }
 }

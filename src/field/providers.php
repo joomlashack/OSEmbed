@@ -43,10 +43,9 @@ class OsembedFormFieldProviders extends FormField
     {
         if ($return = parent::setup($element, $value, $group)) {
             if (!defined('OSEMBED_LOADED')) {
-                $path = JPATH_PLUGINS . '/content/osembed/include.php';
-                if ($return = is_file($path)) {
-                    require_once $path;
-                }
+                $includePath = JPATH_PLUGINS . '/content/osembed/include.php';
+
+                $return = is_file($includePath) && include $includePath;
             }
         }
         $this->hidden = true;

@@ -26,26 +26,23 @@ use Joomla\CMS\Factory;
 
 defined('_JEXEC') or die();
 
-if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
-    $allediaFrameworkPath = JPATH_SITE . '/libraries/allediaframework/include.php';
+if (!defined('OSEMBED_LOADED')) {
+    $frameworkPath = JPATH_SITE . '/libraries/allediaframework/include.php';
+    if (is_file($frameworkPath) && include $frameworkPath) {
+        include_once 'library/autoload.php';
 
-    if (file_exists($allediaFrameworkPath)) {
-        require_once $allediaFrameworkPath;
+        Framework\Joomla\Extension\Helper::loadLibrary('plg_content_osembed');
+
+        define('OSEMBED_LOADED', 1);
+        define('OSEMBED_PLUGIN_PATH', __DIR__);
 
     } else {
         $app = Factory::getApplication();
 
         if ($app->isClient('administrator')) {
-            $app->enqueueMessage('[OSEmbed] Alledia framework not found', 'error');
+            $app->enqueueMessage('[OSEmbed] Joomlashack framework not found', 'error');
         }
     }
 }
 
-if (defined('ALLEDIA_FRAMEWORK_LOADED') && !defined('OSEMBED_LOADED')) {
-    include_once 'library/autoload.php';
-
-    Framework\Joomla\Extension\Helper::loadLibrary('plg_content_osembed');
-
-    define('OSEMBED_LOADED', 1);
-    define('OSEMBED_PLUGIN_PATH', __DIR__);
-}
+return defined('OSEMBED_LOADED');

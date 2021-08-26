@@ -98,6 +98,7 @@
             <folder>/plugins/content/osembed/library/Pro</folder>
 
             <file>/plugins/content/osembed/library/Free/Embed.php</file>
+            <file>/plugins/content/osembed/library/Free/Installer/AbstractFail.php</file>
             <file>/plugins/content/osembed/library/Free/Provider/Example.php</file>
             <file>/plugins/content/osembed/library/Free/Provider/Facebook.php</file>
             <file>/plugins/content/osembed/library/mpratt/embera/phpdoc.xml</file>

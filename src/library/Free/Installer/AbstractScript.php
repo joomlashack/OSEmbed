@@ -26,18 +26,9 @@ namespace Alledia\OSEmbed\Free\Installer;
 defined('_JEXEC') or die();
 
 $includePath = realpath(__DIR__ . '/../../../library/Installer/include.php');
-if ($includePath) {
-    require_once $includePath;
 
-} else {
-    require_once __DIR__ . '/AbstractFail.php';
-}
+require_once $includePath;
 
-/**
- * Class AbstractScript
- *
- * @package Alledia\OSEmbed\Free\Installer
- */
 class AbstractScript extends \Alledia\Installer\AbstractScript
 {
 }
