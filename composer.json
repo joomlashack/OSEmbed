@@ -30,7 +30,7 @@
         "vendor-dir": "src/library"
     },
     "require"          : {
-        "php"          : "7.2.5",
+        "php"          : ">=7.2.5",
         "ext-simplexml": "*",
         "mpratt/embera": "^2"
     }
