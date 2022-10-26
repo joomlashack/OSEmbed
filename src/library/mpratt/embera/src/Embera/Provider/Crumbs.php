@@ -1,6 +1,6 @@
 <?php
 /**
- * Meetup.php
+ * Crumbs.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,35 +15,33 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Meetup Provider
- * Find Meetup events so you can do more of what matters to you. Or create your own group and meet...
+ * Crumbs Provider
  *
- * @link https://meetup.com/
- *
+ * @link https://crumb.sh
  */
-class Meetup extends ProviderAdapter implements ProviderInterface
+class Crumbs extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://api.meetup.com/oembed?format=json';
+    protected $endpoint = 'https://crumb.sh/oembed/?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'meetup.com'
+        'crumb.sh'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
-    protected $responsiveSupport = true;
+    protected $responsiveSupport = false;
 
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (
-            preg_match('~meetup\.com/(?:.+)~i', (string) $url) ||
-            preg_match('~meetu\.ps/(?:\w+)/?$~i', (string) $url)
-        );
+        return (bool) (preg_match('~crumb\.sh/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
@@ -51,7 +49,9 @@ class Meetup extends ProviderAdapter implements ProviderInterface
     {
         $url->convertToHttps();
         $url->removeQueryString();
+        $url->removeLastSlash();
 
         return $url;
     }
+
 }

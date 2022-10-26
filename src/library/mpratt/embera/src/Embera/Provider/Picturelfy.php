@@ -1,6 +1,6 @@
 <?php
 /**
- * ModeloIO.php
+ * Picturefly.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,21 +15,22 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * ModeloIO Provider
- * Collaborate with colleagues, share & markup design assets, & build interactive presentations wi...
+ * Picturefly Provider
  *
- * @link https://modelo.io
- *
+ * @link https://picturefy.com
  */
-class ModeloIO extends ProviderAdapter implements ProviderInterface
+class Picturelfy extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://portal.modelo.io/oembed?format=json&modelName=embera&authorName=embera';
+    protected $endpoint = 'https://api.picturelfy.com/service/oembed/?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        '*.modelo.io'
+        'picturelfy.com'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
@@ -40,24 +41,16 @@ class ModeloIO extends ProviderAdapter implements ProviderInterface
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~modelo\.io/embedded/([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~picturelfy\.com/p/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
     public function normalizeUrl(Url $url)
     {
         $url->convertToHttps();
+        $url->removeQueryString();
+        $url->removeLastSlash();
+
         return $url;
     }
-
-    /** inline {@inheritdoc} */
-    public function modifyResponse(array $response = [])
-    {
-        if (!empty($response['html'])) {
-            $response['html'] = preg_replace('~<p>(.+)</p>~i', '', $response['html']);
-        }
-
-        return $response;
-    }
-
 }

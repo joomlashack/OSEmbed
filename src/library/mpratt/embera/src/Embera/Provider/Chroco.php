@@ -1,6 +1,6 @@
 <?php
 /**
- * Pixdor.php
+ * Chroco.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,21 +15,22 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Pixdor Provider
- * No description.
+ * Chroco Provider
  *
- * @link https://pixdor.com
- *
+ * @link https://chroco.ooo
  */
-class Pixdor extends ProviderAdapter implements ProviderInterface
+class Chroco extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://store.pixdor.com/oembed?format=json';
+    protected $endpoint = 'https://chroco.ooo/embed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'store.pixdor.com'
+        'chroco.ooo'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
@@ -40,7 +41,7 @@ class Pixdor extends ProviderAdapter implements ProviderInterface
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~store\.pixdor\.com/(map|place-marker-widget)/([^/]+)/show$~i', (string) $url));
+        return (bool) (preg_match('~chroco\.ooo/(mypage|story)/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
@@ -53,22 +54,31 @@ class Pixdor extends ProviderAdapter implements ProviderInterface
         return $url;
     }
 
+    /** inline {@inheritdoc} */
+    public function modifyResponse(array $response = [])
+    {
+        return $response;
+    }
+
+    /** inline {@inheritdoc} */
     public function getFakeResponse()
     {
-        $embedUrl = str_replace('/show', '/embed.html', $this->url);
+        preg_match('~v=([a-z0-9_\-]+)~i', (string) $this->url, $matches);
+
+        $embedUrl = '';
 
         $attr = [];
-        $attr[] = 'src="' . $embedUrl . '"';
-        $attr[] = 'style="max-width: 100%; max-height: 100%"';
         $attr[] = 'width="{width}"';
         $attr[] = 'height="{height}"';
+        $attr[] = 'src="' . $embedUrl . '"';
         $attr[] = 'frameborder="0"';
-        $attr[] = 'data-keep-widget-ratio="true"';
+        $attr[] = 'allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"';
+        $attr[] = 'allowfullscreen';
 
         return [
-            'type' => 'rich',
-            'provider_name' => 'Pixdor',
-            'provider_url' => 'https://www.pixdor.com',
+            'type' => '',
+            'provider_name' => 'Chroco',
+            'provider_url' => 'https://chroco.ooo',
             'title' => 'Unknown title',
             'html' => '<iframe ' . implode(' ', $attr). '></iframe>',
         ];

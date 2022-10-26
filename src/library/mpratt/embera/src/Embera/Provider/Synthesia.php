@@ -1,6 +1,6 @@
 <?php
 /**
- * Minerva.php
+ * Synthesia.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,20 +15,18 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Minerva Provider
- * Minerva is the easiest way to capture and share clickable instructions for anything on the inte...
+ * Synthesia Provider
  *
- * @link https://minervaknows.com/
- *
+ * @link https://share.synthesia.io
  */
-class Minerva extends ProviderAdapter implements ProviderInterface
+class Synthesia extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://oembed.minervaknows.com?format=json';
+    protected $endpoint = 'https://69jr5v75rc.execute-api.eu-west-1.amazonaws.com/prod/v2/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        '*.minervaknows.com'
+        'share.synthesia.io'
     ];
 
     /** inline {@inheritdoc} */
@@ -43,10 +41,7 @@ class Minerva extends ProviderAdapter implements ProviderInterface
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (
-            preg_match('~\.minervaknows\.com/(themes|featured-recipes|recipes)/([^/]+)~i', (string) $url) ||
-            preg_match('~\.minervaknows\.com/(themes|recipes)/([^/]+)/(follow|recipes)~i', (string) $url)
-        );
+        return (bool) (preg_match('~share\.synthesia\.io/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */

@@ -17,6 +17,8 @@ use Embera\Url;
 /**
  * Instagram Provider
  * Create an account or log in to Instagram - A simple, fun &amp; creative way to capture, edit &a...
+ * This Provider Requires the use of an access_token provided by Instagram.
+ * Example: `$embera = new Embera([ 'instagram_access_token' => 'yourtokenforinstagram' ]);`
  *
  * @link https://instagram.com
  * @see https://www.instagram.com/developer/embedding/#oembed
@@ -24,7 +26,7 @@ use Embera\Url;
 class Instagram extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://graph.facebook.com/v9.0/instagram_oembed';
+    protected $endpoint = 'https://graph.facebook.com/v12.0/instagram_oembed';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
@@ -44,8 +46,8 @@ class Instagram extends ProviderAdapter implements ProviderInterface
     public function validateUrl(Url $url)
     {
         return (bool) (
-            preg_match('~(instagram\.com|instagr\.am)/(?:p|tv)/([^/]+)/?$~i', (string) $url) ||
-            preg_match('~(instagram\.com|instagr\.am)/([^/]+)/(?:p|tv)/([^/]+)/?$~i', (string) $url)
+            preg_match('~(instagram\.com|instagr\.am)/(?:p|tv|reel)/([^/]+)/?$~i', (string) $url) ||
+            preg_match('~(instagram\.com|instagr\.am)/([^/]+)/(?:p|tv|reel)/([^/]+)/?$~i', (string) $url)
         );
     }
 

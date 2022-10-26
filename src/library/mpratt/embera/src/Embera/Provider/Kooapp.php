@@ -1,6 +1,6 @@
 <?php
 /**
- * Spotful.php
+ * Kooapp.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,21 +15,22 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Spotful Provider
- * No description.
+ * Kooapp Provider
  *
- * @link https://bespotful.com
- *
+ * @link https://kooapp.com
  */
-class Spotful extends ProviderAdapter implements ProviderInterface
+class Kooapp extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://api.bespotful.com/oembed?format=json';
+    protected $endpoint = 'https://embed.kooapp.com/services/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'play.bespotful.com'
+        'kooapp.com'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
@@ -40,7 +41,7 @@ class Spotful extends ProviderAdapter implements ProviderInterface
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~play\.bespotful\.com/([0-9]+)$~i', (string) $url));
+        return (bool) (preg_match('~kooapp\.com/koo/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
@@ -52,16 +53,4 @@ class Spotful extends ProviderAdapter implements ProviderInterface
 
         return $url;
     }
-
-    /** inline {@inheritdoc} */
-    public function modifyResponse(array $response = [])
-    {
-        if (!empty($response['html_responsive'])) {
-            $response['html_original'] = $response['html'];
-            $response['html'] = $response['html_responsive'];
-        }
-
-        return $response;
-    }
-
 }

@@ -1,6 +1,7 @@
 <?php
+
 /**
- * PolariShare.php
+ * Waltrack.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,21 +16,22 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * PolariShare Provider
- * Sharing knowledge in new ways
+ * Waltrack Provider
  *
- * @link https://polarishare.com
- *
+ * @link https://https://waltrack.net
  */
-class PolariShare extends ProviderAdapter implements ProviderInterface
+class Waltrack extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://api.polarishare.com/rest/api/oembed?format=json';
+    protected $endpoint = 'https://waltrack.net/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'polarishare.com'
+        'waltrack.net'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
@@ -40,7 +42,7 @@ class PolariShare extends ProviderAdapter implements ProviderInterface
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~polarishare\.com/([^/]+)/([^/]+)(/[^/]+)?$~i', (string) $url));
+        return (bool) (preg_match('~waltrack\.net/product/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
@@ -52,5 +54,4 @@ class PolariShare extends ProviderAdapter implements ProviderInterface
 
         return $url;
     }
-
 }

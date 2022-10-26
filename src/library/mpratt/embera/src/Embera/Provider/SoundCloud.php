@@ -28,7 +28,9 @@ class SoundCloud extends ProviderAdapter implements ProviderInterface
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'soundcloud.com'
+        'soundcloud.com',
+        'api.soundcloud.com',
+        'on.soundcloud.com'
     ];
 
     /** inline {@inheritdoc} */
@@ -50,7 +52,6 @@ class SoundCloud extends ProviderAdapter implements ProviderInterface
     public function normalizeUrl(Url $url)
     {
         $url->convertToHttps();
-        $url->removeQueryString();
         $url->removeLastSlash();
 
         return $url;

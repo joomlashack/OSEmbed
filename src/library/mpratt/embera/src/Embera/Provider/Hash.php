@@ -1,6 +1,6 @@
 <?php
 /**
- * TourHero.php
+ * Hash.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,20 +15,19 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * TourHero Provider
- * TourHero helps you plan and book unforgettable travel experiences. Fully customized trips that ...
+ * Hash Provider
+ * Build multi-agent simulations in minutes
  *
- * @link https://tourhero.com
- *
+ * @link https://hash.ai
  */
-class TourHero extends ProviderAdapter implements ProviderInterface
+class Hash extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://oembed.tourhero.com/?format=json';
+    protected $endpoint = 'https://api.hash.ai/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'tourhero.com'
+        'core.hash.ai'
     ];
 
     /** inline {@inheritdoc} */
@@ -43,17 +42,7 @@ class TourHero extends ProviderAdapter implements ProviderInterface
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~tourhero\.com/(.+)\.html$~i', (string) $url));
-    }
-
-    /** inline {@inheritdoc} */
-    public function normalizeUrl(Url $url)
-    {
-        $url->convertToHttps();
-        $url->removeQueryString();
-        $url->removeLastSlash();
-
-        return $url;
+        return (bool) (preg_match('~hash\.ai/@([^/]+)/([^/]+)~i', (string) $url));
     }
 
 }

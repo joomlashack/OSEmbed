@@ -1,6 +1,6 @@
 <?php
 /**
- * Bopp.php
+ * Pandavideo.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,23 +15,18 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Bopp Provider
- * Image Hosting That Isn't Bad!
+ * Pandavideo Provider
  *
- * This provider generates the html code when not available.
- *
- * @link https://i.bopp.tk
- * @todo Might support fake responses
- *
+ * @link https://pandavideo.com
  */
-class Bopp extends ProviderAdapter implements ProviderInterface
+class Pandavideo extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'http://api.bopp.tk/v1/oembed?format=json';
+    protected $endpoint = 'https://api-v2.pandavideo.com.br/oembed';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'i.bopp.tk'
+        '*.tv.pandavideo.com.br'
     ];
 
     /** inline {@inheritdoc} */
@@ -46,27 +41,17 @@ class Bopp extends ProviderAdapter implements ProviderInterface
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~i\.bopp\.tk/([^/]+)~i', (string) $url));
+        return (bool) (
+            preg_match('~pandavideo\.com\.br/embed/\?v\=([^/]+)~i', (string) $url) ||
+            preg_match('~pandavideo\.com\.br/(.+)playlist\.m3u8$~i', (string) $url) ||
+            preg_match('~pandavideo\.com\.br/#/videos/([^/]+)~i', (string) $url)
+        );
     }
 
     /** inline {@inheritdoc} */
     public function normalizeUrl(Url $url)
     {
         $url->convertToHttps();
-        $url->removeQueryString();
-        $url->removeLastSlash();
-
         return $url;
     }
-
-    /** inline {@inheritdoc} */
-    public function modifyResponse(array $response = [])
-    {
-        if (empty($response['html'])) {
-            $response['html'] = '<img src="' . $response['url'] . '" alt="" title="">';
-        }
-
-        return $response;
-    }
-
 }

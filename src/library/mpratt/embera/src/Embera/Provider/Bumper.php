@@ -1,6 +1,6 @@
 <?php
 /**
- * Uppy.php
+ * Bumper.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,20 +15,18 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Uppy Provider
- * No description.
+ * Bumper Provider
  *
- * @link https://app.uppy.jp
- *
+ * @link https://bumper.com
  */
-class Uppy extends ProviderAdapter implements ProviderInterface
+class Bumper extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://api.uppy.jp/v1/oembed?format=json';
+    protected $endpoint = 'https://www.bumper.com/oembed-s/bumper?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'app.uppy.jp'
+        'bumper.com'
     ];
 
     /** inline {@inheritdoc} */
@@ -43,16 +41,6 @@ class Uppy extends ProviderAdapter implements ProviderInterface
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~app\.uppy\.jp/shares/video\?([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~bumper\.com/(marketplace\-s|oembed|oembed\-s)/([^/]+)~i', (string) $url));
     }
-
-    /** inline {@inheritdoc} */
-    public function normalizeUrl(Url $url)
-    {
-        $url->convertToHttps();
-        $url->removeLastSlash();
-
-        return $url;
-    }
-
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * CocoCorp.php
+ * Audiomeans.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,37 +15,42 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * CocoCorp Provider
- * Coco Corp - Interactive Video
+ * Audiomeans Provider
  *
- * @link https://ilovecoco.video
+ * @link https://*.audiomeans.fr
  */
-class CocoCorp extends ProviderAdapter implements ProviderInterface
+class Audiomeans extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://app.ilovecoco.video/api/oembed.json';
+    protected $endpoint = 'https://podcasts.audiomeans.fr/services/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        '*.ilovecoco.video'
+        '*.audiomeans.fr'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
+    protected $responsiveSupport = false;
+
+    /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~ilovecoco\.video/([^/]+)/embed$~i', (string) $url));
+        return (bool) (preg_match('~audiomeans\.fr/player([^/]+)/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
     public function normalizeUrl(Url $url)
     {
         $url->convertToHttps();
-        $url->removeQueryString();
         $url->removeLastSlash();
 
         return $url;
     }
+
 }

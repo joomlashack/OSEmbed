@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dcbb6f8fc23c2dc6a5692e82a65bcde5",
+    "content-hash": "27404d13d0beba0105473dfb03d5d24d",
     "packages": [
         {
             "name": "mpratt/embera",
-            "version": "2.0.19",
+            "version": "2.0.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mpratt/Embera.git",
-                "reference": "2d12e16d9c4d3b9f026f3537512fd16869604cab"
+                "reference": "9c16a9559fa75d9a9d5efddb17cd34555a6dff5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mpratt/Embera/zipball/2d12e16d9c4d3b9f026f3537512fd16869604cab",
-                "reference": "2d12e16d9c4d3b9f026f3537512fd16869604cab",
+                "url": "https://api.github.com/repos/mpratt/Embera/zipball/9c16a9559fa75d9a9d5efddb17cd34555a6dff5e",
+                "reference": "9c16a9559fa75d9a9d5efddb17cd34555a6dff5e",
                 "shasum": ""
             },
             "require": {
@@ -25,10 +25,11 @@
                 "php": ">=5.6"
             },
             "require-dev": {
+                "phpstan/phpstan": "^1.4",
                 "phpunit/phpunit": "^9.0"
             },
             "suggest": {
-                "ext-curl": "Allow to fetch data using curl instead of using file_get_contents"
+                "ext-curl": "Fetch data using curl instead of using file_get_contents"
             },
             "type": "library",
             "autoload": {
@@ -43,7 +44,14 @@
             },
             "scripts": {
                 "test": [
-                    "phpunit"
+                    "Composer\\Config::disableProcessTimeout",
+                    "phpunit -v"
+                ],
+                "test-github": [
+                    "phpunit -v -c phpunit-github.xml"
+                ],
+                "analyse": [
+                    "phpstan analyse src --level=4 --no-progress"
                 ]
             },
             "license": [
@@ -73,10 +81,16 @@
                 "Youtube"
             ],
             "support": {
-                "source": "https://github.com/mpratt/Embera/tree/2.0.19",
+                "source": "https://github.com/mpratt/Embera/tree/2.0.27",
                 "issues": "https://github.com/mpratt/Embera/issues"
             },
-            "time": "2021-05-28T00:35:13+00:00"
+            "funding": [
+                {
+                    "type": "paypal",
+                    "url": "https://paypal.me/mtpratt"
+                }
+            ],
+            "time": "2022-07-15T01:01:46+00:00"
         }
     ],
     "packages-dev": [],
@@ -86,8 +100,9 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
+        "php": ">=7.2.5",
         "ext-simplexml": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }

@@ -17,6 +17,8 @@ use Embera\Url;
 /**
  * Facebook Provider
  * Connect with friends and the world around you on Facebook.
+ * This Provider Requires the use of an access_token provided by Facebook.
+ * Example: `$embera = new Embera([ 'facebook_access_token' => 'yourtokenforfacebook' ]);`
  *
  * @link https://facebook.com
  * @see https://developers.facebook.com/docs/plugins/oembed-endpoints
@@ -24,7 +26,7 @@ use Embera\Url;
 class Facebook extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://graph.facebook.com/v9.0/oembed_{type}';
+    protected $endpoint = 'https://graph.facebook.com/v12.0/oembed_{type}';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
@@ -32,7 +34,7 @@ class Facebook extends ProviderAdapter implements ProviderInterface
     ];
 
     /** inline {@inheritdoc} */
-    protected $allowedParams = [ 'maxwidth', 'maxheight', 'callback', 'omitscript', 'breaking_change', 'access_token', 'fields' ];
+    protected $allowedParams = [ 'maxwidth', 'maxheight', 'callback', 'omitscript', 'breaking_change', 'access_token', 'fields', 'locale' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
