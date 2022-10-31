@@ -56,7 +56,6 @@ class ProviderCollection extends ProviderCollectionAdapter
         'Imgur',
         'Kickstarter',
         'Livestream',
-        'Meetup',
         'Reddit',
         'Scribd',
         'Sketchfab',
