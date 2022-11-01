@@ -36,6 +36,7 @@
             <fieldset name="basic">
                 <field name="debug"
                        type="radio"
+                       layout="joomla.form.field.radio.switcher"
                        label="PLG_CONTENT_OSEMBED_CONFIG_DEBUG_LABEL"
                        class="btn-group btn-group-yesno"
                        default="0">

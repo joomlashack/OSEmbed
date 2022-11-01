@@ -114,7 +114,7 @@ class OsembedFormFieldProviders extends FormField
         ksort($providerNames, SORT_NATURAL | SORT_FLAG_CASE);
 
         $tableStart = [
-            '<div class="span6">',
+            '<div class="span6 col-md-6">',
             '<table class="table table-striped" style="border: 1px solid #ddd">',
             '<thead>',
             '<tr>',
@@ -147,7 +147,7 @@ class OsembedFormFieldProviders extends FormField
             $html = array_merge($html, $tableEnd);
         }
 
-        return sprintf('<div class="row-fluid">%s</div>', join("\n", $html));
+        return sprintf('<div class="row-fluid row">%s</div>', join("\n", $html));
     }
 
     /**
