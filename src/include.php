@@ -21,28 +21,39 @@
  * along with OSEmbed.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use Alledia\Framework;
+use Alledia\Framework\Joomla\Extension\Helper;
 use Joomla\CMS\Factory;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
 
-if (!defined('OSEMBED_LOADED')) {
+try {
     $frameworkPath = JPATH_SITE . '/libraries/allediaframework/include.php';
-    if (is_file($frameworkPath) && include $frameworkPath) {
-        include_once 'library/autoload.php';
-
-        Framework\Joomla\Extension\Helper::loadLibrary('plg_content_osembed');
-
-        define('OSEMBED_LOADED', 1);
-        define('OSEMBED_PLUGIN_PATH', __DIR__);
-
-    } else {
+    if (is_file($frameworkPath) == false || (include $frameworkPath) == false) {
         $app = Factory::getApplication();
 
         if ($app->isClient('administrator')) {
             $app->enqueueMessage('[OSEmbed] Joomlashack framework not found', 'error');
         }
+
+        return false;
     }
+
+    if (defined('ALLEDIA_FRAMEWORK_LOADED') && !defined('OSEMBED_LOADED')) {
+        define('OSEMBED_PLUGIN_PATH', __DIR__);
+        define('OSEMBED_LIBRARY', OSEMBED_PLUGIN_PATH . '/library');
+
+        require_once OSEMBED_LIBRARY . '/autoload.php';
+        //Helper::loadLibrary('plg_content_osembed');
+
+        define('OSEMBED_LOADED', 1);
+    }
+
+} catch (Throwable $error) {
+    Factory::getApplication()
+        ->enqueueMessage('[OSEmbed] Unable to initialize: ' . $error->getMessage(), 'error');
+
+    return false;
 }
 
-return defined('OSEMBED_LOADED');
+return defined('ALLEDIA_FRAMEWORK_LOADED') && defined('OSEMBED_LOADED');
