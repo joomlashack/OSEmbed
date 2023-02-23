@@ -1,6 +1,6 @@
 <?php
 /**
- * Kmdr.php
+ * Mixpanel.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,20 +15,18 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Kmdr Provider
- * Transform code-blocks in the browser to explain syntax
+ * Mixpanel Provider
  *
- * @link https://kmdr.sh
- *
+ * @link https://mixpanel.com
  */
-class Kmdr extends ProviderAdapter implements ProviderInterface
+class Mixpanel extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://api.kmdr.sh/services/oembed?format=json';
+    protected $endpoint = 'https://mixpanel.com/api/app/embed/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'app.kmdr.sh'
+        'mixpanel.com'
     ];
 
     /** inline {@inheritdoc} */
@@ -38,22 +36,20 @@ class Kmdr extends ProviderAdapter implements ProviderInterface
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
-    protected $responsiveSupport = false;
+    protected $responsiveSupport = true;
 
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~app\.kmdr\.sh/(history|h)/([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~mixpanel\.com/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
     public function normalizeUrl(Url $url)
     {
         $url->convertToHttps();
-        $url->removeQueryString();
         $url->removeLastSlash();
 
         return $url;
     }
-
 }

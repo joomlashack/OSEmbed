@@ -1,6 +1,6 @@
 <?php
 /**
- * Incredible.php
+ * QTpi.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,18 +15,18 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Incredible Provider
+ * QTpi Provider
  *
- * @link https://incredible.dev
+ * @link https://qtpi.gg
  */
-class Incredible extends ProviderAdapter implements ProviderInterface
+class QTpi extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://oembed.incredible.dev/oembed';
+    protected $endpoint = 'https://qtpi.gg/fashion/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'incredible.dev'
+        'qtpi.gg'
     ];
 
     /** inline {@inheritdoc} */
@@ -41,7 +41,7 @@ class Incredible extends ProviderAdapter implements ProviderInterface
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~incredible\.dev/watch/([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~qtpi\.gg/fashion/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */

@@ -1,6 +1,6 @@
 <?php
 /**
- * Ceros.php
+ * BeamsFm.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,22 +15,22 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Ceros Provider
- * Ceros is a cloud-based design platform that allows marketers and designers
- * to create immersive content without writing a single line of code
+ * Beams.fm Provider
  *
- * @link https://ceros.com
- *
+ * @link https://beams.fm
  */
-class Ceros extends ProviderAdapter implements ProviderInterface
+class BeamsFm extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://view.ceros.com/oembed';
+    protected $endpoint = 'https://api.beams.fm/oEmbed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'view.ceros.com'
+        'beams.fm'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
@@ -41,7 +41,7 @@ class Ceros extends ProviderAdapter implements ProviderInterface
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~ceros\.com/([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~beams\.fm/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
@@ -49,7 +49,8 @@ class Ceros extends ProviderAdapter implements ProviderInterface
     {
         $url->convertToHttps();
         $url->removeQueryString();
+        $url->removeLastSlash();
+
         return $url;
     }
-
 }

@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "mpratt/embera",
-            "version": "2.0.27",
+            "version": "2.0.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mpratt/Embera.git",
-                "reference": "9c16a9559fa75d9a9d5efddb17cd34555a6dff5e"
+                "reference": "31da2251613fc6a9c734c4d016d2112c658d79dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mpratt/Embera/zipball/9c16a9559fa75d9a9d5efddb17cd34555a6dff5e",
-                "reference": "9c16a9559fa75d9a9d5efddb17cd34555a6dff5e",
+                "url": "https://api.github.com/repos/mpratt/Embera/zipball/31da2251613fc6a9c734c4d016d2112c658d79dd",
+                "reference": "31da2251613fc6a9c734c4d016d2112c658d79dd",
                 "shasum": ""
             },
             "require": {
@@ -81,7 +81,7 @@
                 "Youtube"
             ],
             "support": {
-                "source": "https://github.com/mpratt/Embera/tree/2.0.27",
+                "source": "https://github.com/mpratt/Embera/tree/2.0.30",
                 "issues": "https://github.com/mpratt/Embera/issues"
             },
             "funding": [
@@ -90,7 +90,7 @@
                     "url": "https://paypal.me/mtpratt"
                 }
             ],
-            "time": "2022-07-15T01:01:46+00:00"
+            "time": "2023-01-20T18:55:16+00:00"
         }
     ],
     "packages-dev": [],

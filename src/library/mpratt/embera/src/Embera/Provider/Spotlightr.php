@@ -1,6 +1,6 @@
 <?php
 /**
- * Ceros.php
+ * Spotlightr.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,22 +15,24 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Ceros Provider
- * Ceros is a cloud-based design platform that allows marketers and designers
- * to create immersive content without writing a single line of code
+ * Spotlightr Provider
  *
- * @link https://ceros.com
- *
+ * @link https://*.spotlightr.com
+ * @see https://docs.spotlightr.com/en/articles/3107055-oembed-protocol
  */
-class Ceros extends ProviderAdapter implements ProviderInterface
+class Spotlightr extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://view.ceros.com/oembed';
+    protected $endpoint = 'https://api.spotlightr.com/getOEmbed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'view.ceros.com'
+        '*.spotlightr.com',
+        '*.cdn.spotlightr.com'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
@@ -41,7 +43,7 @@ class Ceros extends ProviderAdapter implements ProviderInterface
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~ceros\.com/([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~spotlightr\.com/(watch|publish)/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
@@ -49,6 +51,8 @@ class Ceros extends ProviderAdapter implements ProviderInterface
     {
         $url->convertToHttps();
         $url->removeQueryString();
+        $url->removeLastSlash();
+
         return $url;
     }
 

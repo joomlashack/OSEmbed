@@ -1,6 +1,6 @@
 <?php
 /**
- * Amtraker.php
+ * Mediastream.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,20 +15,18 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Amtraker Provider
+ * Mediastream Provider
  *
- * @link https://amtraker.com
- * @see https://api.amtrak.cc/docs
+ * @link https://mdstrm.com
  */
-class Amtraker extends ProviderAdapter implements ProviderInterface
+class Mediastream extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://api.amtraker.com/v2/oembed?format=json';
+    protected $endpoint = 'https://mdstrm.com/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'amtraker.com',
-        'beta.amtraker.com'
+        'mdstrm.com'
     ];
 
     /** inline {@inheritdoc} */
@@ -43,14 +41,17 @@ class Amtraker extends ProviderAdapter implements ProviderInterface
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~amtraker\.com/trains/([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~mdstrm\.com/(embed|live-stream|image)/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
     public function normalizeUrl(Url $url)
     {
         $url->convertToHttps();
+        $url->removeQueryString();
         $url->removeLastSlash();
+
         return $url;
     }
+
 }

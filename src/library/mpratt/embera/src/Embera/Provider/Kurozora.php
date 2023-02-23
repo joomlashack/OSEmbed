@@ -1,6 +1,6 @@
 <?php
 /**
- * MessesInfo.php
+ * Kurozora.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,29 +15,33 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * MessesInfo Provider
- * 
+ * Kurozora Provider
  *
- * @link https://messes.info
- *
+ * @link https://hurozora.app
  */
-class MessesInfo extends ProviderAdapter implements ProviderInterface
+class Kurozora extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'http://egliseinfo.catholique.fr/api/oembed?format=json';
+    protected $endpoint = 'https://kurozora.app/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'messes.info',
+        'kurozora.app'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
+    protected $responsiveSupport = false;
+
+    /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~messes\.info/([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~kurozora\.app/(episodes|songs)/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */

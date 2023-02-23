@@ -1,6 +1,6 @@
 <?php
 /**
- * ZnipeTV.php
+ * Pikasso.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,38 +15,42 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * ZnipeTV Provider
- * Znipe’s Digital Pass offers premium esports entertainment, streaming world class tournaments,...
+ * Pikasso.xyz Provider
  *
- * @link https://znipe.tv
- *
+ * @link https://*.builder.pikasso.xyz
  */
-class ZnipeTV extends ProviderAdapter implements ProviderInterface
+class Pikasso extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://api.znipe.tv/v3/oembed?format=json';
+    protected $endpoint = 'https://builder.pikasso.xyz/api/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        '*.znipe.tv'
+        '*.builder.pikasso.xyz',
+        '*.pikasso.xyz'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
-    protected $responsiveSupport = true;
+    protected $responsiveSupport = false;
 
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~v=(?:[a-z0-9_\-]+)~i', (string) $url));
+        return (bool) (preg_match('~.pikasso\.xyz/embed/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
     public function normalizeUrl(Url $url)
     {
         $url->convertToHttps();
+        $url->removeQueryString();
+        $url->removeLastSlash();
 
         return $url;
     }
