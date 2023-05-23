@@ -1,6 +1,6 @@
 <?php
 /**
- * Audioboom.php
+ * Audiocom.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,33 +15,33 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Audioboom Provider
- * Host, distribute and monetize your podcast with Audioboom.
+ * Audiocom Provider
  *
- * @link https://audioboom.com
- * @todo We could add fake responses for post urls but not for channels urls.
- *
+ * @link https://audio.com
  */
-class Audioboom extends ProviderAdapter implements ProviderInterface
+class Audiocom extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://audioboom.com/publishing/oembed.json';
+    protected $endpoint = 'https://api.audio.com/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'audioboom.com'
+        'audio.com'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
-    protected $responsiveSupport = true;
+    protected $responsiveSupport = false;
 
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~audioboom\.com/(channels?|posts?|playlists?|podcasts?|episodes?)/([^/]+)/?$~i', (string) $url));
+        return (bool) (preg_match('~audio\.com/([^/]+)/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
@@ -49,7 +49,8 @@ class Audioboom extends ProviderAdapter implements ProviderInterface
     {
         $url->convertToHttps();
         $url->removeQueryString();
+        $url->removeLastSlash();
+
         return $url;
     }
-
 }

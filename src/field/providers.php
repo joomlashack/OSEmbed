@@ -42,7 +42,7 @@ class OsembedFormFieldProviders extends FormField
     public function setup(SimpleXMLElement $element, $value, $group = null)
     {
         if ($return = parent::setup($element, $value, $group)) {
-            if (!defined('OSEMBED_LOADED')) {
+            if (defined('OSEMBED_LOADED') == false) {
                 $includePath = JPATH_PLUGINS . '/content/osembed/include.php';
 
                 $return = is_file($includePath) && include $includePath;
@@ -147,7 +147,7 @@ class OsembedFormFieldProviders extends FormField
             $html = array_merge($html, $tableEnd);
         }
 
-        return sprintf('<div class="row-fluid row">%s</div>', join("\n", $html));
+        return sprintf('<div class="row-fluid">%s</div>', join("\n", $html));
     }
 
     /**
