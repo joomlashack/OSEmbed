@@ -85,7 +85,7 @@
                        group="system"
                        element="osmylicensesmanager"
                        publish="true"
-                       ordering="first">ShackExtensionSupport</extension>
+                       ordering="last">ShackExtensionSupport</extension>
         </relatedExtensions>
 
         <include>ShackDefaultFiles</include>
