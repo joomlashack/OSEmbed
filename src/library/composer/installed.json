@@ -2,17 +2,17 @@
     "packages": [
         {
             "name": "mpratt/embera",
-            "version": "2.0.34",
-            "version_normalized": "2.0.34.0",
+            "version": "2.0.35",
+            "version_normalized": "2.0.35.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mpratt/Embera.git",
-                "reference": "7cee7dfd4e46cb45fd8f2f15195d90cf2442becc"
+                "reference": "840035cbccd938ede69858cd5c872f3c5e97401e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mpratt/Embera/zipball/7cee7dfd4e46cb45fd8f2f15195d90cf2442becc",
-                "reference": "7cee7dfd4e46cb45fd8f2f15195d90cf2442becc",
+                "url": "https://api.github.com/repos/mpratt/Embera/zipball/840035cbccd938ede69858cd5c872f3c5e97401e",
+                "reference": "840035cbccd938ede69858cd5c872f3c5e97401e",
                 "shasum": ""
             },
             "require": {
@@ -26,7 +26,7 @@
             "suggest": {
                 "ext-curl": "Fetch data using curl instead of using file_get_contents"
             },
-            "time": "2023-06-21T04:06:34+00:00",
+            "time": "2023-11-09T06:38:50+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -78,7 +78,7 @@
                 "Youtube"
             ],
             "support": {
-                "source": "https://github.com/mpratt/Embera/tree/2.0.34",
+                "source": "https://github.com/mpratt/Embera/tree/2.0.35",
                 "issues": "https://github.com/mpratt/Embera/issues"
             },
             "funding": [
@@ -90,6 +90,6 @@
             "install-path": "../mpratt/embera"
         }
     ],
-    "dev": true,
+    "dev": false,
     "dev-package-names": []
 }

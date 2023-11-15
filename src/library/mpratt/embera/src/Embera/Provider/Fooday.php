@@ -1,7 +1,6 @@
 <?php
-
 /**
- * Waltrack.php
+ * fooday.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -16,18 +15,18 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Waltrack Provider
+ * fooday Provider
  *
- * @link https://https://waltrack.net
+ * @link https://fooday.app
  */
-class Waltrack extends ProviderAdapter implements ProviderInterface
+class Fooday extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://waltrack.net/oembed?format=json';
+    protected $endpoint = 'https://fooday.app/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'waltrack.net'
+        'fooday.app'
     ];
 
     /** inline {@inheritdoc} */
@@ -37,12 +36,12 @@ class Waltrack extends ProviderAdapter implements ProviderInterface
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
-    protected $responsiveSupport = true;
+    protected $responsiveSupport = false;
 
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~waltrack\.net/product/([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~fooday\.app/([^/]+)/(reviews|spots)/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */

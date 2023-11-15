@@ -1,6 +1,6 @@
 <?php
 /**
- * Padlet.php
+ * Behance.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,32 +15,33 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Padlet Provider
- * No description.
+ * Behance Provider
  *
- * @link https://padlet.com
- *
+ * @link https://behance.net
  */
-class Padlet extends ProviderAdapter implements ProviderInterface
+class Behance extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://padlet.com/oembed/?format=json';
+    protected $endpoint = 'https://www.behance.net/services/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'padlet.com'
+        'behance.net'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
-    protected $responsiveSupport = true;
+    protected $responsiveSupport = false;
 
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~padlet\.com/([^/]+)/([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~behance\.net/([^/]+)/([^/]+)/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */

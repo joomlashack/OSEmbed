@@ -1,6 +1,6 @@
 <?php
 /**
- * Minesweeper.php
+ * TonicAudio.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,18 +15,19 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Minesweeper Provider
+ * TonicAudio Provider
  *
- * @link https://minesweeper.today
+ * @link https://tonicaudio.com
  */
-class Minesweeper extends ProviderAdapter implements ProviderInterface
+class TonicAudio extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://minesweeper.today/api/oembed?format=json';
+    protected $endpoint = 'https://tonicaudio.com/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'minesweeper.today'
+        'tonicaudio.com',
+        'tnic.io',
     ];
 
     /** inline {@inheritdoc} */
@@ -41,7 +42,7 @@ class Minesweeper extends ProviderAdapter implements ProviderInterface
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~minesweeper\.today/([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~\.(com|io)/(song|take)/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
@@ -53,5 +54,4 @@ class Minesweeper extends ProviderAdapter implements ProviderInterface
 
         return $url;
     }
-
 }

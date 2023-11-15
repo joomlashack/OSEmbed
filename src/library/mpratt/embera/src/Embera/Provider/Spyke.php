@@ -1,6 +1,6 @@
 <?php
 /**
- * Byzart.php
+ * Spyke.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,29 +15,33 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Byzart Provider
- * The Byzart project aims to enhance Byzantine and Post-Byzantine archaeological and artistic heritage on Europeana.
+ * Spyke Provider
  *
- * @link https://cmc.byzart.eu
- *
+ * @link https://spyke.social
  */
-class Byzart extends ProviderAdapter implements ProviderInterface
+class Spyke extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://cmc.byzart.eu/oembed/?format=json';
+    protected $endpoint = 'https://api.spyke.social/embed/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'cmc.byzart.eu'
+        '*.spyke.social'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
+    protected $responsiveSupport = false;
+
+    /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~byzart\.eu/files/(?:.+)$~i', (string) $url));
+        return (bool) (preg_match('~spyke\.social/([^/]+)/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
@@ -45,6 +49,8 @@ class Byzart extends ProviderAdapter implements ProviderInterface
     {
         $url->convertToHttps();
         $url->removeQueryString();
+        $url->removeLastSlash();
+
         return $url;
     }
 }

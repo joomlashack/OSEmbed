@@ -1,6 +1,6 @@
 <?php
 /**
- * NoPaste.php
+ * EchoesHQ.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,38 +15,40 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * NoPaste Provider
- * NoPaste is a client-side paste service which works with no database, and no back-end code. The ...
+ * EchoesHQ Provider
  *
- * @link https://nopaste.ml
- *
+ * @link https://echoeshq.com
  */
-class NoPaste extends ProviderAdapter implements ProviderInterface
+class EchoesHQ extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://oembed.nopaste.ml/';
+    protected $endpoint = 'https://api.echoeshq.com/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'nopaste.ml'
+        '*.echoeshq.com'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
-    protected $responsiveSupport = false;
+    protected $responsiveSupport = true;
 
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~nopaste\.ml/([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~echoeshq\.com/embed/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
     public function normalizeUrl(Url $url)
     {
         $url->convertToHttps();
+        $url->removeLastSlash();
         return $url;
     }
 }
