@@ -29,7 +29,10 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\Plugin\PluginHelper;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
+// phpcs:enable PSR1.Files.SideEffects
+// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
 
 class OsembedFormFieldProviders extends FormField
 {
@@ -55,6 +58,7 @@ class OsembedFormFieldProviders extends FormField
 
     /**
      * @inheritDoc
+     * @throws Exception
      */
     protected function getInput()
     {
@@ -67,7 +71,7 @@ class OsembedFormFieldProviders extends FormField
                     $providerParts = explode('\\', $provider);
                     $providerName  = array_pop($providerParts);
 
-                    if (!isset($providerNames[$providerName])) {
+                    if (isset($providerNames[$providerName]) == false) {
                         $providerNames[$providerName] = [];
                     }
                     $providerNames[$providerName][] = $host;
@@ -147,7 +151,7 @@ class OsembedFormFieldProviders extends FormField
             $html = array_merge($html, $tableEnd);
         }
 
-        return sprintf('<div class="row-fluid">%s</div>', join("\n", $html));
+        return sprintf('<div class="row row-fluid">%s</div>', join("\n", $html));
     }
 
     /**
