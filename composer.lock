@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "27404d13d0beba0105473dfb03d5d24d",
+    "content-hash": "70796857116e2df60adf027b83fce737",
     "packages": [
         {
             "name": "mpratt/embera",
-            "version": "2.0.35",
+            "version": "2.0.36b1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/mpratt/Embera.git",
-                "reference": "840035cbccd938ede69858cd5c872f3c5e97401e"
+                "url": "https://github.com/joomlashack/Embera.git",
+                "reference": "45cf7e92cd0aa4bb95c079294a87b41a328a180b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mpratt/Embera/zipball/840035cbccd938ede69858cd5c872f3c5e97401e",
-                "reference": "840035cbccd938ede69858cd5c872f3c5e97401e",
+                "url": "https://api.github.com/repos/joomlashack/Embera/zipball/45cf7e92cd0aa4bb95c079294a87b41a328a180b",
+                "reference": "45cf7e92cd0aa4bb95c079294a87b41a328a180b",
                 "shasum": ""
             },
             "require": {
@@ -81,8 +81,7 @@
                 "Youtube"
             ],
             "support": {
-                "source": "https://github.com/mpratt/Embera/tree/2.0.35",
-                "issues": "https://github.com/mpratt/Embera/issues"
+                "source": "https://github.com/joomlashack/Embera/tree/2.0.36b1"
             },
             "funding": [
                 {
@@ -90,13 +89,15 @@
                     "url": "https://paypal.me/mtpratt"
                 }
             ],
-            "time": "2023-11-09T06:38:50+00:00"
+            "time": "2023-11-16T17:46:50+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "mpratt/embera": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

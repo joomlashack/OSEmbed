@@ -20,18 +20,18 @@
             "email": "help@joomlashack.com"
         }
     ],
-    "repositories"     : {
-        "embera": {
+    "repositories"     : [
+        {
             "type": "vcs",
-            "url" : "git@github.com:mpratt/Embera.git"
+            "url" : "git@github.com:joomlashack/Embera.git"
         }
-    },
+    ],
     "config"           : {
         "vendor-dir": "src/library"
     },
     "require"          : {
         "php"          : ">=7.2.5",
         "ext-simplexml": "*",
-        "mpratt/embera": "^2"
+        "mpratt/embera": "^2.0@dev"
     }
 }
