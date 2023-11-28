@@ -46,12 +46,10 @@ class ProviderCollection extends ProviderCollectionAdapter
      * @var string[]
      */
     protected $supportedProviders = [
-        'CodePen',
         'DailyMotion',
         'Deviantart',
         'Flickr',
         'GettyImages',
-        'Gfycat',
         'Giphy',
         'Imgur',
         'Kickstarter',
