@@ -1,6 +1,6 @@
 <?php
 /**
- * Odysee.php
+ * Viostream.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,18 +15,19 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Odysee Provider
+ * Viostream Provider
  *
- * @link https://odysee.com
+ * @link https://https://share.viostream.com/*
+ * @see https://help.viostream.com/sharing-your-media/embedding-with-oembed-tags/
  */
-class Odysee extends ProviderAdapter implements ProviderInterface
+class Viostream extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://odysee.com/$/oembed?format=json';
+    protected $endpoint = 'https://play.viostream.com/oembed';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'odysee.com'
+        'share.viostream.com'
     ];
 
     /** inline {@inheritdoc} */
@@ -36,12 +37,12 @@ class Odysee extends ProviderAdapter implements ProviderInterface
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
-    protected $responsiveSupport = true;
+    protected $responsiveSupport = false;
 
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~odysee\.com/([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~share\.viostream\.com/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
@@ -53,5 +54,4 @@ class Odysee extends ProviderAdapter implements ProviderInterface
 
         return $url;
     }
-
 }

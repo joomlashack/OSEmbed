@@ -1,6 +1,6 @@
 <?php
 /**
- * Odysee.php
+ * Web3IsGoingJustGreat.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,18 +15,18 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Odysee Provider
+ * Web3IsGoingJustGreat Provider
  *
- * @link https://odysee.com
+ * @link https://www.web3isgoinggreat.com|www.web3isgoinggreat.com|www.web3isgoinggreat.com
  */
-class Odysee extends ProviderAdapter implements ProviderInterface
+class Web3IsGoingJustGreat extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://odysee.com/$/oembed?format=json';
+    protected $endpoint = 'https://www.web3isgoinggreat.com/api/oembed';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'odysee.com'
+        'web3isgoinggreat.com'
     ];
 
     /** inline {@inheritdoc} */
@@ -36,22 +36,18 @@ class Odysee extends ProviderAdapter implements ProviderInterface
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
-    protected $responsiveSupport = true;
+    protected $responsiveSupport = false;
 
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~odysee\.com/([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~web3isgoinggreat\.com/(\?id\=|single/|embed/)([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
     public function normalizeUrl(Url $url)
     {
         $url->convertToHttps();
-        $url->removeQueryString();
-        $url->removeLastSlash();
-
         return $url;
     }
-
 }

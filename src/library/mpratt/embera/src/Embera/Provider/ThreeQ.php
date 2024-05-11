@@ -1,6 +1,6 @@
 <?php
 /**
- * Odysee.php
+ * ThreeQ.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,18 +15,19 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Odysee Provider
+ * ThreeQ Provider
  *
- * @link https://odysee.com
+ * @link https://playout.3qsdn.com
+ * @see https://docs.3q.video/en/Player_API/Basic_usage.html
  */
-class Odysee extends ProviderAdapter implements ProviderInterface
+class ThreeQ extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://odysee.com/$/oembed?format=json';
+    protected $endpoint = 'https://playout.3qsdn.com/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'odysee.com'
+        'playout.3qsdn.com'
     ];
 
     /** inline {@inheritdoc} */
@@ -36,12 +37,22 @@ class Odysee extends ProviderAdapter implements ProviderInterface
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
-    protected $responsiveSupport = true;
+    protected $responsiveSupport = false;
 
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~odysee\.com/([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~playout\.3qsdn\.com/embed/([^/]+)~i', (string) $url));
+    }
+
+    public function getUrl($asString = true)
+    {
+        if ($asString) {
+            preg_match('~/embed/([^/]+)~i', (string) $this->url, $matches);
+            return $matches[1];
+        }
+
+        return $this->url;
     }
 
     /** inline {@inheritdoc} */
@@ -53,5 +64,4 @@ class Odysee extends ProviderAdapter implements ProviderInterface
 
         return $url;
     }
-
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Odysee.php
+ * NeetoRecord.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,18 +15,18 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Odysee Provider
+ * NeetoRecord Provider
  *
- * @link https://odysee.com
+ * @link https://*.neetorecord.com
  */
-class Odysee extends ProviderAdapter implements ProviderInterface
+class NeetoRecord extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://odysee.com/$/oembed?format=json';
+    protected $endpoint = 'https://api.neetorecord.com/api/v1/oembed';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'odysee.com'
+        '*.neetorecord.com'
     ];
 
     /** inline {@inheritdoc} */
@@ -36,12 +36,12 @@ class Odysee extends ProviderAdapter implements ProviderInterface
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
-    protected $responsiveSupport = true;
+    protected $responsiveSupport = false;
 
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~odysee\.com/([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~neetorecord\.com/watch/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
@@ -53,5 +53,4 @@ class Odysee extends ProviderAdapter implements ProviderInterface
 
         return $url;
     }
-
 }

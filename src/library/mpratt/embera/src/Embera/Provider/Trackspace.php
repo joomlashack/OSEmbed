@@ -1,6 +1,6 @@
 <?php
 /**
- * Odysee.php
+ * Trackspace.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,18 +15,18 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Odysee Provider
+ * Trackspace Provider
  *
- * @link https://odysee.com
+ * @link https://trackspace.upitup.com
  */
-class Odysee extends ProviderAdapter implements ProviderInterface
+class Trackspace extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://odysee.com/$/oembed?format=json';
+    protected $endpoint = 'https://trackspace.upitup.com/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'odysee.com'
+        'trackspace.upitup.com'
     ];
 
     /** inline {@inheritdoc} */
@@ -41,7 +41,7 @@ class Odysee extends ProviderAdapter implements ProviderInterface
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~odysee\.com/([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~trackspace\.upitup\.com/(user|track)/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
@@ -53,5 +53,4 @@ class Odysee extends ProviderAdapter implements ProviderInterface
 
         return $url;
     }
-
 }
