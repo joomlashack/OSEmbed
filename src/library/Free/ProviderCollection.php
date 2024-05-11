@@ -37,7 +37,7 @@ class ProviderCollection extends ProviderCollectionAdapter
      * @var string[]
      */
     protected $excludeUrls = [
-        'youtu.be'
+        'youtu.be',
     ];
 
     /**

@@ -29,18 +29,20 @@ use Joomla\CMS\Log\Log;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\Registry\Registry;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
+// phpcs:enable PSR1.Files.SideEffects
 
 abstract class Helper
 {
-    const LOG_LIBRARY = 'osembed.library';
-    const LOG_CONTENT = 'osembed.content';
-    const LOG_SYSTEM  = 'osembed.system';
+    public const LOG_LIBRARY = 'osembed.library';
+    public const LOG_CONTENT = 'osembed.content';
+    public const LOG_SYSTEM  = 'osembed.system';
 
     /**
      * @var string
      */
-    protected static $minPHPVersion = '5.6';
+    protected static $minPHPVersion = '7.4';
 
     /**
      * @var bool
@@ -50,12 +52,11 @@ abstract class Helper
     /**
      * @return bool
      */
-    public static function isDebugEnabled()
+    public static function isDebugEnabled(): bool
     {
         $plugin = PluginHelper::getPlugin('content', 'osembed');
         $params = new Registry($plugin ? $plugin->params : null);
 
-        $params    = $params ?: new Registry();
         $appParams = Factory::getConfig();
 
         return $params->get('debug') || $appParams->get('debug');
@@ -64,7 +65,7 @@ abstract class Helper
     /**
      * @return void
      */
-    public static function addLogger()
+    public static function addLogger(): void
     {
         if (static::isDebugEnabled()) {
             Log::addLogger(
@@ -79,7 +80,7 @@ abstract class Helper
      * @return bool
      * @throws \Exception
      */
-    public static function complySystemRequirements()
+    public static function complySystemRequirements(): bool
     {
         if (static::$systemRequirements === null) {
             static::$systemRequirements = version_compare(phpversion(), static::$minPHPVersion, 'ge');

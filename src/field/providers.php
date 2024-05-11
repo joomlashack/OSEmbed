@@ -36,7 +36,14 @@ defined('_JEXEC') or die();
 
 class OsembedFormFieldProviders extends FormField
 {
-    protected $layout            = null;
+    /**
+     * @inheritdoc
+     */
+    protected $layout = null;
+
+    /**
+     * @inheritdoc
+     */
     protected $renderLabelLayout = null;
 
     /**
@@ -113,7 +120,7 @@ class OsembedFormFieldProviders extends FormField
      *
      * @return string
      */
-    protected function displayProviders(array $providerNames)
+    protected function displayProviders(array $providerNames): string
     {
         ksort($providerNames, SORT_NATURAL | SORT_FLAG_CASE);
 
@@ -126,13 +133,13 @@ class OsembedFormFieldProviders extends FormField
             sprintf('<th>%s</th>', Text::_('PLG_CONTENT_OSEMBED_PROVIDER_HOSTS')),
             '</tr>',
             '</thead>',
-            '<tbody>'
+            '<tbody>',
         ];
 
         $tableEnd = [
             '</tbody>',
             '</table>',
-            '</div>'
+            '</div>',
         ];
 
         $html    = [];
@@ -170,7 +177,7 @@ class OsembedFormFieldProviders extends FormField
      *
      * @return string[][][]
      */
-    protected function createColumns(array $list)
+    protected function createColumns(array $list): array
     {
         $columns = array_chunk($list, ceil(count($list) / 2), true);
 
@@ -202,7 +209,7 @@ class OsembedFormFieldProviders extends FormField
      *
      * @return int
      */
-    protected function getHostCount(array $providers)
+    protected function getHostCount(array $providers): int
     {
         return (int)array_sum(
             array_map(

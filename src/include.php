@@ -21,7 +21,6 @@
  * along with OSEmbed.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use Alledia\Framework\Joomla\Extension\Helper;
 use Joomla\CMS\Factory;
 
 // phpcs:disable PSR1.Files.SideEffects

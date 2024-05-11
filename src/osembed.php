@@ -21,8 +21,6 @@
  * along with OSEmbed.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-defined('_JEXEC') or die;
-
 use Alledia\Framework\Factory;
 use Alledia\Framework\Joomla\Extension\AbstractPlugin;
 use Alledia\OSEmbed\Free\Embera;
@@ -35,9 +33,17 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\Registry\Registry;
 
+// phpcs:disable PSR1.Files.SideEffects
+defined('_JEXEC') or die();
+// phpcs:enable PSR1.Files.SideEffects
+// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
+
 if (include 'include.php') {
     class Plgcontentosembed extends AbstractPlugin
     {
+        /**
+         * @inheritdoc
+         */
         protected $namespace = 'OSEmbed';
 
         /**
@@ -45,9 +51,13 @@ if (include 'include.php') {
          */
         public $type = 'content';
 
+        /**
+         * @inheritdoc
+         */
         protected $autoloadLanguage = true;
 
         /**
+         * @inheritdoc
          * @var SiteApplication
          */
         protected $app = null;
@@ -72,7 +82,7 @@ if (include 'include.php') {
          */
         protected $excludedContexts = [
             'com_finder.indexer',
-            'com_search.search'
+            'com_search.search',
         ];
 
         /**
@@ -110,23 +120,23 @@ if (include 'include.php') {
          * @return  void
          * @throws Exception
          */
-        public function onContentPrepare($context, $article, $params)
+        public function onContentPrepare($context, $article, $params): void
         {
             if ($this->isEnabled() && !in_array($context, $this->excludedContexts)) {
-                $versionUID = md5($this->extension->getVersion());
+                $versionUid = md5($this->extension->getVersion());
 
                 HTMLHelper::_('jquery.framework');
 
                 HTMLHelper::_(
                     'stylesheet',
                     'plg_content_osembed/osembed.css',
-                    ['relative' => true, 'version' => $versionUID]
+                    ['relative' => true, 'version' => $versionUid]
                 );
 
                 HTMLHelper::_(
                     'script',
                     'plg_content_osembed/osembed.min.js',
-                    ['relative' => true, 'version' => $versionUID]
+                    ['relative' => true, 'version' => $versionUid]
                 );
 
                 $textField = null;
@@ -195,7 +205,7 @@ if (include 'include.php') {
             if ($this->embera === null) {
                 $config = $this->params->toArray();
 
-                if (!is_array($config['ignore_tags'])) {
+                if (is_array($config['ignore_tags']) == false) {
                     $config['ignore_tags'] = array_filter(
                         array_unique(
                             array_map('trim', explode(',', $config['ignore_tags']))
@@ -234,8 +244,9 @@ if (include 'include.php') {
          */
         protected function parseContent(?string $content): ?string
         {
-            $embera = $this->getEmbera();
-            if ($content && $embera) {
+            if ($content) {
+                $embera = $this->getEmbera();
+
                 if ($this->params->get('stripnewline', false)) {
                     return preg_replace('/\n/', '', $embera->autoEmbed($content));
 
@@ -253,9 +264,9 @@ if (include 'include.php') {
         protected function isEnabled(): bool
         {
             if ($this->enabled === null) {
-                $isHTML = in_array(Factory::getDocument()->getType(), ['html', 'raw']);
+                $isHtml = in_array($this->app->getDocument()->getType(), ['html', 'raw']);
 
-                $this->enabled = $isHTML && $this->callHelper('complySystemRequirements');
+                $this->enabled = $isHtml && $this->callHelper('complySystemRequirements');
             }
 
             return $this->enabled;

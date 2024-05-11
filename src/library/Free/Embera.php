@@ -32,7 +32,10 @@ use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Log\Log;
 use Joomla\Registry\Registry;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
+
+// phpcs:enable PSR1.Files.SideEffects
 
 class Embera extends \Embera\Embera
 {
@@ -98,15 +101,12 @@ class Embera extends \Embera\Embera
 
                 $itemTemplate = '<li><div>%s: </div><div>%s</div></li>';
                 foreach ($providers as $found => $provider) {
-                    $url = null;
-                    if ($constructUrl) {
-                        $url = urldecode(
-                            $constructUrl->invokeArgs(
-                                $oembedClient,
-                                [$provider->getEndpoint(), $provider->getParams()]
-                            )
-                        );
-                    }
+                    $url = urldecode(
+                        $constructUrl->invokeArgs(
+                            $oembedClient,
+                            [$provider->getEndpoint(), $provider->getParams()]
+                        )
+                    );
 
                     if (isset($urlData[$found]['embera_using_fake_response'])) {
                         $fakeResponse = $urlData[$found]['embera_using_fake_response'] ? 'YES' : 'NO';
@@ -121,7 +121,7 @@ class Embera extends \Embera\Embera
                             $provider->getProviderName(),
                             sprintf($itemTemplate, 'Found', $found),
                             sprintf($itemTemplate, 'Endpoint', $provider->getEndpoint()),
-                            sprintf($itemTemplate, 'URL', $url ? $url : '*error*'),
+                            sprintf($itemTemplate, 'URL', $url ?: '*error*'),
                             sprintf($itemTemplate, 'Fake Rsp', $fakeResponse)
                         ),
                         'notice'
