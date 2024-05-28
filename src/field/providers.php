@@ -28,6 +28,7 @@ use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Version;
 
 // phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
@@ -158,7 +159,11 @@ class OsembedFormFieldProviders extends FormField
             $html = array_merge($html, $tableEnd);
         }
 
-        return sprintf('<div class="row row-fluid">%s</div>', join("\n", $html));
+        return sprintf(
+            '<div class="%s">%s</div>',
+            Version::MAJOR_VERSION > 3 ? 'row' : 'row-fluid',
+            join("\n", $html)
+        );
     }
 
     /**
