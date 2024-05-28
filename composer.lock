@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "mpratt/embera",
-            "version": "2.0.39b1",
+            "version": "2.0.39",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomlashack/Embera.git",
-                "reference": "e31b474d93d20ceac6ab0479a705bd3a51882be5"
+                "reference": "efdd70fe7209dedf531e56c416f10c558293bc4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomlashack/Embera/zipball/e31b474d93d20ceac6ab0479a705bd3a51882be5",
-                "reference": "e31b474d93d20ceac6ab0479a705bd3a51882be5",
+                "url": "https://api.github.com/repos/joomlashack/Embera/zipball/efdd70fe7209dedf531e56c416f10c558293bc4b",
+                "reference": "efdd70fe7209dedf531e56c416f10c558293bc4b",
                 "shasum": ""
             },
             "require": {
@@ -81,7 +81,7 @@
                 "Youtube"
             ],
             "support": {
-                "source": "https://github.com/joomlashack/Embera/tree/2.0.39b1"
+                "source": "https://github.com/joomlashack/Embera/tree/2.0.39"
             },
             "funding": [
                 {
@@ -89,7 +89,7 @@
                     "url": "https://paypal.me/mtpratt"
                 }
             ],
-            "time": "2024-05-10T23:54:11+00:00"
+            "time": "2024-05-15T17:15:07+00:00"
         }
     ],
     "packages-dev": [],
