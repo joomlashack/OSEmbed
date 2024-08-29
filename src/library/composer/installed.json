@@ -2,17 +2,17 @@
     "packages": [
         {
             "name": "mpratt/embera",
-            "version": "2.0.39",
-            "version_normalized": "2.0.39.0",
+            "version": "2.0.41",
+            "version_normalized": "2.0.41.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomlashack/Embera.git",
-                "reference": "efdd70fe7209dedf531e56c416f10c558293bc4b"
+                "reference": "069305b9252a428ba4ae6eb58d3dc8c6d9be5cd0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomlashack/Embera/zipball/efdd70fe7209dedf531e56c416f10c558293bc4b",
-                "reference": "efdd70fe7209dedf531e56c416f10c558293bc4b",
+                "url": "https://api.github.com/repos/joomlashack/Embera/zipball/069305b9252a428ba4ae6eb58d3dc8c6d9be5cd0",
+                "reference": "069305b9252a428ba4ae6eb58d3dc8c6d9be5cd0",
                 "shasum": ""
             },
             "require": {
@@ -26,7 +26,7 @@
             "suggest": {
                 "ext-curl": "Fetch data using curl instead of using file_get_contents"
             },
-            "time": "2024-05-15T17:15:07+00:00",
+            "time": "2024-08-17T04:27:29+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -78,7 +78,7 @@
                 "Youtube"
             ],
             "support": {
-                "source": "https://github.com/joomlashack/Embera/tree/2.0.39"
+                "source": "https://github.com/joomlashack/Embera/tree/2.0.41"
             },
             "funding": [
                 {

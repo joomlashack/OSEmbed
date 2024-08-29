@@ -1,6 +1,6 @@
 <?php
 /**
- * Codepoints.php
+ * Bunny.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,30 +15,34 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Codepoints Provider
- * Codepoints.net is dedicated to all the characters, that are defined in
- * the Unicode Standard. Theoretically, these should be all characters ever
- * used.
+ * Bunny Provider
  *
- * @link https://codepoints.net
+ * @link https://iframe.mediadelivery.net|iframe.mediadelivery.net|video.bunnycdn.com|video.bunnycdn.com
  */
-class Codepoints extends ProviderAdapter implements ProviderInterface
+class Bunny extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://codepoints.net/api/v1/oembed?format=json';
+    protected $endpoint = 'https://video.bunnycdn.com/OEmbed';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'codepoints.net'
+        '*.mediadelivery.net',
+        '*.bunnycdn.com'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
+    protected $responsiveSupport = false;
+
+    /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~codepoints\.net/U\+(?:[^/]+)$~i', (string) $url));
+        return (bool) (preg_match('~(mediadelivery\.net|bunnycdn\.com)/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
@@ -47,36 +51,35 @@ class Codepoints extends ProviderAdapter implements ProviderInterface
         $url->convertToHttps();
         $url->removeQueryString();
         $url->removeLastSlash();
+
         return $url;
     }
 
     /** inline {@inheritdoc} */
     public function modifyResponse(array $response = [])
     {
-        // The oembed html response returns http:// but it is capable of handling https://
-        if (!empty($response['html'])) {
-            $response['html'] = str_ireplace('http://', 'https://', $response['html']);
-        }
-
         return $response;
     }
 
     /** inline {@inheritdoc} */
     public function getFakeResponse()
     {
-        preg_match('~/U\+([^/]+)$~i', $this->url, $m);
+        preg_match('~v=([a-z0-9_\-]+)~i', (string) $this->url, $matches);
 
-        $embedUrl = $this->url . '?embed';
+        $embedUrl = '';
 
         $attr = [];
+        $attr[] = 'width="{width}"';
+        $attr[] = 'height="{height}"';
         $attr[] = 'src="' . $embedUrl . '"';
-        $attr[] = 'style="width: 64px; height: 640px; border: 1px solid #444;"';
+        $attr[] = 'frameborder="0"';
+        $attr[] = 'allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"';
+        $attr[] = 'allowfullscreen';
 
         return [
-            'type' => 'rich',
-            'provider_name' => 'Codepoints.net',
-            'provider_url' => 'http://codepoints.net/',
-            'thumbnail_url' => 'http://codepoints.net/api/v1/glyph/' . $m['1'],
+            'type' => '',
+            'provider_name' => 'Bunny',
+            'provider_url' => 'https://iframe.mediadelivery.net|iframe.mediadelivery.net|video.bunnycdn.com|video.bunnycdn.com',
             'title' => 'Unknown title',
             'html' => '<iframe ' . implode(' ', $attr). '></iframe>',
         ];

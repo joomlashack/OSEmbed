@@ -1,10 +1,9 @@
 <?php
 /**
- * Deseretnews.php
+ * Genially.php
  *
  * @package Embera
- * @author Michael Pratt <yo@michael-pratt.com>
- * @link   http://www.michael-pratt.com/
+ * @author Matías Minevitz <matias.minevitz@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,28 +14,32 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Deseretnews Provider
- * In-depth news, analysis and opinion covering Utah and the nation.
+ * Genially Provider
+ * Engage your audience with clickable, gamified, media-rich experiences. Create your interactive content now!
  *
- * @link https://deseretnews.com
+ * @link https://genially.com
  */
-class Deseretnews extends ProviderAdapter implements ProviderInterface
+class Genially extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://embed.deseretnews.com/?format=json';
+    protected $endpoint = 'https://genially.com/services/oembed?format=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'graphics.deseretnews.com', 'graphics.deseret.com'
+        '*.genial.ly',
+        '*.genially.com',
     ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
+    protected $responsiveSupport = true;
+
+    /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~deseret(news)?\.com/([^/]+)/(iframe/)?([^/]+)$~i', (string) $url));
+        return (bool) (preg_match('~view\.(?:genial\.ly|genially\.com)/[a-z0-9]{24}(?:$|/)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
@@ -44,9 +47,7 @@ class Deseretnews extends ProviderAdapter implements ProviderInterface
     {
         $url->convertToHttps();
         $url->removeQueryString();
-        $url->removeLastSlash();
 
         return $url;
     }
-
 }

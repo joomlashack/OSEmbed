@@ -1,6 +1,6 @@
 <?php
 /**
- * Deseretnews.php
+ * MySQLVisualExplain.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,28 +15,33 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Deseretnews Provider
- * In-depth news, analysis and opinion covering Utah and the nation.
+ * MySQLVisualExplain Provider
  *
- * @link https://deseretnews.com
+ * @link https://mysqlexplain.com
  */
-class Deseretnews extends ProviderAdapter implements ProviderInterface
+class MySQLVisualExplain extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://embed.deseretnews.com/?format=json';
+    protected $endpoint = 'https://api.mysqlexplain.com/v2/oembed.json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'graphics.deseretnews.com', 'graphics.deseret.com'
+        '*.mysqlexplain.com'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
+    protected $responsiveSupport = false;
+
+    /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~deseret(news)?\.com/([^/]+)/(iframe/)?([^/]+)$~i', (string) $url));
+        return (bool) (preg_match('~mysqlexplain\.com/explain/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
@@ -48,5 +53,4 @@ class Deseretnews extends ProviderAdapter implements ProviderInterface
 
         return $url;
     }
-
 }

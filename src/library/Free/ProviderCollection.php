@@ -48,6 +48,7 @@ class ProviderCollection extends ProviderCollectionAdapter
     protected $supportedProviders = [
         'DailyMotion',
         'Deviantart',
+        'Figma',
         'Flickr',
         'GettyImages',
         'Giphy',
