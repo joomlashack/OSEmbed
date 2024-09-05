@@ -21,7 +21,6 @@
  * along with OSEmbed.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use Alledia\Framework\Factory;
 use Alledia\Framework\Joomla\Extension\AbstractPlugin;
 use Alledia\OSEmbed\Free\Embera;
 use Alledia\OSEmbed\Free\Helper;
@@ -122,7 +121,7 @@ if (include 'include.php') {
          */
         public function onContentPrepare($context, $article, $params): void
         {
-            if ($this->isEnabled() && !in_array($context, $this->excludedContexts)) {
+            if ($this->isEnabled() && in_array($context, $this->excludedContexts) == false) {
                 $versionUid = md5($this->extension->getVersion());
 
                 HTMLHelper::_('jquery.framework');
