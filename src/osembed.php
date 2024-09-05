@@ -86,6 +86,18 @@ if (include 'include.php') {
         ];
 
         /**
+         * @var string[]
+         */
+        protected $ignoreViews = [];
+
+        /**
+         * @var string[]
+         */
+        protected $defaultViews = [
+            'com_content:category:list' => 'com_content:category',
+        ];
+
+        /**
          * @inheritDoc
          */
         public function __construct(&$subject, $config = [])
@@ -109,6 +121,16 @@ if (include 'include.php') {
                 $this->params->def('ignore_tags', ['pre', 'code', 'a', 'img', 'iframe']);
 
                 $this->debug = $this->params->get('debug', false);
+
+                $ignoreViews = $this->params->get('ignore_views');
+                foreach ($ignoreViews as $ignoreView => $enabled) {
+                    if ($enabled) {
+                        $this->ignoreViews[] = $ignoreView;
+                        if ($this->defaultViews[$ignoreView] ?? null) {
+                            $this->ignoreViews[] = $this->defaultViews[$ignoreView];
+                        }
+                    }
+                }
             }
         }
 
@@ -122,7 +144,7 @@ if (include 'include.php') {
          */
         public function onContentPrepare($context, $article, $params): void
         {
-            if ($this->isEnabled() && in_array($context, $this->excludedContexts) == false) {
+            if ($this->isEnabled() && $this->isNotExcluded($context)) {
                 $versionUid = md5($this->extension->getVersion());
 
                 HTMLHelper::_('jquery.framework');
@@ -174,6 +196,42 @@ if (include 'include.php') {
                     $article->{$textField} = $this->parseContent($article->{$textField});
                 }
             }
+        }
+
+        /**
+         * @param string $context
+         *
+         * @return bool
+         */
+        protected function isNotExcluded(string $context): bool
+        {
+            $currentView = join(
+                ':',
+                array_filter(
+                    [
+                        $this->app->input->get('option'),
+                        $this->app->input->get('view'),
+                        $this->app->input->get('layout'),
+                    ]
+                )
+            );
+
+            $excluded = in_array($context, $this->excludedContexts)
+                || in_array($currentView, $this->ignoreViews);
+
+            if ($this->debug && $excluded) {
+                $this->app->enqueueMessage(
+                    sprintf(
+                        'Ignoring Context %s / View %s',
+                        $context,
+                        $currentView
+                    ),
+                    'notice'
+                );
+
+            }
+
+            return $excluded == false;
         }
 
         /**
