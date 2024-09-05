@@ -142,13 +142,13 @@ if (include 'include.php') {
                 $textField = null;
                 switch ($context) {
                     case 'com_content.category':
-                        if ($this->params->get('show_intro') && isset($article->introtext)) {
-                            $textField = 'introtext';
+                        if ($params->get('show_intro') && isset($article->text)) {
+                            $textField = 'text';
                         }
                         break;
 
                     case 'com_content.categories':
-                        if ($params && $params->get('show_description')) {
+                        if ($params->get('show_description')) {
                             $textField = 'text';
                         }
                         break;
