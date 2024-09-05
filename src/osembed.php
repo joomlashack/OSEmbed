@@ -82,6 +82,7 @@ if (include 'include.php') {
         protected $excludedContexts = [
             'com_finder.indexer',
             'com_search.search',
+            'com_content.category.title',
         ];
 
         /**
@@ -150,10 +151,6 @@ if (include 'include.php') {
                         if ($params && $params->get('show_description')) {
                             $textField = 'text';
                         }
-                        break;
-
-                    case 'com_content.category.title':
-                        // disable these
                         break;
 
                     default:
