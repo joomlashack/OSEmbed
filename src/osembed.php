@@ -162,7 +162,15 @@ if (include 'include.php') {
                 }
 
                 if ($this->debug) {
-                    $this->app->enqueueMessage(sprintf('%s: Field=%s', $context, $textField ?: 'null'), 'notice');
+                    $this->app->enqueueMessage(
+                        sprintf(
+                            '%s: Field=%s (%s)',
+                            $context,
+                            $textField ?: 'null',
+                            isset($article->{$textField}) ? 'True' : 'False'
+                        ),
+                        'notice'
+                    );
                 }
 
                 if ($textField && isset($article->{$textField})) {
