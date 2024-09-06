@@ -120,9 +120,9 @@ if (include 'include.php') {
                 $this->params->def('responsive', true);
                 $this->params->def('ignore_tags', ['pre', 'code', 'a', 'img', 'iframe']);
 
-                $this->debug = $this->params->get('debug', false);
+                $this->debug = (bool)$this->params->get('debug', false);
 
-                $ignoreViews = $this->params->get('ignore_views');
+                $ignoreViews = $this->params->get('ignore_views') ?: [];
                 foreach ($ignoreViews as $ignoreView => $enabled) {
                     if ($enabled) {
                         $this->ignoreViews[] = $ignoreView;
