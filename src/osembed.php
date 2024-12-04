@@ -145,6 +145,10 @@ if (include 'include.php') {
         public function onContentPrepare($context, $article, $params): void
         {
             if ($this->isEnabled() && $this->isNotExcluded($context)) {
+                if ($params instanceof Registry == false) {
+                    $params = new Registry($params);
+                }
+
                 $versionUid = md5($this->extension->getVersion());
 
                 HTMLHelper::_('jquery.framework');
