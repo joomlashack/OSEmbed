@@ -7,14 +7,14 @@ namespace Composer\Autoload;
 class ComposerStaticInit15b942fc6af6974ec5ec3a1e7a92e45dF
 {
     public static $prefixLengthsPsr4 = array (
-        'E' => 
+        'E' =>
         array (
             'Embera\\' => 7,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Embera\\' => 
+        'Embera\\' =>
         array (
             0 => __DIR__ . '/..' . '/mpratt/embera/src/Embera',
         ),
