@@ -1,6 +1,6 @@
 <?php
 /**
- * MicrosoftStream.php
+ * Amtraker.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,32 +15,33 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * MicrosoftStream Provider
- * No description.
+ * Amtraker Provider
  *
- * @link https://web.microsoftstream.com/
- * @see https://docs.microsoft.com/en-us/stream/embed-video-oembed
+ * @link https://amtraker.com
  */
-class MicrosoftStream extends ProviderAdapter implements ProviderInterface
+class Amtraker extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://web.microsoftstream.com/oembed?format=json';
+    protected $endpoint = 'https://api.amtraker.com/v3/oembed';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        '*.microsoftstream.com'
+        '*.amtraker.com'
     ];
 
     /** inline {@inheritdoc} */
-    protected $allowedParams = [ 'maxwidth', 'maxheight', 'width', 'height', 'autoplay', 'preload', 'st' ];
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
+    protected $responsiveSupport = false;
+
+    /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~microsoftstream\.com/(video|channel)/([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~amtraker\.com/trains/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
@@ -52,5 +53,4 @@ class MicrosoftStream extends ProviderAdapter implements ProviderInterface
 
         return $url;
     }
-
 }

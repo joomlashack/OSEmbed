@@ -1,6 +1,6 @@
 <?php
 /**
- * UniversityCambridgeMap.php
+ * Sbedit.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,29 +15,33 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * UniversityCambridgeMap Provider
- * University of Cambridge map and directory
+ * Sbedit Provider
  *
- * @link https://map.cam.ac.uk
- *
+ * @link https://sbedit.net
  */
-class UniversityCambridgeMap extends ProviderAdapter implements ProviderInterface
+class Sbedit extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://map.cam.ac.uk/oembed/?format=json';
+    protected $endpoint = 'https://sbedit.net/oembed/';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'map.cam.ac.uk'
+        'sbedit.net'
     ];
+
+    /** inline {@inheritdoc} */
+    protected $allowedParams = [ 'maxwidth', 'maxheight' ];
 
     /** inline {@inheritdoc} */
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
+    protected $responsiveSupport = false;
+
+    /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~map\.cam\.ac\.uk/([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~sbedit\.net/oembed/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
@@ -47,7 +51,7 @@ class UniversityCambridgeMap extends ProviderAdapter implements ProviderInterfac
         $url->removeQueryString();
         $url->removeLastSlash();
 
+        $url->overwrite(str_replace('/embed/', '/oembed/', (string) $url));
         return $url;
     }
-
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Smeme.php
+ * Bitchute.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,18 +15,18 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Smeme Provider
+ * Bitchute Provider
  *
- * @link https://open.smeme.com
+ * @link https://api.bitchute.com
  */
-class Smeme extends ProviderAdapter implements ProviderInterface
+class Bitchute extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://open.smeme.com/api/oembed';
+    protected $endpoint = 'https://api.bitchute.com/oembed/';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'open.smeme.com'
+        '*.bitchute.com'
     ];
 
     /** inline {@inheritdoc} */
@@ -41,7 +41,15 @@ class Smeme extends ProviderAdapter implements ProviderInterface
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~open\.smeme\.com/([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~/video/([^/]+)~i', (string) $url));
     }
 
+    /** inline {@inheritdoc} */
+    public function normalizeUrl(Url $url)
+    {
+        $url->convertToHttps();
+        $url->removeQueryString();
+
+        return $url;
+    }
 }

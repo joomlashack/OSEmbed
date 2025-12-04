@@ -1,6 +1,6 @@
 <?php
 /**
- * Shopshare.php
+ * Framatube.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,18 +15,18 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Shopshare Provider
+ * Framatube Provider
  *
- * @link https://shopshare.tv|shopshare.tv
+ * @link https://framatube.org
  */
-class Shopshare extends ProviderAdapter implements ProviderInterface
+class Framatube extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://shopshare.tv/api/shopcast/oembed';
+    protected $endpoint = 'https://framatube.org/services/oembed';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        '*.shopshare.tv'
+        'framatube.org'
     ];
 
     /** inline {@inheritdoc} */
@@ -41,7 +41,7 @@ class Shopshare extends ProviderAdapter implements ProviderInterface
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~shopshare\.tv/(shopboard|shopcast)/([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~framatube\.org/w/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */

@@ -1,6 +1,6 @@
 <?php
 /**
- * UpecPod.php
+ * Quartr.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,20 +15,18 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * UpecPod Provider
- * No Description
+ * Quartr Provider
  *
- * @link https://pod.u-pec.fr
- *
+ * @link https://quartr.com
  */
-class UpecPod extends ProviderAdapter implements ProviderInterface
+class Quartr extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://pod.u-pec.fr/video/oembed?format=json';
+    protected $endpoint = 'https://web.quartr.com/api/oembed';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'pod.u-pec.fr'
+        '*.quartr.com'
     ];
 
     /** inline {@inheritdoc} */
@@ -38,12 +36,12 @@ class UpecPod extends ProviderAdapter implements ProviderInterface
     protected $httpsSupport = true;
 
     /** inline {@inheritdoc} */
-    protected $responsiveSupport = false;
+    protected $responsiveSupport = true;
 
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~pod\.u\-pec\.fr/video/([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~quartr\.com/companies/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
@@ -54,5 +52,4 @@ class UpecPod extends ProviderAdapter implements ProviderInterface
 
         return $url;
     }
-
 }

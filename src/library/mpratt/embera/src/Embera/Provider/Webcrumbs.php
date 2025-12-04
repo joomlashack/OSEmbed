@@ -1,6 +1,6 @@
 <?php
 /**
- * Chainflix.php
+ * Webcrumbs.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,18 +15,18 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Chainflix Provider
+ * Webcrumbs Provider
  *
- * @link https://chainflix.com
+ * @link https://share.webcrumbs.org|tools.webcrumbs.org|www.webcrumbs.org
  */
-class Chainflix extends ProviderAdapter implements ProviderInterface
+class Webcrumbs extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://www.chainflix.net/video/oembed?format=json';
+    protected $endpoint = 'http://tools.webcrumbs.org/?embed=json';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'chainflix.net'
+        '*.webcrumbs.org'
     ];
 
     /** inline {@inheritdoc} */
@@ -41,18 +41,25 @@ class Chainflix extends ProviderAdapter implements ProviderInterface
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (
-            preg_match('~chainflix\.net/video/?~i', (string) $url) &&
-            preg_match('~contentId\=(.*)~i', (string) $url)
-        );
+        return (bool) (preg_match('~webcrumbs\.org/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
     public function normalizeUrl(Url $url)
     {
         $url->convertToHttps();
+        $url->removeQueryString();
         $url->removeLastSlash();
+
         return $url;
     }
 
+    public function getEndpoint()
+    {
+        if (preg_match('~webcrumbs\.org/([^/]+)~i', (string) $this->url, $matches)) {
+            return 'http://share.webcrumbs.org/' . $matches[1] . '?embed=json';
+        }
+
+        return $this->endpoint;
+    }
 }

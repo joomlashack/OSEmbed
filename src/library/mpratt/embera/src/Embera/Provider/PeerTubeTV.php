@@ -1,6 +1,6 @@
 <?php
 /**
- * Naro.php
+ * PeerTubeTV.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,18 +15,18 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * Naro Provider
+ * PeerTube.TV Provider
  *
- * @link https://
+ * @link https://peertube.tv
  */
-class Naro extends ProviderAdapter implements ProviderInterface
+class PeerTubeTV extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://naro.fm/api/oembed/?format=json';
+    protected $endpoint = 'https://peertube.tv/services/oembed';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'naro.fm'
+        'peertube.tv'
     ];
 
     /** inline {@inheritdoc} */
@@ -41,7 +41,7 @@ class Naro extends ProviderAdapter implements ProviderInterface
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~naro\.fm/([^/]+)/([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~peertube\.tv/w/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
@@ -49,8 +49,8 @@ class Naro extends ProviderAdapter implements ProviderInterface
     {
         $url->convertToHttps();
         $url->removeQueryString();
+        $url->removeLastSlash();
 
         return $url;
     }
-
 }

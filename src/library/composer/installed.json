@@ -2,17 +2,17 @@
     "packages": [
         {
             "name": "mpratt/embera",
-            "version": "2.0.41",
-            "version_normalized": "2.0.41.0",
+            "version": "2.0.42",
+            "version_normalized": "2.0.42.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joomlashack/Embera.git",
-                "reference": "069305b9252a428ba4ae6eb58d3dc8c6d9be5cd0"
+                "reference": "afa728339c6f078c803c9277a5054ca241b3c469"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomlashack/Embera/zipball/069305b9252a428ba4ae6eb58d3dc8c6d9be5cd0",
-                "reference": "069305b9252a428ba4ae6eb58d3dc8c6d9be5cd0",
+                "url": "https://api.github.com/repos/joomlashack/Embera/zipball/afa728339c6f078c803c9277a5054ca241b3c469",
+                "reference": "afa728339c6f078c803c9277a5054ca241b3c469",
                 "shasum": ""
             },
             "require": {
@@ -21,12 +21,13 @@
             },
             "require-dev": {
                 "phpstan/phpstan": "^1.4",
-                "phpunit/phpunit": "^9.0"
+                "phpunit/phpunit": "^9.0||^10.0",
+                "symfony/yaml": "^2.1"
             },
             "suggest": {
                 "ext-curl": "Fetch data using curl instead of using file_get_contents"
             },
-            "time": "2024-08-17T04:27:29+00:00",
+            "time": "2025-01-04T06:07:59+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -42,10 +43,10 @@
             "scripts": {
                 "test": [
                     "Composer\\Config::disableProcessTimeout",
-                    "phpunit -v"
+                    "phpunit"
                 ],
                 "test-github": [
-                    "phpunit -v -c phpunit-github.xml"
+                    "phpunit -c phpunit-github.xml"
                 ],
                 "analyse": [
                     "phpstan analyse src --level=4 --no-progress"
@@ -78,7 +79,7 @@
                 "Youtube"
             ],
             "support": {
-                "source": "https://github.com/joomlashack/Embera/tree/2.0.41"
+                "source": "https://github.com/joomlashack/Embera/tree/2.0.42"
             },
             "funding": [
                 {

@@ -1,6 +1,6 @@
 <?php
 /**
- * UpecPod.php
+ * Nebula.php
  *
  * @package Embera
  * @author Michael Pratt <yo@michael-pratt.com>
@@ -15,20 +15,18 @@ namespace Embera\Provider;
 use Embera\Url;
 
 /**
- * UpecPod Provider
- * No Description
+ * Nebula Provider
  *
- * @link https://pod.u-pec.fr
- *
+ * @link https://nebula.tv
  */
-class UpecPod extends ProviderAdapter implements ProviderInterface
+class Nebula extends ProviderAdapter implements ProviderInterface
 {
     /** inline {@inheritdoc} */
-    protected $endpoint = 'https://pod.u-pec.fr/video/oembed?format=json';
+    protected $endpoint = 'https://nebula.tv/api/oembed';
 
     /** inline {@inheritdoc} */
     protected static $hosts = [
-        'pod.u-pec.fr'
+        '*.nebula.tv'
     ];
 
     /** inline {@inheritdoc} */
@@ -43,7 +41,7 @@ class UpecPod extends ProviderAdapter implements ProviderInterface
     /** inline {@inheritdoc} */
     public function validateUrl(Url $url)
     {
-        return (bool) (preg_match('~pod\.u\-pec\.fr/video/([^/]+)~i', (string) $url));
+        return (bool) (preg_match('~nebula\.tv/videos/([^/]+)~i', (string) $url));
     }
 
     /** inline {@inheritdoc} */
@@ -51,8 +49,8 @@ class UpecPod extends ProviderAdapter implements ProviderInterface
     {
         $url->convertToHttps();
         $url->removeQueryString();
+        $url->removeLastSlash();
 
         return $url;
     }
-
 }
