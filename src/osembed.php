@@ -331,7 +331,8 @@ if (include 'include.php') {
         protected function isEnabled(): bool
         {
             if ($this->enabled === null) {
-                $isHtml = in_array($this->app->getDocument()->getType(), ['html', 'raw']);
+                $isHtml = is_callable([$this->app, 'getDocument'])
+                    && in_array($this->app->getDocument()->getType(), ['html', 'raw']);
 
                 $this->enabled = $isHtml && $this->callHelper('complySystemRequirements');
             }
